@@ -1,0 +1,1 @@
+import{v as s}from"./index-Bro6NylL.js";function a(e){return s({url:"/admin/message/list",method:"get",params:e})}function r(e){return s({url:`/admin/message/${e}`,method:"get"})}function m(e){return s({url:`/admin/message/${e}/read`,method:"put"})}function n(e){return s({url:`/admin/message/${e}`,method:"delete"})}export{a,n as d,r as g,m};

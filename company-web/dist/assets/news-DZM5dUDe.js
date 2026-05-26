@@ -1,0 +1,1 @@
+import{s as t}from"./index-DMWWOoiU.js";function n(e){return t.get("/web/news/list",{params:e})}function r(e){return t.get(`/web/news/${e}`)}function g(){return t.get("/web/news/categories")}export{r as a,n as b,g};
