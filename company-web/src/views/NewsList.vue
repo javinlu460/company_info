@@ -22,7 +22,7 @@
           :class="{ active: activeCategory === cat.id }"
           @click="selectCategory(cat.id)"
         >
-          {{ cat.name }}
+          {{ cat.categoryName }}
         </button>
       </div>
 

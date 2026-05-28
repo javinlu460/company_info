@@ -8,15 +8,15 @@ import router from '@/router'
 function generateRoutesFromMenus(menus, parentPath = '') {
   const routes = []
   menus.forEach((menu) => {
-    if (menu.type === 2) return // 按钮类型不生成路由
+    if (menu.menuType === 3) return // 按钮类型不生成路由
 
     const route = {
       name: menu.id + '',
       path: menu.path || '',
       meta: {
-        title: menu.name,
+        title: menu.menuName,
         icon: menu.icon || '',
-        hidden: menu.visible === 0 ? false : true
+        hidden: menu.visible === 0
       }
     }
 
@@ -69,63 +69,96 @@ export const useUserStore = defineStore('user', {
       this.menus = menus
 
       const layoutChildren = []
-      menus.forEach((menu) => {
-        if (menu.type === 2) return
 
+      // 遍历菜单树，将所有叶子菜单扁平化为 layout 的直接子路由
+      const flattenMenus = (menuList, parentPath = '') => {
+        menuList.forEach((menu) => {
+          if (menu.menuType === 3) return // 按钮类型跳过
+
+          const currentPath = menu.path || ''
+
+          if (menu.component) {
+            // 有组件的菜单项，生成路由
+            const fullPath = parentPath ? `${parentPath}/${currentPath}` : currentPath
+            const route = {
+              name: 'Menu' + menu.id,
+              path: fullPath.startsWith('/') ? fullPath : '/' + fullPath,
+              component: loadView(menu.component),
+              meta: {
+                title: menu.menuName,
+                icon: menu.icon || '',
+                hidden: menu.visible === 0
+              }
+            }
+            layoutChildren.push(route)
+          }
+
+          // 继续遍历子菜单
+          if (menu.children && menu.children.length > 0) {
+            flattenMenus(menu.children, currentPath)
+          }
+        })
+      }
+
+      flattenMenus(menus)
+
+      // 构建侧边栏显示用的路由树（保留层级结构）
+      const sidebarRoutes = []
+      menus.forEach((menu) => {
+        if (menu.menuType === 3) return
         const route = {
           name: menu.id + '',
           path: menu.path || '',
           meta: {
-            title: menu.name,
+            title: menu.menuName,
             icon: menu.icon || '',
-            hidden: menu.visible === 0 ? false : true
+            hidden: menu.visible === 0
           }
         }
-
         if (menu.children && menu.children.length > 0) {
-          // 目录类型: 有子菜单
           const childRoutes = []
           menu.children.forEach((child) => {
-            if (child.type === 2) return
-            const childRoute = {
-              name: child.id + '',
-              path: child.path || '',
+            if (child.menuType === 3) return
+            const parentPath = menu.path || ''
+            const childPath = child.path || ''
+            const fullPath = parentPath ? `${parentPath}/${childPath}` : childPath
+            childRoutes.push({
+              name: 'Menu' + child.id,
+              path: fullPath.startsWith('/') ? fullPath : '/' + fullPath,
               meta: {
-                title: child.name,
+                title: child.menuName,
                 icon: child.icon || '',
-                hidden: child.visible === 0 ? false : true
+                hidden: child.visible === 0
               }
-            }
-            if (child.component) {
-              childRoute.component = loadView(child.component)
-            }
-            if (child.children && child.children.length > 0) {
-              childRoute.children = generateRoutesFromMenus(child.children, child.path)
-            }
-            childRoutes.push(childRoute)
+            })
           })
           route.children = childRoutes
         }
-
-        layoutChildren.push(route)
+        sidebarRoutes.push(route)
       })
+
+      const dashboardRoute = {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
+        meta: { title: '仪表盘', icon: 'Odometer', affix: true }
+      }
 
       const layoutRoute = {
         path: '/',
         component: Layout,
         redirect: '/dashboard',
         children: [
-          {
-            path: 'dashboard',
-            name: 'Dashboard',
-            component: () => import('@/views/dashboard/index.vue'),
-            meta: { title: '仪表盘', icon: 'Odometer', affix: true }
-          },
+          dashboardRoute,
           ...layoutChildren
         ]
       }
 
-      this.routes = layoutRoute.children
+      // 侧边栏路由数据（带层级结构）
+      this.routes = [
+        { path: '/dashboard', meta: { title: '仪表盘', icon: 'Odometer' } },
+        ...sidebarRoutes
+      ]
       return [layoutRoute]
     },
 

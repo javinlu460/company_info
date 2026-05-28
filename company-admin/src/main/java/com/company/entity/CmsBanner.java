@@ -22,6 +22,7 @@ public class CmsBanner {
     private Integer status;
 
     /** 排序 */
+    @TableField("sort")
     private Integer orderNum;
 
     @TableField(fill = FieldFill.INSERT)

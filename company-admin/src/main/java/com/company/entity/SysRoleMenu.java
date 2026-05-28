@@ -7,9 +7,7 @@ import lombok.Data;
 @TableName("sys_role_menu")
 public class SysRoleMenu {
 
-    @TableId(type = IdType.AUTO)
-    private Long id;
-
+    @TableId(type = IdType.INPUT)
     private Long roleId;
 
     private Long menuId;

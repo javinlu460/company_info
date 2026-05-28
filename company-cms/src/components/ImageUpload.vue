@@ -10,7 +10,7 @@
       accept="image/*"
     >
       <div v-if="modelValue" class="image-preview">
-        <el-image :src="modelValue" fit="cover" class="preview-img" />
+        <el-image :src="imageUrl" fit="cover" class="preview-img" />
         <div class="image-mask">
           <el-icon class="mask-icon" @click.stop="handleRemove"><Delete /></el-icon>
         </div>
@@ -41,6 +41,14 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const uploadAction = computed(() => props.action)
+
+// 图片显示时拼接/api前缀
+const imageUrl = computed(() => {
+  if (!props.modelValue) return ''
+  if (props.modelValue.startsWith('http')) return props.modelValue
+  if (props.modelValue.startsWith('/api/')) return props.modelValue
+  return '/api' + props.modelValue
+})
 
 const uploadHeaders = computed(() => ({
   Authorization: 'Bearer ' + (localStorage.getItem('token') || '')

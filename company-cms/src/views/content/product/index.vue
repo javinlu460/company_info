@@ -10,7 +10,7 @@
           <el-tree-select
             v-model="queryParams.categoryId"
             :data="categoryTree"
-            :props="{ label: 'name', value: 'id', children: 'children' }"
+            :props="{ label: 'categoryName', value: 'id', children: 'children' }"
             check-strictly
             clearable
             placeholder="请选择分类"
@@ -38,23 +38,23 @@
       <el-table v-loading="loading" :data="tableData" border stripe>
         <el-table-column label="封面图" width="100" align="center">
           <template #default="{ row }">
-            <el-image v-if="row.coverImage" :src="row.coverImage" fit="cover" style="width: 60px; height: 60px;" :preview-src-list="[row.coverImage]" />
+            <el-image v-if="row.coverImage" :src="getImageUrl(row.coverImage)" fit="cover" style="width: 60px; height: 60px;" :preview-src-list="[getImageUrl(row.coverImage)]" />
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="产品名称" min-width="160" show-overflow-tooltip />
+        <el-table-column prop="productName" label="产品名称" min-width="160" show-overflow-tooltip />
         <el-table-column prop="categoryName" label="分类" width="120" />
         <el-table-column prop="status" label="状态" width="80" align="center">
           <template #default="{ row }">
             <el-switch v-model="row.status" :active-value="1" :inactive-value="0" @change="handleStatusChange(row)" />
           </template>
         </el-table-column>
-        <el-table-column prop="recommend" label="推荐" width="80" align="center">
+        <el-table-column prop="isRecommend" label="推荐" width="80" align="center">
           <template #default="{ row }">
-            <el-switch v-model="row.recommend" :active-value="1" :inactive-value="0" @change="handleRecommendChange(row)" />
+            <el-switch v-model="row.isRecommend" :active-value="1" :inactive-value="0" @change="handleRecommendChange(row)" />
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="排序" width="80" align="center" />
+        <el-table-column prop="orderNum" label="排序" width="80" align="center" />
         <el-table-column prop="viewCount" label="浏览量" width="80" align="center" />
         <el-table-column prop="createTime" label="创建时间" width="170" />
         <el-table-column label="操作" width="160" fixed="right" align="center">
@@ -65,8 +65,8 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        v-model:current-page="queryParams.current"
-        v-model:page-size="queryParams.size"
+        v-model:current-page="queryParams.pageNum"
+        v-model:page-size="queryParams.pageSize"
         :total="total"
         :page-sizes="[10, 20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
@@ -87,8 +87,8 @@
       <el-form ref="formRef" :model="form" :rules="formRules" label-width="100px">
         <el-row :gutter="20">
           <el-col :span="12">
-            <el-form-item label="产品名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入产品名称" />
+            <el-form-item label="产品名称" prop="title">
+              <el-input v-model="form.title" placeholder="请输入产品名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -96,7 +96,7 @@
               <el-tree-select
                 v-model="form.categoryId"
                 :data="categoryTree"
-                :props="{ label: 'name', value: 'id', children: 'children' }"
+                :props="{ label: 'categoryName', value: 'id', children: 'children' }"
                 check-strictly
                 placeholder="请选择分类"
                 style="width: 100%;"
@@ -124,11 +124,11 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="是否推荐" prop="recommend">
-          <el-switch v-model="form.recommend" :active-value="1" :inactive-value="0" />
+        <el-form-item label="是否推荐" prop="isRecommend">
+          <el-switch v-model="form.isRecommend" :active-value="1" :inactive-value="0" />
         </el-form-item>
-        <el-form-item label="简介" prop="summary">
-          <el-input v-model="form.summary" type="textarea" :rows="3" placeholder="请输入产品简介" />
+        <el-form-item label="简介" prop="description">
+          <el-input v-model="form.description" type="textarea" :rows="3" placeholder="请输入产品简介" />
         </el-form-item>
         <el-form-item label="产品详情" prop="content">
           <RichEditor v-model="form.content" />
@@ -149,6 +149,7 @@ import { getProductList, addProduct, updateProduct, deleteProduct, updateProduct
 import { getProductCategoryTree } from '@/api/productCategory'
 import ImageUpload from '@/components/ImageUpload.vue'
 import RichEditor from '@/components/RichEditor.vue'
+import { getImageUrl } from '@/utils/image'
 
 const loading = ref(false)
 const submitLoading = ref(false)
@@ -162,24 +163,24 @@ const queryParams = reactive({
   keyword: '',
   categoryId: undefined,
   status: undefined,
-  current: 1,
-  size: 10
+  pageNum: 1,
+  pageSize: 10
 })
 
 const form = reactive({
   id: undefined,
-  name: '',
+  title: '',
   categoryId: undefined,
   coverImage: '',
-  summary: '',
+  description: '',
   content: '',
   sort: 0,
   status: 1,
-  recommend: 0
+  isRecommend: 0
 })
 
 const formRules = {
-  name: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
+  title: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
   categoryId: [{ required: true, message: '请选择分类', trigger: 'change' }]
 }
 
@@ -211,7 +212,7 @@ async function loadCategoryTree() {
 }
 
 function handleSearch() {
-  queryParams.current = 1
+  queryParams.pageNum = 1
   loadData()
 }
 
@@ -219,7 +220,7 @@ function handleReset() {
   queryParams.keyword = ''
   queryParams.categoryId = undefined
   queryParams.status = undefined
-  queryParams.current = 1
+  queryParams.pageNum = 1
   loadData()
 }
 
@@ -230,7 +231,17 @@ function handleAdd() {
 
 function handleEdit(row) {
   resetForm()
-  Object.assign(form, { ...row })
+  Object.assign(form, {
+    id: row.id,
+    title: row.productName,
+    categoryId: row.categoryId,
+    coverImage: row.coverImage,
+    description: row.description,
+    content: row.detail,
+    sort: row.orderNum,
+    status: row.status,
+    isRecommend: row.isRecommend
+  })
   dialogVisible.value = true
 }
 
@@ -245,15 +256,15 @@ async function handleStatusChange(row) {
 
 async function handleRecommendChange(row) {
   try {
-    await updateProduct({ id: row.id, recommend: row.recommend })
+    await updateProduct({ id: row.id, isRecommend: row.isRecommend })
     ElMessage.success('推荐状态更新成功')
   } catch (e) {
-    row.recommend = row.recommend === 1 ? 0 : 1
+    row.isRecommend = row.isRecommend === 1 ? 0 : 1
   }
 }
 
 async function handleDelete(row) {
-  await ElMessageBox.confirm(`确定要删除产品「${row.name}」吗？`, '提示', {
+  await ElMessageBox.confirm(`确定要删除产品「${row.productName}」吗？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
@@ -286,14 +297,14 @@ async function handleSubmit() {
 function resetForm() {
   Object.assign(form, {
     id: undefined,
-    name: '',
+    title: '',
     categoryId: undefined,
     coverImage: '',
-    summary: '',
+    description: '',
     content: '',
     sort: 0,
     status: 1,
-    recommend: 0
+    isRecommend: 0
   })
 }
 </script>

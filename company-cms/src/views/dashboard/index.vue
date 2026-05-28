@@ -103,10 +103,10 @@ onMounted(() => {
 async function loadStats() {
   try {
     const [productRes, newsRes, messageRes, userRes] = await Promise.all([
-      getProductList({ current: 1, size: 1 }),
-      getNewsList({ current: 1, size: 1 }),
-      getMessageList({ current: 1, size: 1, readStatus: 0 }),
-      getUserList({ current: 1, size: 1 })
+      getProductList({ pageNum: 1, pageSize: 1 }),
+      getNewsList({ pageNum: 1, pageSize: 1 }),
+      getMessageList({ pageNum: 1, pageSize: 1, isRead: 0 }),
+      getUserList({ pageNum: 1, pageSize: 1 })
     ])
     stats.productCount = productRes.data.total || 0
     stats.newsCount = newsRes.data.total || 0
@@ -120,8 +120,8 @@ async function loadStats() {
 async function loadRecentData() {
   try {
     const [messageRes, newsRes] = await Promise.all([
-      getMessageList({ current: 1, size: 5 }),
-      getNewsList({ current: 1, size: 5 })
+      getMessageList({ pageNum: 1, pageSize: 5 }),
+      getNewsList({ pageNum: 1, pageSize: 5 })
     ])
     recentMessages.value = messageRes.data.records || []
     recentNews.value = newsRes.data.records || []

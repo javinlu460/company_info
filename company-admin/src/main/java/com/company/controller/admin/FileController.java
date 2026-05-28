@@ -35,8 +35,12 @@ public class FileController {
         // 生成新文件名
         String newFilename = UUID.randomUUID().toString().replace("-", "") + extension;
 
-        // 确保目录存在
+        // 确保目录存在，使用绝对路径
         File uploadDir = new File(uploadPath);
+        if (!uploadDir.isAbsolute()) {
+            // 如果是相对路径，基于用户工作目录解析
+            uploadDir = new File(System.getProperty("user.dir"), uploadPath);
+        }
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
         }
@@ -44,7 +48,7 @@ public class FileController {
         // 保存文件
         File dest = new File(uploadDir, newFilename);
         try {
-            file.transferTo(dest);
+            file.transferTo(dest.getAbsoluteFile());
         } catch (IOException e) {
             return R.fail("文件上传失败: " + e.getMessage());
         }

@@ -18,8 +18,6 @@ public class CmsMessage {
 
     private String email;
 
-    private String subject;
-
     private String content;
 
     private String address;
@@ -27,6 +25,7 @@ public class CmsMessage {
     /** 是否已读: 1-已读, 0-未读 */
     private Integer isRead;
 
+    @TableField("reply_content")
     private String reply;
 
     @TableField(fill = FieldFill.INSERT)

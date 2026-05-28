@@ -24,8 +24,16 @@ public class CmsNewsCategoryController {
 
     @ApiOperation("分类列表")
     @GetMapping("/list")
-    @PreAuthorize("@ss.hasPermi('cms:newsCategory:list')")
+    @PreAuthorize("@ss.hasPermi('content:newsCategory:list')")
     public R<?> list() {
+        List<CmsNewsCategory> list = cmsNewsCategoryService.list(
+                new LambdaQueryWrapper<CmsNewsCategory>().orderByAsc(CmsNewsCategory::getOrderNum));
+        return R.ok(list);
+    }
+
+    @ApiOperation("所有分类(下拉选择)")
+    @GetMapping("/all")
+    public R<?> all() {
         List<CmsNewsCategory> list = cmsNewsCategoryService.list(
                 new LambdaQueryWrapper<CmsNewsCategory>().orderByAsc(CmsNewsCategory::getOrderNum));
         return R.ok(list);

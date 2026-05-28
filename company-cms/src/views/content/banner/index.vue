@@ -12,8 +12,8 @@
           <template #default="{ row }">
             <el-image
               v-if="row.imageUrl"
-              :src="row.imageUrl"
-              :preview-src-list="[row.imageUrl]"
+              :src="getImageUrl(row.imageUrl)"
+              :preview-src-list="[getImageUrl(row.imageUrl)]"
               fit="cover"
               style="width: 80px; height: 45px;"
             />
@@ -21,11 +21,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="标题" min-width="160" show-overflow-tooltip />
-        <el-table-column prop="link" label="链接" min-width="200" show-overflow-tooltip />
-        <el-table-column prop="sort" label="排序" width="100" align="center">
+        <el-table-column prop="linkUrl" label="链接" min-width="200" show-overflow-tooltip />
+        <el-table-column prop="orderNum" label="排序" width="100" align="center">
           <template #default="{ row }">
             <el-input-number
-              v-model="row.sort"
+              v-model="row.orderNum"
               :min="0"
               size="small"
               controls-position="right"
@@ -51,8 +51,8 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        v-model:current-page="queryParams.current"
-        v-model:page-size="queryParams.size"
+        v-model:current-page="queryParams.pageNum"
+        v-model:page-size="queryParams.pageSize"
         :total="total"
         :page-sizes="[10, 20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
@@ -76,8 +76,8 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题" />
         </el-form-item>
-        <el-form-item label="链接" prop="link">
-          <el-input v-model="form.link" placeholder="请输入链接" />
+        <el-form-item label="链接" prop="linkUrl">
+          <el-input v-model="form.linkUrl" placeholder="请输入链接" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input-number v-model="form.sort" :min="0" />
@@ -102,6 +102,7 @@ import { ref, reactive, onMounted, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getBannerList, addBanner, updateBanner, deleteBanner, updateBannerStatus } from '@/api/banner'
 import ImageUpload from '@/components/ImageUpload.vue'
+import { getImageUrl } from '@/utils/image'
 
 const loading = ref(false)
 const submitLoading = ref(false)
@@ -111,15 +112,15 @@ const dialogVisible = ref(false)
 const formRef = ref(null)
 
 const queryParams = reactive({
-  current: 1,
-  size: 10
+  pageNum: 1,
+  pageSize: 10
 })
 
 const form = reactive({
   id: undefined,
   imageUrl: '',
   title: '',
-  link: '',
+  linkUrl: '',
   sort: 0,
   status: 1
 })
@@ -152,7 +153,14 @@ function handleAdd() {
 
 function handleEdit(row) {
   resetForm()
-  Object.assign(form, { ...row })
+  Object.assign(form, {
+    id: row.id,
+    imageUrl: row.imageUrl,
+    title: row.title,
+    linkUrl: row.linkUrl,
+    sort: row.orderNum,
+    status: row.status
+  })
   dialogVisible.value = true
 }
 
@@ -167,7 +175,7 @@ async function handleStatusChange(row) {
 
 async function handleSortChange(row) {
   try {
-    await updateBanner({ id: row.id, sort: row.sort })
+    await updateBanner({ id: row.id, sort: row.orderNum })
   } catch (e) {
     loadData()
   }
@@ -209,7 +217,7 @@ function resetForm() {
     id: undefined,
     imageUrl: '',
     title: '',
-    link: '',
+    linkUrl: '',
     sort: 0,
     status: 1
   })

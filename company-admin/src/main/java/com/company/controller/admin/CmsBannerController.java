@@ -1,6 +1,7 @@
 package com.company.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.company.common.result.R;
 import com.company.dto.CmsBannerDTO;
 import com.company.entity.CmsBanner;
@@ -11,7 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Api(tags = "轮播图管理")
 @RestController
@@ -24,13 +24,15 @@ public class CmsBannerController {
         this.cmsBannerService = cmsBannerService;
     }
 
-    @ApiOperation("轮播图列表(按sort排序)")
+    @ApiOperation("轮播图列表(分页)")
     @GetMapping("/list")
     @PreAuthorize("@ss.hasPermi('cms:banner:list')")
-    public R<?> list() {
-        List<CmsBanner> list = cmsBannerService.list(
+    public R<?> list(@RequestParam(defaultValue = "1") Integer pageNum,
+                     @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<CmsBanner> page = cmsBannerService.page(
+                new Page<>(pageNum, pageSize),
                 new LambdaQueryWrapper<CmsBanner>().orderByAsc(CmsBanner::getOrderNum));
-        return R.ok(list);
+        return R.ok(page);
     }
 
     @ApiOperation("新增轮播图")

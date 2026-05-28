@@ -15,8 +15,8 @@
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         default-expand-all
       >
-        <el-table-column prop="name" label="分类名称" min-width="200" />
-        <el-table-column prop="sort" label="排序" width="100" align="center" />
+        <el-table-column prop="categoryName" label="分类名称" min-width="200" />
+        <el-table-column prop="orderNum" label="排序" width="100" align="center" />
         <el-table-column prop="status" label="状态" width="100" align="center">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
@@ -46,18 +46,18 @@
           <el-tree-select
             v-model="form.parentId"
             :data="categoryTreeSelect"
-            :props="{ label: 'name', value: 'id', children: 'children' }"
+            :props="{ label: 'categoryName', value: 'id', children: 'children' }"
             check-strictly
             clearable
             placeholder="请选择父分类(不选则为顶级)"
             style="width: 100%;"
           />
         </el-form-item>
-        <el-form-item label="分类名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入分类名称" />
+        <el-form-item label="分类名称" prop="categoryName">
+          <el-input v-model="form.categoryName" placeholder="请输入分类名称" />
         </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input-number v-model="form.sort" :min="0" />
+        <el-form-item label="排序" prop="orderNum">
+          <el-input-number v-model="form.orderNum" :min="0" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="form.status">
@@ -88,19 +88,19 @@ const formRef = ref(null)
 const form = reactive({
   id: undefined,
   parentId: 0,
-  name: '',
-  sort: 0,
+  categoryName: '',
+  orderNum: 0,
   status: 1
 })
 
 const formRules = {
-  name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
+  categoryName: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
 }
 
 const dialogTitle = computed(() => form.id ? '编辑分类' : '新增分类')
 
 const categoryTreeSelect = computed(() => {
-  return [{ id: 0, name: '顶级分类', children: categoryData.value }]
+  return [{ id: 0, categoryName: '顶级分类', children: categoryData.value }]
 })
 
 onMounted(() => {
@@ -130,8 +130,8 @@ function handleEdit(row) {
   Object.assign(form, {
     id: row.id,
     parentId: row.parentId || 0,
-    name: row.name,
-    sort: row.sort,
+    categoryName: row.categoryName,
+    orderNum: row.orderNum,
     status: row.status
   })
   dialogVisible.value = true
@@ -142,7 +142,7 @@ async function handleDelete(row) {
     ElMessage.warning('该分类下有子分类，无法删除')
     return
   }
-  await ElMessageBox.confirm(`确定要删除分类「${row.name}」吗？`, '提示', {
+  await ElMessageBox.confirm(`确定要删除分类「${row.categoryName}」吗？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
@@ -176,8 +176,8 @@ function resetForm() {
   Object.assign(form, {
     id: undefined,
     parentId: 0,
-    name: '',
-    sort: 0,
+    categoryName: '',
+    orderNum: 0,
     status: 1
   })
 }

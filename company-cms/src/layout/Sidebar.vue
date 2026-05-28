@@ -16,6 +16,8 @@
         router
       >
         <template v-for="route in userStore.routes" :key="route.name">
+          <!-- 跳过隐藏菜单 -->
+          <template v-if="!route.meta || !route.meta.hidden">
           <!-- 单个菜单项(无子菜单) -->
           <el-menu-item
             v-if="!route.children || route.children.length === 0"
@@ -30,7 +32,7 @@
           <!-- 有子菜单 -->
           <el-sub-menu
             v-else
-            :index="route.path"
+            :index="route.path || route.name"
           >
             <template #title>
               <el-icon v-if="route.meta && route.meta.icon">
@@ -38,17 +40,19 @@
               </el-icon>
               <span>{{ route.meta && route.meta.title }}</span>
             </template>
-            <el-menu-item
-              v-for="child in route.children"
-              :key="child.name"
-              :index="child.path"
-            >
-              <el-icon v-if="child.meta && child.meta.icon">
-                <component :is="child.meta.icon" />
-              </el-icon>
-              <template #title>{{ child.meta && child.meta.title }}</template>
-            </el-menu-item>
+            <template v-for="child in route.children" :key="child.name">
+              <el-menu-item
+                v-if="!child.meta || !child.meta.hidden"
+                :index="child.path"
+              >
+                <el-icon v-if="child.meta && child.meta.icon">
+                  <component :is="child.meta.icon" />
+                </el-icon>
+                <template #title>{{ child.meta && child.meta.title }}</template>
+              </el-menu-item>
+            </template>
           </el-sub-menu>
+          </template>
         </template>
       </el-menu>
     </el-scrollbar>

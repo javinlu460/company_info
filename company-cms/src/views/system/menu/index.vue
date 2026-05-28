@@ -15,33 +15,33 @@
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         default-expand-all
       >
-        <el-table-column prop="name" label="菜单名称" min-width="180" />
+        <el-table-column prop="menuName" label="菜单名称" min-width="180" />
         <el-table-column prop="icon" label="图标" width="80" align="center">
           <template #default="{ row }">
             <el-icon v-if="row.icon"><component :is="row.icon" /></el-icon>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="类型" width="90" align="center">
+        <el-table-column prop="menuType" label="类型" width="90" align="center">
           <template #default="{ row }">
-            <el-tag v-if="row.type === 0" type="">目录</el-tag>
-            <el-tag v-else-if="row.type === 1" type="success">菜单</el-tag>
-            <el-tag v-else-if="row.type === 2" type="warning">按钮</el-tag>
+            <el-tag v-if="row.menuType === 1" type="">目录</el-tag>
+            <el-tag v-else-if="row.menuType === 2" type="success">菜单</el-tag>
+            <el-tag v-else-if="row.menuType === 3" type="warning">按钮</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="path" label="路由路径" min-width="140" show-overflow-tooltip />
-        <el-table-column prop="permission" label="权限标识" min-width="160" show-overflow-tooltip />
-        <el-table-column prop="sort" label="排序" width="80" align="center" />
+        <el-table-column prop="perms" label="权限标识" min-width="160" show-overflow-tooltip />
+        <el-table-column prop="orderNum" label="排序" width="80" align="center" />
         <el-table-column prop="visible" label="状态" width="80" align="center">
           <template #default="{ row }">
-            <el-tag :type="row.visible === 0 ? 'success' : 'info'">
-              {{ row.visible === 0 ? '显示' : '隐藏' }}
+            <el-tag :type="row.visible === 1 ? 'success' : 'info'">
+              {{ row.visible === 1 ? '显示' : '隐藏' }}
             </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="220" fixed="right" align="center">
           <template #default="{ row }">
             <el-button
-              v-if="row.type !== 2"
+              v-if="row.menuType !== 3"
               type="primary"
               link
               icon="Plus"
@@ -67,42 +67,42 @@
           <el-tree-select
             v-model="form.parentId"
             :data="menuTreeSelect"
-            :props="{ label: 'name', value: 'id', children: 'children' }"
+            :props="{ label: 'menuName', value: 'id', children: 'children' }"
             check-strictly
             clearable
             placeholder="请选择父菜单(不选则为顶级)"
             style="width: 100%;"
           />
         </el-form-item>
-        <el-form-item label="菜单类型" prop="type">
-          <el-radio-group v-model="form.type">
-            <el-radio :value="0">目录</el-radio>
-            <el-radio :value="1">菜单</el-radio>
-            <el-radio :value="2">按钮</el-radio>
+        <el-form-item label="菜单类型" prop="menuType">
+          <el-radio-group v-model="form.menuType">
+            <el-radio :value="1">目录</el-radio>
+            <el-radio :value="2">菜单</el-radio>
+            <el-radio :value="3">按钮</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="菜单名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入菜单名称" />
+        <el-form-item label="菜单名称" prop="menuName">
+          <el-input v-model="form.menuName" placeholder="请输入菜单名称" />
         </el-form-item>
-        <el-form-item v-if="form.type !== 2" label="路由路径" prop="path">
+        <el-form-item v-if="form.menuType !== 3" label="路由路径" prop="path">
           <el-input v-model="form.path" placeholder="请输入路由路径" />
         </el-form-item>
-        <el-form-item v-if="form.type === 1" label="组件路径" prop="component">
+        <el-form-item v-if="form.menuType === 2" label="组件路径" prop="component">
           <el-input v-model="form.component" placeholder="如: system/user/index" />
         </el-form-item>
-        <el-form-item v-if="form.type === 2" label="权限标识" prop="permission">
-          <el-input v-model="form.permission" placeholder="如: system:user:add" />
+        <el-form-item v-if="form.menuType === 3" label="权限标识" prop="perms">
+          <el-input v-model="form.perms" placeholder="如: system:user:add" />
         </el-form-item>
-        <el-form-item v-if="form.type !== 2" label="图标" prop="icon">
+        <el-form-item v-if="form.menuType !== 3" label="图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标名称" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input-number v-model="form.sort" :min="0" />
         </el-form-item>
-        <el-form-item v-if="form.type !== 2" label="是否可见" prop="visible">
+        <el-form-item v-if="form.menuType !== 3" label="是否可见" prop="visible">
           <el-radio-group v-model="form.visible">
-            <el-radio :value="0">显示</el-radio>
-            <el-radio :value="1">隐藏</el-radio>
+            <el-radio :value="1">显示</el-radio>
+            <el-radio :value="0">隐藏</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -128,24 +128,24 @@ const formRef = ref(null)
 const form = reactive({
   id: undefined,
   parentId: 0,
-  name: '',
-  type: 0,
+  menuName: '',
+  menuType: 1,
   path: '',
   component: '',
-  permission: '',
+  perms: '',
   icon: '',
   sort: 0,
-  visible: 0
+  visible: 1
 })
 
 const formRules = {
-  name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }]
+  menuName: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }]
 }
 
 const dialogTitle = computed(() => form.id ? '编辑菜单' : '新增菜单')
 
 const menuTreeSelect = computed(() => {
-  return [{ id: 0, name: '顶级菜单', children: menuData.value }]
+  return [{ id: 0, menuName: '顶级菜单', children: menuData.value }]
 })
 
 onMounted(() => {
@@ -166,7 +166,7 @@ function handleAdd(row) {
   resetForm()
   if (row && row.id) {
     form.parentId = row.id
-    form.type = row.type === 0 ? 0 : 1
+    form.menuType = row.menuType === 1 ? 1 : 2
   }
   dialogVisible.value = true
 }
@@ -176,13 +176,13 @@ function handleEdit(row) {
   Object.assign(form, {
     id: row.id,
     parentId: row.parentId || 0,
-    name: row.name,
-    type: row.type,
+    menuName: row.menuName,
+    menuType: row.menuType,
     path: row.path,
     component: row.component,
-    permission: row.permission,
+    perms: row.perms,
     icon: row.icon,
-    sort: row.sort,
+    sort: row.orderNum,
     visible: row.visible
   })
   dialogVisible.value = true
@@ -193,7 +193,7 @@ async function handleDelete(row) {
     ElMessage.warning('该菜单下有子菜单，无法删除')
     return
   }
-  await ElMessageBox.confirm(`确定要删除菜单「${row.name}」吗？`, '提示', {
+  await ElMessageBox.confirm(`确定要删除菜单「${row.menuName}」吗？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
@@ -227,14 +227,14 @@ function resetForm() {
   Object.assign(form, {
     id: undefined,
     parentId: 0,
-    name: '',
-    type: 0,
+    menuName: '',
+    menuType: 1,
     path: '',
     component: '',
-    permission: '',
+    perms: '',
     icon: '',
     sort: 0,
-    visible: 0
+    visible: 1
   })
 }
 </script>

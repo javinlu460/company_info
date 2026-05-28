@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item label="分类">
           <el-select v-model="queryParams.categoryId" clearable placeholder="请选择" style="width: 160px;">
-            <el-option v-for="cat in categoryOptions" :key="cat.id" :label="cat.name" :value="cat.id" />
+            <el-option v-for="cat in categoryOptions" :key="cat.id" :label="cat.categoryName" :value="cat.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="状态">
@@ -32,7 +32,7 @@
       <el-table v-loading="loading" :data="tableData" border stripe>
         <el-table-column label="封面图" width="100" align="center">
           <template #default="{ row }">
-            <el-image v-if="row.coverImage" :src="row.coverImage" fit="cover" style="width: 60px; height: 60px;" :preview-src-list="[row.coverImage]" />
+            <el-image v-if="row.coverImage" :src="getImageUrl(row.coverImage)" fit="cover" style="width: 60px; height: 60px;" :preview-src-list="[getImageUrl(row.coverImage)]" />
             <span v-else>-</span>
           </template>
         </el-table-column>
@@ -44,10 +44,10 @@
             <el-switch v-model="row.status" :active-value="1" :inactive-value="0" @change="handleStatusChange(row)" />
           </template>
         </el-table-column>
-        <el-table-column prop="top" label="置顶" width="80" align="center">
+        <el-table-column prop="isTop" label="置顶" width="80" align="center">
           <template #default="{ row }">
-            <el-tag :type="row.top === 1 ? 'danger' : 'info'" size="small">
-              {{ row.top === 1 ? '置顶' : '普通' }}
+            <el-tag :type="row.isTop === 1 ? 'danger' : 'info'" size="small">
+              {{ row.isTop === 1 ? '置顶' : '普通' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -61,8 +61,8 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        v-model:current-page="queryParams.current"
-        v-model:page-size="queryParams.size"
+        v-model:current-page="queryParams.pageNum"
+        v-model:page-size="queryParams.pageSize"
         :total="total"
         :page-sizes="[10, 20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
@@ -90,7 +90,7 @@
           <el-col :span="12">
             <el-form-item label="分类" prop="categoryId">
               <el-select v-model="form.categoryId" placeholder="请选择分类" style="width: 100%;">
-                <el-option v-for="cat in categoryOptions" :key="cat.id" :label="cat.name" :value="cat.id" />
+                <el-option v-for="cat in categoryOptions" :key="cat.id" :label="cat.categoryName" :value="cat.id" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -122,8 +122,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="是否置顶" prop="top">
-              <el-switch v-model="form.top" :active-value="1" :inactive-value="0" />
+            <el-form-item label="是否置顶" prop="isTop">
+              <el-switch v-model="form.isTop" :active-value="1" :inactive-value="0" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -149,6 +149,7 @@ import { getNewsList, addNews, updateNews, deleteNews, updateNewsStatus } from '
 import { getNewsCategoryAll } from '@/api/newsCategory'
 import ImageUpload from '@/components/ImageUpload.vue'
 import RichEditor from '@/components/RichEditor.vue'
+import { getImageUrl } from '@/utils/image'
 
 const loading = ref(false)
 const submitLoading = ref(false)
@@ -162,8 +163,8 @@ const queryParams = reactive({
   keyword: '',
   categoryId: undefined,
   status: undefined,
-  current: 1,
-  size: 10
+  pageNum: 1,
+  pageSize: 10
 })
 
 const form = reactive({
@@ -176,7 +177,7 @@ const form = reactive({
   author: '',
   sort: 0,
   status: 1,
-  top: 0
+  isTop: 0
 })
 
 const formRules = {
@@ -212,7 +213,7 @@ async function loadCategories() {
 }
 
 function handleSearch() {
-  queryParams.current = 1
+  queryParams.pageNum = 1
   loadData()
 }
 
@@ -220,7 +221,7 @@ function handleReset() {
   queryParams.keyword = ''
   queryParams.categoryId = undefined
   queryParams.status = undefined
-  queryParams.current = 1
+  queryParams.pageNum = 1
   loadData()
 }
 
@@ -231,7 +232,18 @@ function handleAdd() {
 
 function handleEdit(row) {
   resetForm()
-  Object.assign(form, { ...row })
+  Object.assign(form, {
+    id: row.id,
+    title: row.title,
+    categoryId: row.categoryId,
+    coverImage: row.coverImage,
+    summary: row.summary,
+    content: row.content,
+    author: row.author,
+    sort: row.orderNum,
+    status: row.status,
+    isTop: row.isTop
+  })
   dialogVisible.value = true
 }
 
@@ -286,7 +298,7 @@ function resetForm() {
     author: '',
     sort: 0,
     status: 1,
-    top: 0
+    isTop: 0
   })
 }
 </script>

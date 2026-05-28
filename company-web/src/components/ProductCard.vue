@@ -1,13 +1,13 @@
 <template>
   <article class="product-card" @click="$router.push(`/products/${product.id}`)">
     <div class="card-img">
-      <img :src="getImageUrl(product.imageUrl)" :alt="product.name" />
+      <img :src="getImageUrl(product.coverImage)" :alt="product.productName" />
       <div class="card-overlay">
         <span>查看详情</span>
       </div>
     </div>
     <div class="card-body">
-      <h3 class="card-title">{{ product.name }}</h3>
+      <h3 class="card-title">{{ product.productName }}</h3>
       <p v-if="product.description" class="card-desc">{{ truncateText(product.description, 50) }}</p>
     </div>
   </article>
@@ -24,7 +24,8 @@ const props = defineProps({
 function getImageUrl(url) {
   if (!url) return ''
   if (url.startsWith('http')) return url
-  return 'http://localhost:8080' + url
+  if (url.startsWith('/api/')) return url
+  return '/api' + (url.startsWith('/') ? url : '/' + url)
 }
 
 function truncateText(text, maxLen) {

@@ -12,14 +12,12 @@ public class SysConfig {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private String configName;
-
     private String configKey;
 
     private String configValue;
 
-    /** 状态: 1-正常, 0-禁用 */
-    private Integer status;
+    /** 值类型: text/image/richtext */
+    private String configType;
 
     private String remark;
 
@@ -28,7 +26,4 @@ public class SysConfig {
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
-    @TableLogic
-    private Integer deleted;
 }

@@ -8,8 +8,8 @@
     <!-- 表格 -->
     <el-card shadow="never">
       <el-table v-loading="loading" :data="tableData" border stripe>
-        <el-table-column prop="name" label="角色名称" min-width="140" />
-        <el-table-column prop="code" label="角色标识" min-width="140" />
+        <el-table-column prop="roleName" label="角色名称" min-width="140" />
+        <el-table-column prop="roleKey" label="角色标识" min-width="140" />
         <el-table-column prop="status" label="状态" width="100" align="center">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
@@ -35,11 +35,11 @@
       destroy-on-close
     >
       <el-form ref="formRef" :model="form" :rules="formRules" label-width="100px">
-        <el-form-item label="角色名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入角色名称" />
+        <el-form-item label="角色名称" prop="roleName">
+          <el-input v-model="form.roleName" placeholder="请输入角色名称" />
         </el-form-item>
-        <el-form-item label="角色标识" prop="code">
-          <el-input v-model="form.code" placeholder="请输入角色标识" />
+        <el-form-item label="角色标识" prop="roleKey">
+          <el-input v-model="form.roleKey" placeholder="请输入角色标识" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input-number v-model="form.sort" :min="0" />
@@ -60,7 +60,7 @@
             show-checkbox
             node-key="id"
             :default-checked-keys="form.menuIds"
-            :props="{ label: 'name', children: 'children' }"
+            :props="{ label: 'menuName', children: 'children' }"
             empty-text="暂无菜单数据"
           />
         </el-form-item>
@@ -89,8 +89,8 @@ const menuTree = ref([])
 
 const form = reactive({
   id: undefined,
-  name: '',
-  code: '',
+  roleName: '',
+  roleKey: '',
   sort: 0,
   status: 1,
   remark: '',
@@ -98,8 +98,8 @@ const form = reactive({
 })
 
 const formRules = {
-  name: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
-  code: [{ required: true, message: '请输入角色标识', trigger: 'blur' }]
+  roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
+  roleKey: [{ required: true, message: '请输入角色标识', trigger: 'blur' }]
 }
 
 const dialogTitle = computed(() => form.id ? '编辑角色' : '新增角色')
@@ -112,7 +112,7 @@ onMounted(() => {
 async function loadData() {
   loading.value = true
   try {
-    const res = await getRoleList({ current: 1, size: 999 })
+    const res = await getRoleList({ pageNum: 1, pageSize: 999 })
     tableData.value = res.data.records || res.data || []
   } finally {
     loading.value = false
@@ -137,8 +137,8 @@ function handleEdit(row) {
   resetForm()
   Object.assign(form, {
     id: row.id,
-    name: row.name,
-    code: row.code,
+    roleName: row.roleName,
+    roleKey: row.roleKey,
     sort: row.sort,
     status: row.status,
     remark: row.remark,
@@ -148,7 +148,7 @@ function handleEdit(row) {
 }
 
 async function handleDelete(row) {
-  await ElMessageBox.confirm(`确定要删除角色「${row.name}」吗？`, '提示', {
+  await ElMessageBox.confirm(`确定要删除角色「${row.roleName}」吗？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
@@ -186,8 +186,8 @@ async function handleSubmit() {
 function resetForm() {
   Object.assign(form, {
     id: undefined,
-    name: '',
-    code: '',
+    roleName: '',
+    roleKey: '',
     sort: 0,
     status: 1,
     remark: '',

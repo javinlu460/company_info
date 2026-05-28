@@ -52,7 +52,8 @@ const trackStyle = computed(() => ({
 function getImageUrl(url) {
   if (!url) return ''
   if (url.startsWith('http')) return url
-  return 'http://localhost:8080' + url
+  if (url.startsWith('/api/')) return url
+  return '/api' + (url.startsWith('/') ? url : '/' + url)
 }
 
 function next() {

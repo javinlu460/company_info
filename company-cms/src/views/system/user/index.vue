@@ -47,8 +47,8 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        v-model:current-page="queryParams.current"
-        v-model:page-size="queryParams.size"
+        v-model:current-page="queryParams.pageNum"
+        v-model:page-size="queryParams.pageSize"
         :total="total"
         :page-sizes="[10, 20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
@@ -92,7 +92,7 @@
             <el-option
               v-for="role in roleOptions"
               :key="role.id"
-              :label="role.name"
+              :label="role.roleName"
               :value="role.id"
             />
           </el-select>
@@ -122,8 +122,8 @@ const roleOptions = ref([])
 
 const queryParams = reactive({
   keyword: '',
-  current: 1,
-  size: 10
+  pageNum: 1,
+  pageSize: 10
 })
 
 const form = reactive({
@@ -171,13 +171,13 @@ async function loadRoles() {
 }
 
 function handleSearch() {
-  queryParams.current = 1
+  queryParams.pageNum = 1
   loadData()
 }
 
 function handleReset() {
   queryParams.keyword = ''
-  queryParams.current = 1
+  queryParams.pageNum = 1
   loadData()
 }
 

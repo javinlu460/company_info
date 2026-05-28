@@ -33,16 +33,19 @@ public class WebContactController {
     @GetMapping("/info")
     public R<?> info() {
         Map<String, String> data = new HashMap<>();
-        String[] configKeys = {"company_name", "company_phone", "company_email", "company_address", "company_description"};
-        for (String key : configKeys) {
-            SysConfig config = sysConfigService.getOne(
-                    new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getConfigKey, key));
-            if (config != null) {
-                data.put(key, config.getConfigValue());
-            } else {
-                data.put(key, "");
+        // 读取所有配置
+        java.util.List<SysConfig> allConfigs = sysConfigService.list();
+        Map<String, String> configMap = new HashMap<>();
+        for (SysConfig c : allConfigs) {
+            if (c.getConfigKey() != null) {
+                configMap.put(c.getConfigKey(), c.getConfigValue() != null ? c.getConfigValue() : "");
             }
         }
+        data.put("name", configMap.getOrDefault("company_name", ""));
+        data.put("phone", configMap.getOrDefault("company_phone", ""));
+        data.put("email", configMap.getOrDefault("company_email", ""));
+        data.put("address", configMap.getOrDefault("company_address", ""));
+        data.put("fax", configMap.getOrDefault("company_fax", ""));
         return R.ok(data);
     }
 

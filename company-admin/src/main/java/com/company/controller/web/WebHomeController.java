@@ -71,16 +71,17 @@ public class WebHomeController {
 
         // 网站配置
         Map<String, String> config = new HashMap<>();
-        String[] configKeys = {"company_name", "company_logo", "company_phone", "company_description"};
-        for (String key : configKeys) {
-            SysConfig sysConfig = sysConfigService.getOne(
-                    new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getConfigKey, key));
-            if (sysConfig != null) {
-                config.put(key, sysConfig.getConfigValue());
-            } else {
-                config.put(key, "");
+        List<SysConfig> allConfigs = sysConfigService.list();
+        Map<String, String> configMap = new HashMap<>();
+        for (SysConfig c : allConfigs) {
+            if (c.getConfigKey() != null) {
+                configMap.put(c.getConfigKey(), c.getConfigValue() != null ? c.getConfigValue() : "");
             }
         }
+        config.put("siteName", configMap.getOrDefault("company_name", ""));
+        config.put("logo", configMap.getOrDefault("company_logo", ""));
+        config.put("phone", configMap.getOrDefault("company_phone", ""));
+        config.put("siteDesc", configMap.getOrDefault("company_description", ""));
         data.put("config", config);
 
         return R.ok(data);

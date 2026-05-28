@@ -203,11 +203,11 @@ INSERT INTO sys_role (id, role_name, role_key, sort, status, remark) VALUES
 -- 3. 初始化菜单树
 -- ---- 一级目录：系统管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(1, 0, '系统管理', 1, '/system', NULL, NULL, 'setting', 1, 1, 1);
+(1, 0, '系统管理', 1, '/system', NULL, NULL, 'Setting', 1, 1, 1);
 
 -- ---- 系统管理 -> 用户管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(2, 1, '用户管理', 2, 'user', 'system/user/index', NULL, 'user', 1, 1, 1),
+(2, 1, '用户管理', 2, 'user', 'system/user/index', NULL, 'User', 1, 1, 1),
 (3, 2, '用户查询', 3, NULL, NULL, 'system:user:list', NULL, 1, 1, 1),
 (4, 2, '用户新增', 3, NULL, NULL, 'system:user:add', NULL, 2, 1, 1),
 (5, 2, '用户修改', 3, NULL, NULL, 'system:user:edit', NULL, 3, 1, 1),
@@ -215,7 +215,7 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 系统管理 -> 角色管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(7, 1, '角色管理', 2, 'role', 'system/role/index', NULL, 'peoples', 2, 1, 1),
+(7, 1, '角色管理', 2, 'role', 'system/role/index', NULL, 'UserFilled', 2, 1, 1),
 (8, 7, '角色查询', 3, NULL, NULL, 'system:role:list', NULL, 1, 1, 1),
 (9, 7, '角色新增', 3, NULL, NULL, 'system:role:add', NULL, 2, 1, 1),
 (10, 7, '角色修改', 3, NULL, NULL, 'system:role:edit', NULL, 3, 1, 1),
@@ -223,7 +223,7 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 系统管理 -> 菜单管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(12, 1, '菜单管理', 2, 'menu', 'system/menu/index', NULL, 'tree-table', 3, 1, 1),
+(12, 1, '菜单管理', 2, 'menu', 'system/menu/index', NULL, 'Grid', 3, 1, 1),
 (13, 12, '菜单查询', 3, NULL, NULL, 'system:menu:list', NULL, 1, 1, 1),
 (14, 12, '菜单新增', 3, NULL, NULL, 'system:menu:add', NULL, 2, 1, 1),
 (15, 12, '菜单修改', 3, NULL, NULL, 'system:menu:edit', NULL, 3, 1, 1),
@@ -231,17 +231,17 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 一级菜单：网站配置 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(17, 0, '网站配置', 2, '/config', 'system/config/index', NULL, 'edit', 2, 1, 1),
+(17, 0, '网站配置', 2, '/config', 'config/index', NULL, 'Edit', 2, 1, 1),
 (18, 17, '配置查询', 3, NULL, NULL, 'system:config:list', NULL, 1, 1, 1),
 (19, 17, '配置修改', 3, NULL, NULL, 'system:config:edit', NULL, 2, 1, 1);
 
 -- ---- 一级目录：内容管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(20, 0, '内容管理', 1, '/content', NULL, NULL, 'documentation', 3, 1, 1);
+(20, 0, '内容管理', 1, '/content', NULL, NULL, 'Document', 3, 1, 1);
 
 -- ---- 内容管理 -> 轮播图管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(21, 20, '轮播图管理', 2, 'banner', 'content/banner/index', NULL, 'swticher', 1, 1, 1),
+(21, 20, '轮播图管理', 2, 'banner', 'content/banner/index', NULL, 'Picture', 1, 1, 1),
 (22, 21, '轮播图查询', 3, NULL, NULL, 'content:banner:list', NULL, 1, 1, 1),
 (23, 21, '轮播图新增', 3, NULL, NULL, 'content:banner:add', NULL, 2, 1, 1),
 (24, 21, '轮播图修改', 3, NULL, NULL, 'content:banner:edit', NULL, 3, 1, 1),
@@ -249,7 +249,7 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 内容管理 -> 产品分类 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(26, 20, '产品分类', 2, 'product-category', 'content/product-category/index', NULL, 'tree', 2, 1, 1),
+(26, 20, '产品分类', 2, 'product-category', 'content/productCategory/index', NULL, 'Collection', 2, 1, 1),
 (27, 26, '分类查询', 3, NULL, NULL, 'content:productCategory:list', NULL, 1, 1, 1),
 (28, 26, '分类新增', 3, NULL, NULL, 'content:productCategory:add', NULL, 2, 1, 1),
 (29, 26, '分类修改', 3, NULL, NULL, 'content:productCategory:edit', NULL, 3, 1, 1),
@@ -257,7 +257,7 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 内容管理 -> 产品管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(31, 20, '产品管理', 2, 'product', 'content/product/index', NULL, 'shopping', 3, 1, 1),
+(31, 20, '产品管理', 2, 'product', 'content/product/index', NULL, 'Goods', 3, 1, 1),
 (32, 31, '产品查询', 3, NULL, NULL, 'content:product:list', NULL, 1, 1, 1),
 (33, 31, '产品新增', 3, NULL, NULL, 'content:product:add', NULL, 2, 1, 1),
 (34, 31, '产品修改', 3, NULL, NULL, 'content:product:edit', NULL, 3, 1, 1),
@@ -265,7 +265,7 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 内容管理 -> 新闻分类 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(36, 20, '新闻分类', 2, 'news-category', 'content/news-category/index', NULL, 'tree', 4, 1, 1),
+(36, 20, '新闻分类', 2, 'news-category', 'content/newsCategory/index', NULL, 'Folder', 4, 1, 1),
 (37, 36, '分类查询', 3, NULL, NULL, 'content:newsCategory:list', NULL, 1, 1, 1),
 (38, 36, '分类新增', 3, NULL, NULL, 'content:newsCategory:add', NULL, 2, 1, 1),
 (39, 36, '分类修改', 3, NULL, NULL, 'content:newsCategory:edit', NULL, 3, 1, 1),
@@ -273,7 +273,7 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 内容管理 -> 新闻管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(41, 20, '新闻管理', 2, 'news', 'content/news/index', NULL, 'news', 5, 1, 1),
+(41, 20, '新闻管理', 2, 'news', 'content/news/index', NULL, 'Notebook', 5, 1, 1),
 (42, 41, '新闻查询', 3, NULL, NULL, 'content:news:list', NULL, 1, 1, 1),
 (43, 41, '新闻新增', 3, NULL, NULL, 'content:news:add', NULL, 2, 1, 1),
 (44, 41, '新闻修改', 3, NULL, NULL, 'content:news:edit', NULL, 3, 1, 1),
@@ -281,7 +281,7 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 
 -- ---- 一级菜单：留言管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(46, 0, '留言管理', 2, '/message', 'content/message/index', NULL, 'message', 4, 1, 1),
+(46, 0, '留言管理', 2, '/message', 'content/message/index', NULL, 'Message', 4, 1, 1),
 (47, 46, '留言查询', 3, NULL, NULL, 'content:message:list', NULL, 1, 1, 1),
 (48, 46, '留言回复', 3, NULL, NULL, 'content:message:reply', NULL, 2, 1, 1),
 (49, 46, '留言删除', 3, NULL, NULL, 'content:message:delete', NULL, 3, 1, 1);

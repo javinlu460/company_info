@@ -12,8 +12,10 @@ public class CmsFriendlyLink {
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    @TableField("name")
     private String linkName;
 
+    @TableField("url")
     private String linkUrl;
 
     private String logo;
@@ -22,6 +24,7 @@ public class CmsFriendlyLink {
     private Integer status;
 
     /** 排序 */
+    @TableField("sort")
     private Integer orderNum;
 
     @TableField(fill = FieldFill.INSERT)

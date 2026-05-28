@@ -22,7 +22,7 @@ app.directive('hasPermi', {
     const permissions = JSON.parse(localStorage.getItem('permissions') || '[]')
     if (value && value instanceof Array && value.length > 0) {
       const hasPermission = permissions.some((perm) => {
-        return value.includes(perm)
+        return perm === '*:*:*' || value.includes(perm)
       })
       if (!hasPermission) {
         el.parentNode && el.parentNode.removeChild(el)

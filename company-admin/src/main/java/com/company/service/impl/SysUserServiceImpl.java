@@ -48,6 +48,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         List<Long> roleIds = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
 
+        // 判断是否为超级管理员角色
+        List<SysRole> roles = sysRoleMapper.selectList(
+                new LambdaQueryWrapper<SysRole>().in(SysRole::getId, roleIds));
+        boolean isAdmin = roles.stream().anyMatch(r -> "admin".equals(r.getRoleKey()));
+        if (isAdmin) {
+            // 超级管理员拥有所有权限
+            List<String> allPerms = new ArrayList<>();
+            allPerms.add("*:*:*");
+            return allPerms;
+        }
+
         // 获取角色对应的菜单ID列表
         List<SysRoleMenu> roleMenus = sysRoleMenuMapper.selectList(
                 new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getRoleId, roleIds));

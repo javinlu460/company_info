@@ -8,8 +8,8 @@
     <!-- 表格 -->
     <el-card shadow="never">
       <el-table v-loading="loading" :data="tableData" border stripe>
-        <el-table-column prop="name" label="分类名称" min-width="200" />
-        <el-table-column prop="sort" label="排序" width="100" align="center" />
+        <el-table-column prop="categoryName" label="分类名称" min-width="200" />
+        <el-table-column prop="orderNum" label="排序" width="100" align="center" />
         <el-table-column prop="status" label="状态" width="100" align="center">
           <template #default="{ row }">
             <el-tag :type="row.status === 1 ? 'success' : 'danger'">
@@ -34,11 +34,11 @@
       destroy-on-close
     >
       <el-form ref="formRef" :model="form" :rules="formRules" label-width="80px">
-        <el-form-item label="分类名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入分类名称" />
+        <el-form-item label="分类名称" prop="categoryName">
+          <el-input v-model="form.categoryName" placeholder="请输入分类名称" />
         </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input-number v-model="form.sort" :min="0" />
+        <el-form-item label="排序" prop="orderNum">
+          <el-input-number v-model="form.orderNum" :min="0" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="form.status">
@@ -68,19 +68,19 @@ const dialogVisible = ref(false)
 const formRef = ref(null)
 
 const queryParams = reactive({
-  current: 1,
-  size: 100
+  pageNum: 1,
+  pageSize: 100
 })
 
 const form = reactive({
   id: undefined,
-  name: '',
-  sort: 0,
+  categoryName: '',
+  orderNum: 0,
   status: 1
 })
 
 const formRules = {
-  name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
+  categoryName: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
 }
 
 const dialogTitle = computed(() => form.id ? '编辑分类' : '新增分类')
@@ -107,12 +107,17 @@ function handleAdd() {
 
 function handleEdit(row) {
   resetForm()
-  Object.assign(form, { ...row })
+  Object.assign(form, {
+    id: row.id,
+    categoryName: row.categoryName,
+    orderNum: row.orderNum,
+    status: row.status
+  })
   dialogVisible.value = true
 }
 
 async function handleDelete(row) {
-  await ElMessageBox.confirm(`确定要删除分类「${row.name}」吗？`, '提示', {
+  await ElMessageBox.confirm(`确定要删除分类「${row.categoryName}」吗？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
@@ -145,8 +150,8 @@ async function handleSubmit() {
 function resetForm() {
   Object.assign(form, {
     id: undefined,
-    name: '',
-    sort: 0,
+    categoryName: '',
+    orderNum: 0,
     status: 1
   })
 }

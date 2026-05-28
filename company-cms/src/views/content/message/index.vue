@@ -4,7 +4,7 @@
     <el-card shadow="never" class="search-card">
       <el-form :inline="true" :model="queryParams">
         <el-form-item label="阅读状态">
-          <el-select v-model="queryParams.readStatus" clearable placeholder="请选择" style="width: 140px;">
+          <el-select v-model="queryParams.isRead" clearable placeholder="请选择" style="width: 140px;">
             <el-option label="未读" :value="0" />
             <el-option label="已读" :value="1" />
           </el-select>
@@ -23,10 +23,10 @@
         <el-table-column prop="phone" label="电话" width="140" />
         <el-table-column prop="email" label="邮箱" width="180" />
         <el-table-column prop="content" label="内容" min-width="200" show-overflow-tooltip />
-        <el-table-column prop="readStatus" label="状态" width="80" align="center">
+        <el-table-column prop="isRead" label="状态" width="80" align="center">
           <template #default="{ row }">
-            <el-tag :type="row.readStatus === 1 ? 'success' : 'warning'" size="small">
-              {{ row.readStatus === 1 ? '已读' : '未读' }}
+            <el-tag :type="row.isRead === 1 ? 'success' : 'warning'" size="small">
+              {{ row.isRead === 1 ? '已读' : '未读' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -35,7 +35,7 @@
           <template #default="{ row }">
             <el-button type="primary" link icon="View" @click="handleView(row)">查看</el-button>
             <el-button
-              v-if="row.readStatus === 0"
+              v-if="row.isRead === 0"
               type="warning"
               link
               icon="Check"
@@ -47,8 +47,8 @@
         </el-table-column>
       </el-table>
       <el-pagination
-        v-model:current-page="queryParams.current"
-        v-model:page-size="queryParams.size"
+        v-model:current-page="queryParams.pageNum"
+        v-model:page-size="queryParams.pageSize"
         :total="total"
         :page-sizes="[10, 20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
@@ -71,8 +71,8 @@
         <el-descriptions-item label="邮箱">{{ viewData.email }}</el-descriptions-item>
         <el-descriptions-item label="提交时间">{{ viewData.createTime }}</el-descriptions-item>
         <el-descriptions-item label="阅读状态">
-          <el-tag :type="viewData.readStatus === 1 ? 'success' : 'warning'">
-            {{ viewData.readStatus === 1 ? '已读' : '未读' }}
+          <el-tag :type="viewData.isRead === 1 ? 'success' : 'warning'">
+            {{ viewData.isRead === 1 ? '已读' : '未读' }}
           </el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="留言内容">
@@ -82,7 +82,7 @@
       <template #footer>
         <el-button @click="viewDialogVisible = false">关闭</el-button>
         <el-button
-          v-if="viewData.readStatus === 0"
+          v-if="viewData.isRead === 0"
           type="primary"
           @click="handleMarkRead(viewData)"
         >标记已读</el-button>
@@ -103,9 +103,9 @@ const viewDialogVisible = ref(false)
 const viewData = ref({})
 
 const queryParams = reactive({
-  readStatus: undefined,
-  current: 1,
-  size: 10
+  isRead: undefined,
+  pageNum: 1,
+  pageSize: 10
 })
 
 onMounted(() => {
@@ -124,13 +124,13 @@ async function loadData() {
 }
 
 function handleSearch() {
-  queryParams.current = 1
+  queryParams.pageNum = 1
   loadData()
 }
 
 function handleReset() {
-  queryParams.readStatus = undefined
-  queryParams.current = 1
+  queryParams.isRead = undefined
+  queryParams.pageNum = 1
   loadData()
 }
 
@@ -148,9 +148,9 @@ async function handleView(row) {
 async function handleMarkRead(row) {
   await markMessageRead(row.id)
   ElMessage.success('已标记为已读')
-  row.readStatus = 1
+  row.isRead = 1
   if (viewDialogVisible.value) {
-    viewData.value.readStatus = 1
+    viewData.value.isRead = 1
   }
   loadData()
 }

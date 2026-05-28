@@ -14,20 +14,21 @@ public class CmsProduct {
 
     private Long categoryId;
 
+    @TableField("title")
     private String productName;
-
-    private String productCode;
 
     private String coverImage;
 
     private String description;
 
+    @TableField("content")
     private String detail;
 
     /** 状态: 1-上架, 0-下架 */
     private Integer status;
 
     /** 排序 */
+    @TableField("sort")
     private Integer orderNum;
 
     /** 浏览量 */

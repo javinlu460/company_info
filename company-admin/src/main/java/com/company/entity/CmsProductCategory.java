@@ -15,9 +15,11 @@ public class CmsProductCategory {
 
     private Long parentId;
 
+    @TableField("name")
     private String categoryName;
 
     /** 排序 */
+    @TableField("sort")
     private Integer orderNum;
 
     /** 状态: 1-正常, 0-禁用 */

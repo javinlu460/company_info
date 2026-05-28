@@ -29,6 +29,7 @@ public class SysMenu {
     private String perms;
 
     /** 排序 */
+    @TableField("sort")
     private Integer orderNum;
 
     /** 状态: 1-正常, 0-禁用 */
@@ -37,6 +38,7 @@ public class SysMenu {
     /** 是否可见: 1-显示, 0-隐藏 */
     private Integer visible;
 
+    @TableField(exist = false)
     private String remark;
 
     @TableField(fill = FieldFill.INSERT)
@@ -45,7 +47,7 @@ public class SysMenu {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @TableLogic
+    @TableField(exist = false)
     private Integer deleted;
 
     /** 子菜单列表(非数据库字段) */

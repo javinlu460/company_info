@@ -72,6 +72,16 @@ public class SysConfigController {
         for (SysConfig config : configs) {
             if (config.getId() != null) {
                 sysConfigService.updateById(config);
+            } else if (config.getConfigKey() != null) {
+                SysConfig existing = sysConfigService.getOne(
+                        new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getConfigKey, config.getConfigKey()));
+                if (existing != null) {
+                    existing.setConfigValue(config.getConfigValue());
+                    sysConfigService.updateById(existing);
+                } else {
+                    // 配置不存在则新增
+                    sysConfigService.save(config);
+                }
             }
         }
         return R.ok();

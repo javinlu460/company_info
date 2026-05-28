@@ -35,6 +35,7 @@ public class CmsNews {
     private Integer isTop;
 
     /** 排序 */
+    @TableField("sort")
     private Integer orderNum;
 
     @TableField(fill = FieldFill.INSERT)
