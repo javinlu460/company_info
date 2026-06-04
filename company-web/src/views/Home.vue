@@ -41,9 +41,8 @@
           <div class="about-text">
             <h2>{{ homeData.config?.siteName || '关于我们' }}</h2>
             <div class="about-line"></div>
-            <p class="about-desc">
-              {{ homeData.config?.siteDesc || '我们是一家专业的企业，致力于为客户提供优质的产品和服务，以创新驱动发展，以品质赢得信赖。' }}
-            </p>
+            <div class="about-desc" v-html="decodeHtml(homeData.config?.siteDesc)"></div>
+            <p v-if="!homeData.config?.siteDesc" class="about-desc">我们是一家专业的企业，致力于为客户提供优质的产品和服务，以创新驱动发展，以品质赢得信赖。</p>
             <router-link to="/about" class="btn-primary">了解更多</router-link>
           </div>
           <div class="about-stats">
@@ -121,6 +120,18 @@ import NewsItem from '../components/NewsItem.vue'
 
 const homeData = ref({})
 const loading = ref(true)
+
+function decodeHtml(html) {
+  if (!html) return ''
+  // 解码HTML实体
+  let text = html
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+  return text
+}
 
 onMounted(async () => {
   try {

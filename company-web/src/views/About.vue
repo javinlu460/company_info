@@ -59,6 +59,16 @@ async function loadConfig() {
   }
 }
 
+function decodeHtml(html) {
+  if (!html) return ''
+  return html
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+}
+
 function updateTabContent() {
   const keyMap = {
     about: 'aboutContent',
@@ -67,7 +77,7 @@ function updateTabContent() {
     vision: 'visionContent'
   }
   const field = keyMap[activeTab.value]
-  tabContent.value = configData.value[field] || ''
+  tabContent.value = decodeHtml(configData.value[field] || '')
 }
 
 function switchTab(key) {

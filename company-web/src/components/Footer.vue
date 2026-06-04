@@ -3,7 +3,7 @@
     <div class="footer-main container">
       <div class="footer-col">
         <h3 class="footer-col-title">{{ siteConfig.siteName || '企业官网' }}</h3>
-        <p class="footer-desc">{{ siteConfig.siteDesc || '致力于为客户提供优质的产品和服务' }}</p>
+        <p class="footer-desc">{{ stripHtml(siteConfig.siteDesc) || '致力于为客户提供优质的产品和服务' }}</p>
       </div>
       <div class="footer-col">
         <h3 class="footer-col-title">快速导航</h3>
@@ -43,6 +43,16 @@ import { getContactInfo } from '../api/contact'
 
 const siteConfig = ref({})
 const contactInfo = ref({})
+
+function stripHtml(html) {
+  if (!html) return ''
+  // 先解码HTML实体（处理 &lt; &gt; 等）
+  let text = html.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+  // 再去除HTML标签
+  const div = document.createElement('div')
+  div.innerHTML = text
+  return (div.textContent || div.innerText || '').trim().substring(0, 200)
+}
 
 onMounted(async () => {
   try {
