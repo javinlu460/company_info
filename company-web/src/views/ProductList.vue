@@ -1,11 +1,18 @@
 <template>
   <div class="product-list-page">
     <div class="page-banner">
-      <h1>产品中心</h1>
-      <p>PRODUCTS CENTER</p>
+      <div class="container">
+        <nav class="breadcrumb">
+          <router-link to="/">首页</router-link>
+          <span class="separator">/</span>
+          <span class="current">产品中心</span>
+        </nav>
+        <h1>产品中心</h1>
+        <p class="banner-subtitle">PRODUCTS</p>
+      </div>
     </div>
 
-    <div class="container">
+    <div class="container main-content">
       <!-- 分类筛选 -->
       <div class="category-filter">
         <button
@@ -13,7 +20,7 @@
           :class="{ active: !activeCategory }"
           @click="selectCategory(null)"
         >
-          全部产品
+          全部
         </button>
         <button
           v-for="cat in categories"
@@ -131,41 +138,82 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.product-list-page :deep(.page-banner) {
+  min-height: 200px;
+  padding: 80px 0 40px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  background: var(--graphite);
+}
+
+.product-list-page :deep(.page-banner) .container {
+  position: relative;
+  z-index: 1;
+}
+
+.product-list-page :deep(.page-banner) .breadcrumb {
+  margin-bottom: 16px;
+  padding: 0;
+}
+
+.product-list-page :deep(.page-banner) h1 {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.banner-subtitle {
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.main-content {
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
+
 .category-filter {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 30px 0 20px;
+  gap: 12px;
+  padding-bottom: 32px;
   justify-content: center;
 }
 
 .filter-btn {
-  padding: 8px 24px;
+  padding: 10px 28px;
   font-size: 14px;
-  color: var(--color-text);
-  background: var(--color-bg-gray);
-  border: 1px solid transparent;
-  border-radius: 4px;
+  font-weight: 500;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all var(--transition-base);
 }
 
 .filter-btn:hover {
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  background: var(--gray-100);
+  border-color: var(--gray-400);
 }
 
 .filter-btn.active {
-  color: #ffffff;
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  color: var(--white);
+  background: var(--red);
+  border-color: var(--red);
 }
 
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  padding: 10px 0 20px;
+  padding-bottom: 20px;
 }
 
 @media (max-width: 992px) {
@@ -175,6 +223,15 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .product-list-page :deep(.page-banner) {
+    min-height: 160px;
+    padding: 64px 0 32px;
+  }
+
+  .product-list-page :deep(.page-banner) h1 {
+    font-size: 30px;
+  }
+
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -182,10 +239,11 @@ onMounted(() => {
 
   .category-filter {
     gap: 8px;
+    padding-bottom: 24px;
   }
 
   .filter-btn {
-    padding: 6px 16px;
+    padding: 8px 18px;
     font-size: 13px;
   }
 }

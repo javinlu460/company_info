@@ -76,51 +76,61 @@ function changePage(page) {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 6px;
-  padding: 30px 0;
+  gap: 8px;
+  padding: 40px 0 0;
 }
 
 .page-btn {
-  min-width: 36px;
-  height: 36px;
-  padding: 0 10px;
-  border: 1px solid var(--color-border);
-  background: #ffffff;
-  color: var(--color-text);
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--gray-300);
+  background: var(--white);
+  color: var(--ink);
   font-size: 14px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all var(--transition-base);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .page-btn:hover:not(:disabled):not(.active) {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(178, 43, 43, 0.04);
 }
 
 .page-btn.active {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #ffffff;
+  background-color: var(--red);
+  border-color: var(--red);
+  color: var(--white);
 }
 
 .page-btn:disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 .page-btn.ellipsis {
   border: none;
   cursor: default;
   background: transparent;
+  color: var(--gray-500);
 }
 
 @media (max-width: 768px) {
   .pagination {
     flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .page-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 13px;
   }
 }
 </style>

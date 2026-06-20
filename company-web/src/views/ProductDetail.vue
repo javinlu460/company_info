@@ -1,17 +1,16 @@
 <template>
   <div class="product-detail-page">
     <div class="page-banner">
-      <h1>产品详情</h1>
-      <p>PRODUCT DETAIL</p>
-    </div>
-
-    <div class="breadcrumb">
       <div class="container">
-        <router-link to="/">首页</router-link>
-        <span>/</span>
-        <router-link to="/products">产品中心</router-link>
-        <span>/</span>
-        <span class="current">{{ product.name || '产品详情' }}</span>
+        <nav class="breadcrumb">
+          <router-link to="/">首页</router-link>
+          <span class="separator">/</span>
+          <router-link to="/products">产品中心</router-link>
+          <span class="separator">/</span>
+          <span class="current">{{ productName || '产品详情' }}</span>
+        </nav>
+        <h1>产品详情</h1>
+        <p class="banner-subtitle">PRODUCT DETAIL</p>
       </div>
     </div>
 
@@ -20,59 +19,98 @@
       <span>加载中...</span>
     </div>
 
-    <div v-else-if="product.id" class="container">
-      <div class="detail-layout">
-        <div class="detail-main">
-          <h1 class="detail-title">{{ product.name }}</h1>
-          <div v-if="product.imageUrl" class="detail-image">
-            <img :src="getImageUrl(product.imageUrl)" :alt="product.name" />
-          </div>
-          <div v-if="product.description" class="detail-desc">
-            <p>{{ product.description }}</p>
-          </div>
-          <div v-if="product.content" class="detail-content" v-html="product.content"></div>
-        </div>
-
-        <aside class="detail-sidebar">
-          <h3 class="sidebar-title">相关产品</h3>
-          <div v-if="relatedProducts.length" class="related-list">
-            <div
-              v-for="item in relatedProducts"
-              :key="item.id"
-              class="related-item"
-              @click="$router.push(`/products/${item.id}`)"
-            >
-              <img v-if="item.imageUrl" :src="getImageUrl(item.imageUrl)" :alt="item.name" />
-              <span>{{ item.name }}</span>
+    <template v-else-if="product.id">
+      <section class="section-light product-info-section">
+        <div class="container">
+          <div class="product-info">
+            <div class="info-image">
+              <img
+                v-if="imageUrl"
+                :src="imageUrl"
+                :alt="productName"
+              />
+              <div v-else class="image-placeholder">
+                <span>{{ productName.charAt(0) }}</span>
+              </div>
+            </div>
+            <div class="info-content">
+              <span v-if="categoryName" class="category-tag">{{ categoryName }}</span>
+              <h1 class="product-name">{{ productName }}</h1>
+              <p v-if="product.description" class="product-desc">{{ product.description }}</p>
+              <router-link to="/contact" class="btn-red cta-btn">
+                联系咨询
+              </router-link>
             </div>
           </div>
-          <div v-else class="sidebar-empty">暂无相关产品</div>
-        </aside>
-      </div>
-    </div>
+        </div>
+      </section>
+
+      <section class="section-white content-section">
+        <div class="container">
+          <div class="content-card" v-html="decodedContent"></div>
+        </div>
+      </section>
+
+      <section v-if="relatedProducts.length" class="section-light related-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>相关产品</h2>
+            <div class="title-line"></div>
+          </div>
+          <div class="related-grid">
+            <ProductCard
+              v-for="item in relatedProducts"
+              :key="item.id"
+              :product="item"
+            />
+          </div>
+        </div>
+      </section>
+    </template>
 
     <div v-else class="empty-state">
       <div class="empty-icon">📦</div>
       <p>产品不存在或已下架</p>
-      <router-link to="/products" class="btn-primary" style="margin-top: 16px;">返回产品列表</router-link>
+      <router-link to="/products" class="btn-red" style="margin-top: 16px;">返回产品列表</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { getProductDetail, getProductList } from '../api/product'
+import ProductCard from '../components/ProductCard.vue'
 
 const route = useRoute()
 const product = ref({})
 const relatedProducts = ref([])
 const loading = ref(false)
 
+const productName = computed(() => product.value.productName || product.value.name || '')
+const categoryName = computed(() => product.value.categoryName || '')
+const imageUrl = computed(() => {
+  const url = product.value.productImage || product.value.imageUrl || product.value.coverImage
+  return getImageUrl(url)
+})
+
+const decodedContent = computed(() => {
+  if (!product.value.content) return ''
+  return decodeHtmlEntities(product.value.content)
+})
+
 function getImageUrl(url) {
   if (!url) return ''
   if (url.startsWith('http')) return url
-  return 'http://localhost:8080' + url
+  if (url.startsWith('/api/')) return url
+  return '/api' + (url.startsWith('/') ? url : '/' + url)
+}
+
+function decodeHtmlEntities(text) {
+  if (!text) return ''
+  const textarea = document.createElement('textarea')
+  textarea.innerHTML = text
+  return textarea.value
 }
 
 async function loadProduct(id) {
@@ -113,144 +151,205 @@ watch(() => route.params.id, (newId) => {
 </script>
 
 <style scoped>
-.breadcrumb .current {
-  color: var(--color-text);
-}
-
-.detail-layout {
+.product-detail-page :deep(.page-banner) {
+  min-height: 200px;
+  padding: 80px 0 40px;
   display: flex;
-  gap: 40px;
-  padding: 30px 0 60px;
+  align-items: center;
+  text-align: left;
+  background: var(--graphite);
 }
 
-.detail-main {
-  flex: 1;
-  min-width: 0;
+.product-detail-page :deep(.page-banner) .container {
+  position: relative;
+  z-index: 1;
 }
 
-.detail-title {
-  font-size: 26px;
+.product-detail-page :deep(.page-banner) .breadcrumb {
+  margin-bottom: 16px;
+  padding: 0;
+}
+
+.product-detail-page :deep(.page-banner) h1 {
+  font-family: var(--font-serif);
+  font-size: 42px;
   font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--color-primary);
+  color: var(--white);
+  margin-bottom: 8px;
 }
 
-.detail-image {
-  margin-bottom: 24px;
-  border-radius: 6px;
+.banner-subtitle {
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.product-info-section {
+  padding: 60px 0;
+}
+
+.product-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.info-image {
+  border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--white);
 }
 
-.detail-image img {
+.info-image img {
   width: 100%;
-  max-height: 500px;
+  height: auto;
+  max-height: 480px;
   object-fit: contain;
-  background: var(--color-bg-gray);
+  display: block;
 }
 
-.detail-desc {
+.image-placeholder {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--graphite) 0%, var(--blue) 100%);
+}
+
+.image-placeholder span {
+  font-family: var(--font-serif);
+  font-size: 72px;
+  color: var(--paper);
+  opacity: 0.6;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.category-tag {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: var(--red);
+  background: rgba(178, 43, 43, 0.08);
+  border: 1px solid rgba(178, 43, 43, 0.2);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+}
+
+.product-name {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.product-desc {
   font-size: 15px;
-  color: var(--color-text-secondary);
+  color: var(--gray-600);
   line-height: 1.8;
-  margin-bottom: 24px;
-  padding: 16px;
-  background: var(--color-bg-gray);
-  border-radius: 6px;
+  margin-bottom: 32px;
 }
 
-.detail-content {
+.cta-btn {
+  padding: 14px 40px;
+  font-size: 16px;
+}
+
+.content-section {
+  padding: 60px 0;
+}
+
+.content-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   line-height: 1.8;
   font-size: 15px;
-  color: var(--color-text);
+  color: var(--ink);
 }
 
-.detail-content :deep(img) {
+.content-card :deep(img) {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   margin: 16px 0;
 }
 
-.detail-content :deep(p) {
-  margin-bottom: 12px;
+.content-card :deep(p) {
+  margin-bottom: 16px;
 }
 
-.detail-content :deep(table) {
+.content-card :deep(table) {
   width: 100%;
   border-collapse: collapse;
   margin: 16px 0;
 }
 
-.detail-content :deep(table td),
-.detail-content :deep(table th) {
-  border: 1px solid var(--color-border);
-  padding: 8px 12px;
+.content-card :deep(table td),
+.content-card :deep(table th) {
+  border: 1px solid var(--gray-300);
+  padding: 10px 14px;
 }
 
-.detail-sidebar {
-  width: 280px;
-  flex-shrink: 0;
+.related-section {
+  padding: 80px 0;
 }
 
-.sidebar-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--color-primary);
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--color-primary);
-  margin-bottom: 16px;
+.related-section .section-title {
+  margin-bottom: 48px;
 }
 
-.related-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: color 0.3s;
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
 
-.related-item:hover {
-  color: var(--color-secondary);
-}
-
-.related-item img {
-  width: 60px;
-  height: 45px;
-  object-fit: cover;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.related-item span {
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.sidebar-empty {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  text-align: center;
-  padding: 30px 0;
+@media (max-width: 992px) {
+  .related-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
-  .detail-layout {
-    flex-direction: column;
-    gap: 30px;
+  .product-detail-page :deep(.page-banner) {
+    min-height: 160px;
+    padding: 64px 0 32px;
   }
 
-  .detail-sidebar {
-    width: 100%;
+  .product-detail-page :deep(.page-banner) h1 {
+    font-size: 30px;
   }
 
-  .detail-title {
-    font-size: 22px;
+  .product-info {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .product-name {
+    font-size: 26px;
+  }
+
+  .content-card {
+    padding: 24px;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 </style>

@@ -5,12 +5,14 @@
       <router-view />
     </main>
     <Footer />
+    <AiChat />
   </div>
 </template>
 
 <script setup>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import AiChat from './components/AiChat.vue'
 </script>
 
 <style scoped>

@@ -1,15 +1,22 @@
 <template>
-  <article class="news-item" @click="$router.push(`/news/${news.id}`)">
-    <div class="news-date">
-      <span class="date-day">{{ day }}</span>
-      <span class="date-year">{{ yearMonth }}</span>
+  <article class="news-card" @click="$router.push(`/news/${news.id}`)">
+    <!-- 图片区域 -->
+    <div class="card-image">
+      <img
+        v-if="coverUrl"
+        :src="coverUrl"
+        :alt="news.title"
+        class="card-img"
+      />
+      <div v-else class="card-placeholder"></div>
+      <span v-if="news.categoryName" class="card-category-tag">{{ news.categoryName }}</span>
     </div>
-    <div class="news-content">
-      <h3 class="news-title">{{ news.title }}</h3>
-      <p v-if="news.summary || news.description" class="news-summary">
-        {{ truncateText(news.summary || news.description, 120) }}
-      </p>
-      <span class="news-more">查看详情 &rarr;</span>
+
+    <!-- 内容区域 -->
+    <div class="card-body">
+      <time class="card-date">{{ formattedDate }}</time>
+      <h3 class="card-title">{{ news.title }}</h3>
+      <p v-if="summary" class="card-summary">{{ summary }}</p>
     </div>
   </article>
 </template>
@@ -24,122 +31,133 @@ const props = defineProps({
   }
 })
 
-const day = computed(() => {
-  const date = props.news.publishDate || props.news.createTime
-  if (!date) return '--'
-  return new Date(date).getDate()
+function getImageUrl(url) {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  if (url.startsWith('/api/')) return url
+  return '/api' + (url.startsWith('/') ? url : '/' + url)
+}
+
+const coverUrl = computed(() => {
+  const raw = props.news.coverImage || props.news.cover || props.news.thumbnail || props.news.image || ''
+  return getImageUrl(raw)
 })
 
-const yearMonth = computed(() => {
+const formattedDate = computed(() => {
   const date = props.news.publishDate || props.news.createTime
   if (!date) return ''
   const d = new Date(date)
-  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}`
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}.${m}.${day}`
 })
 
-function truncateText(text, maxLen) {
-  if (!text) return ''
-  return text.length > maxLen ? text.substring(0, maxLen) + '...' : text
-}
+const summary = computed(() => {
+  const text = props.news.summary || props.news.description || ''
+  return text.length > 80 ? text.substring(0, 80) + '...' : text
+})
 </script>
 
 <style scoped>
-.news-item {
-  display: flex;
-  gap: 24px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--color-border);
+.news-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.news-item:hover {
-  background-color: rgba(0, 51, 102, 0.02);
-}
-
-.news-item:hover .news-title {
-  color: var(--color-secondary);
-}
-
-.news-item:hover .news-more {
-  color: var(--color-secondary);
-}
-
-.news-date {
-  flex-shrink: 0;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  background: var(--color-bg-gray);
-  border-radius: 6px;
-  border-left: 3px solid var(--color-primary);
 }
 
-.date-day {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-primary);
-  line-height: 1;
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
-.date-year {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  margin-top: 4px;
-}
-
-.news-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.news-title {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 8px;
+/* 图片区域 */
+.card-image {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  transition: color 0.3s;
+  background: var(--gray-200);
+  flex-shrink: 0;
 }
 
-.news-summary {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: 10px;
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-base);
+}
+
+.news-card:hover .card-img {
+  transform: scale(1.05);
+}
+
+.card-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #23272B 0%, #1A3F5C 100%);
+}
+
+.card-category-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--white);
+  background: rgba(20, 20, 26, 0.72);
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+/* 内容区域 */
+.card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.card-date {
+  font-size: 12px;
+  color: var(--gray-500);
+  letter-spacing: 0.02em;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color var(--transition-fast);
 }
 
-.news-more {
-  font-size: 13px;
-  color: var(--color-primary);
-  transition: color 0.3s;
+.news-card:hover .card-title {
+  color: var(--red);
 }
 
-@media (max-width: 768px) {
-  .news-item {
-    gap: 16px;
-  }
-
-  .news-date {
-    width: 64px;
-    height: 64px;
-  }
-
-  .date-day {
-    font-size: 22px;
-  }
-
-  .news-title {
-    font-size: 15px;
-  }
+.card-summary {
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
 }
 </style>

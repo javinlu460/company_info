@@ -1,7 +1,11 @@
 <template>
   <div class="sidebar-wrapper">
     <div class="logo-container" :class="{ collapse: appStore.sidebarCollapsed }">
-      <img src="" alt="" class="logo-img" />
+      <img v-if="logoUrl" :src="logoUrl" alt="logo" class="logo-img" />
+      <svg v-else class="logo-img" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="6" fill="#409eff"/>
+        <text x="16" y="22" text-anchor="middle" fill="white" font-size="16" font-weight="bold">C</text>
+      </svg>
       <span v-if="!appStore.sidebarCollapsed" class="logo-title">企业信息管理系统</span>
     </div>
     <el-scrollbar>
@@ -60,17 +64,33 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAppStore } from '@/store/app'
 import { useUserStore } from '@/store/user'
+import request from '@/api/request'
 
 const route = useRoute()
 const appStore = useAppStore()
 const userStore = useUserStore()
+const logoUrl = ref('')
 
 const activeMenu = computed(() => {
   return route.path
+})
+
+onMounted(async () => {
+  try {
+    const res = await request.get('/admin/config/list')
+    const configs = res.data || res
+    const logoConfig = (Array.isArray(configs) ? configs : configs.records || []).find(c => c.configKey === 'company_logo')
+    if (logoConfig && logoConfig.configValue) {
+      const val = logoConfig.configValue
+      logoUrl.value = val.startsWith('http') ? val : (val.startsWith('/api') ? val : '/api' + (val.startsWith('/') ? val : '/' + val))
+    }
+  } catch (e) {
+    console.warn('加载Logo失败:', e)
+  }
 })
 </script>
 

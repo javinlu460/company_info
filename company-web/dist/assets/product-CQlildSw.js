@@ -1,1 +1,0 @@
-import{s as e}from"./index-DMWWOoiU.js";function o(t){return e.get("/web/product/list",{params:t})}function u(t){return e.get(`/web/product/${t}`)}function c(){return e.get("/web/product/categories")}export{u as a,o as b,c as g};
