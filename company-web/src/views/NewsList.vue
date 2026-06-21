@@ -1,15 +1,15 @@
 <template>
   <div class="news-list-page">
     <!-- 页面Banner -->
-    <div class="page-banner news-banner">
+    <div class="page-banner">
       <div class="container">
-        <p class="banner-en">INDUSTRY INSIGHTS</p>
-        <h1>行业洞察</h1>
-        <nav class="breadcrumb" aria-label="breadcrumb">
+        <nav class="breadcrumb">
           <router-link to="/">首页</router-link>
           <span class="separator">/</span>
           <span class="current">行业洞察</span>
         </nav>
+        <h1>行业洞察</h1>
+        <p class="banner-subtitle">INSIGHTS</p>
       </div>
     </div>
 
@@ -146,64 +146,60 @@ onMounted(() => {
 
 <style scoped>
 /* Banner */
-.news-banner {
-  height: 200px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  background: var(--graphite) !important;
+.page-banner {
+  background: var(--graphite);
+  color: var(--paper);
+  padding: 100px 0 64px;
+  margin-top: var(--header-height);
 }
 
-.news-banner .container {
-  text-align: center;
+.page-banner .container {
+  position: relative;
+  z-index: 1;
 }
 
-.banner-en {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.news-banner h1 {
+.page-banner h1 {
   font-family: var(--font-serif);
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 700;
-  color: var(--white);
-  margin-bottom: 14px;
+  color: #F2F3EF;
+  margin-bottom: 8px;
   line-height: 1.2;
 }
 
-/* 面包屑（在banner内，浅色） */
-.news-banner .breadcrumb {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  font-size: 13px;
-  padding: 0;
-  background: transparent;
-  color: rgba(242, 243, 239, 0.7);
+.banner-subtitle {
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0;
 }
 
-.news-banner .breadcrumb a {
+.breadcrumb {
+  padding: 0 0 16px;
+  font-size: 14px;
+  color: rgba(242, 243, 239, 0.7);
+  background: transparent;
+}
+
+.breadcrumb a {
   color: rgba(242, 243, 239, 0.7);
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: color 0.2s;
 }
 
-.news-banner .breadcrumb a:hover {
+.breadcrumb a:hover {
   color: var(--gold);
 }
 
-.news-banner .breadcrumb .separator {
-  margin: 0 8px;
+.breadcrumb .separator {
+  margin: 0 10px;
   color: rgba(242, 243, 239, 0.4);
 }
 
-.news-banner .breadcrumb .current {
-  color: rgba(242, 243, 239, 0.9);
+.breadcrumb .current {
+  color: var(--gold);
 }
 
 /* 分类筛选条 */
@@ -265,13 +261,12 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .news-banner {
-    height: auto;
-    padding: 40px 0;
+  .page-banner {
+    padding: 80px 0 48px;
   }
 
-  .news-banner h1 {
-    font-size: 26px;
+  .page-banner h1 {
+    font-size: 28px;
   }
 
   .news-grid {

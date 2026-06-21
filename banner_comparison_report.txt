@@ -1,0 +1,271 @@
+﻿# Page Banner 样式对比分析报告
+
+## 执行摘要
+对 company-web 项目中 5 个主要页面的 banner 区域进行了详细代码审查和原型对标分析。
+
+### 调查范围
+1. ProductList.vue（产品列表页）
+2. NewsList.vue（新闻资讯页）
+3. About.vue（关于我们页）
+4. Contact.vue（联系我们页）
+5. Business.vue（解决方案页 - 参考标准）
+
+---
+
+## 发现的五大不一致问题
+
+### 问题 1: HTML 结构顺序不统一（严重）
+
+ProductList.vue:
+- 顺序: 面包屑 > h1 > 副标题 
+- 对齐: LEFT ALIGN
+- 特点: 异常不一致
+
+NewsList.vue:
+- 顺序: 副标题 > h1 > 面包屑
+- 对齐: CENTER ALIGN  
+- 特点: 也异常不一致
+
+About.vue:
+- 顺序: 面包屑 > h1 > 副标题
+- 对齐: CENTER ALIGN
+
+Contact.vue:
+- 顺序: 面包屑 > h1 > 副标题
+- 对齐: CENTER ALIGN
+
+Business.vue:
+- 顺序: 面包屑 > h1 > 副标题
+- 对齐: CENTER ALIGN
+
+结论: ProductList 和 NewsList 需要重点调整。
+
+---
+
+### 问题 2: 背景颜色不统一（严重）
+
+| 页面 | 背景 | 文本颜色 |
+|-----|------|---------|
+| ProductList | var(--graphite) 深灰 | 白色 |
+| NewsList | var(--graphite) 深灰 | 白色 |
+| About | 蓝色渐变 + 遮罩 | 浅色 |
+| Contact | 蓝色渐变 + 遮罩 | 浅色 |
+| Business | var(--paper) 浅色 | 深灰 |
+
+三种不同的背景方案，严重影响视觉一致性。
+
+---
+
+### 问题 3: 英文副标题样式不统一（中等）
+
+| 页面 | 选择器 | 字体大小 | 颜色 | 字体 |
+|-----|--------|---------|------|------|
+| ProductList | .banner-subtitle | 14px | 金色 | sans |
+| NewsList | .banner-en | 12px | 金色 | sans |
+| About | .subtitle | 18px | 金色 | serif |
+| Contact | .subtitle | 18px | 金色 | serif |
+| Business | .subtitle | 16px | 红色 | serif |
+
+四种不同的样式实现，Business 甚至使用了不同的颜色（红色）。
+
+---
+
+### 问题 4: 边距与填充不统一（中等）
+
+| 页面 | Padding | Height | Margin-top |
+|-----|---------|---------|-----------|
+| ProductList | 80px 0 40px | min-h: 200px | 无 |
+| NewsList | 0 | 200px (固定) | 无 |
+| About | 120px 0 80px | 无 | header-height |
+| Contact | 120px 0 80px | 无 | header-height |
+| Business | 100px 0 64px | 无 | header-height |
+
+五种不同的尺寸组合。
+
+---
+
+### 问题 5: 装饰元素差异（低）
+
+- About & Contact: 有渐变背景和伪元素装饰
+  - ::before: SVG 背景图案，透明度 0.03
+  - ::after: 深色遮罩，透明度 0.32
+  
+- ProductList & NewsList & Business: 无装饰
+
+原型对标: 原型中仅 hero section 有复杂装饰，内页保持简约。
+
+---
+
+## 原型参考标准
+
+### Hero Section（主页）
+`html
+<section class="hero">
+  <div class="hero-kicker">CNC Precision Machining</div>
+  <h1>精密机械加工定制<strong>来图即可加工</strong></h1>
+  <p class="hero-sub">专注精密机械加工</p>
+  <div class="hero-specs">
+    <div class="spec-badge">加工规格信息</div>
+  </div>
+</section>
+`
+
+### 内页 Section-Head
+`html
+<div class="section-head">
+  <div class="ew">SOLUTIONS · 解决方案</div>
+  <h2>页面标题</h2>
+  <p class="lead">补充描述</p>
+</div>
+`
+
+**原型特点:**
+- 深灰色背景为主
+- 简约风格，无复杂装饰
+- 标题前带 .ew 标签（English Word）
+- 标准层级: .ew > h2 > lead 段落
+
+---
+
+## 统一建议方案
+
+### 优选方案: 深灰色简约统一风格
+
+所有内页 banner 采用：
+
+**HTML 结构：**
+`html
+<div class="page-banner">
+  <div class="container">
+    <nav class="breadcrumb">
+      <router-link to="/">首页</router-link>
+      <span class="separator">/</span>
+      <span class="current">页面名称</span>
+    </nav>
+    <h1>页面标题</h1>
+    <p class="banner-subtitle">ENGLISH SUBTITLE</p>
+  </div>
+</div>
+`
+
+**CSS 样式：**
+`css
+.page-banner {
+  position: relative;
+  background: var(--graphite);
+  color: var(--paper);
+  padding: 100px 0 64px;
+  text-align: center;
+  margin-top: var(--header-height);
+}
+
+.page-banner h1 {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+
+.page-banner .banner-subtitle {
+  font-size: 16px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.page-banner .breadcrumb {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: rgba(242, 243, 239, 0.7);
+}
+
+.page-banner .breadcrumb .current {
+  color: var(--gold);
+}
+`
+
+---
+
+## 修改清单（按优先级）
+
+### P0 - HTML 结构统一
+- [ ] **ProductList.vue**: 保持当前顺序，调整对齐方式从左对齐改为居中
+- [ ] **NewsList.vue**: 调整结构顺序（副标题位置移到最后，面包屑改为第一项）
+- [ ] 统一所有 banner 的命名约定: 副标题使用 .banner-subtitle
+
+### P1 - CSS 样式统一（必改）
+- [ ] 所有页面: 背景改为 ar(--graphite)
+- [ ] 所有页面: 文本颜色改为 ar(--paper) (浅色)
+- [ ] 所有页面: 副标题颜色改为 ar(--gold)
+- [ ] 所有页面: padding 统一为 100px 0 64px
+- [ ] 所有页面: margin-top 统一为 ar(--header-height)
+- [ ] About & Contact: 移除 ::before 和 ::after 伪元素
+
+### P2 - 响应式优化
+- [ ] 统一媒体查询断点（@media 768px 处理）
+- [ ] 统一移动端字体大小调整
+
+---
+
+## 详细代码位置
+
+**项目源文件:**
+- d:\IdeaProjects\company_info\company-web\src\views\ProductList.vue
+  - HTML: 行 1-61
+  - CSS: 行 140-250
+
+- d:\IdeaProjects\company_info\company-web\src\views\NewsList.vue
+  - HTML: 行 1-68
+  - CSS: 行 147-290
+
+- d:\IdeaProjects\company_info\company-web\src\views\About.vue
+  - HTML: 行 1-14
+  - CSS: 行 238-312
+
+- d:\IdeaProjects\company_info\company-web\src\views\Contact.vue
+  - HTML: 行 1-14
+  - CSS: 行 271-343
+
+- d:\IdeaProjects\company_info\company-web\src\views\Business.vue
+  - HTML: 行 1-14
+  - CSS: 行 210-264
+
+**原型文件:**
+- C:\Users\javin\xwechat_files\lujiawei8581_b3c5\msg\file\2026-06\
+  - 山西瑞蒙德的官方网站-企业站原型(2).html
+
+---
+
+## 预期工作量评估
+
+- **代码修改范围**: 5 个 Vue 文件（总计约 1,300 行代码）
+- **修改类型**: 
+  - HTML 结构调整: 2 个文件
+  - CSS 样式更新: 5 个文件（统一修改）
+  
+- **预计工时**: 1-2 小时（含单元测试和视觉验证）
+- **风险等级**: 低（仅涉及表现层，无业务逻辑变化）
+- **回归测试**: 需验证所有 5 个页面的响应式表现
+
+---
+
+## 结论
+
+目前项目的 5 个 banner 实现存在明显的一致性问题，涉及 5 个维度的差异：
+
+1. HTML 结构顺序 ✗ 严重
+2. 背景颜色 ✗ 严重
+3. 副标题样式 ✗ 中等
+4. 边距填充 ✗ 中等
+5. 装饰元素 ✗ 低
+
+**强烈建议**采用上述的"深灰色简约统一风格"方案，以提升整体用户体验的一致性和专业性。
+
+修改工作相对简单，风险低，预期效果显著。
+
+---
+
+生成时间: 2026年06月20日
+分析人员: 研究分析代理

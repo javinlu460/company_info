@@ -1,0 +1,1 @@
+import{w as t}from"./index-CNqVgTnG.js";function n(e){return t.get("/web/news/list",{params:e})}function r(e){return t.get(`/web/news/${e}`)}function w(){return t.get("/web/news/categories")}export{r as a,n as b,w as g};

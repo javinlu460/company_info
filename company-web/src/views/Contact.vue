@@ -9,7 +9,7 @@
           <span class="current">联系我们</span>
         </nav>
         <h1>联系我们</h1>
-        <p class="subtitle">CONTACT US</p>
+        <p class="banner-subtitle">CONTACT</p>
       </div>
     </div>
 
@@ -270,29 +270,10 @@ onMounted(() => {
 <style scoped>
 /* 页面 Banner */
 .page-banner {
-  position: relative;
-  background: linear-gradient(135deg, var(--graphite) 0%, var(--blue) 100%);
+  background: var(--graphite);
   color: var(--paper);
-  padding: 120px 0 80px;
-  text-align: center;
+  padding: 100px 0 64px;
   margin-top: var(--header-height);
-  overflow: hidden;
-}
-
-.page-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-.page-banner::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.32);
-  pointer-events: none;
 }
 
 .page-banner .container {
@@ -302,31 +283,33 @@ onMounted(() => {
 
 .page-banner h1 {
   font-family: var(--font-serif);
-  font-size: 42px;
+  font-size: 38px;
   font-weight: 700;
+  color: #F2F3EF;
   margin-bottom: 8px;
   line-height: 1.2;
 }
 
-.page-banner .subtitle {
-  font-family: var(--font-serif);
-  font-size: 18px;
+.banner-subtitle {
+  font-size: 14px;
   color: var(--gold);
   letter-spacing: 4px;
-  max-width: none;
-  margin: 0 auto;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0;
 }
 
 .breadcrumb {
   padding: 0 0 16px;
   font-size: 14px;
-  color: rgba(242, 243, 239, 0.8);
+  color: rgba(242, 243, 239, 0.7);
   background: transparent;
 }
 
 .breadcrumb a {
-  color: var(--paper);
-  transition: color var(--transition-fast);
+  color: rgba(242, 243, 239, 0.7);
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
 .breadcrumb a:hover {
@@ -335,7 +318,7 @@ onMounted(() => {
 
 .breadcrumb .separator {
   margin: 0 10px;
-  color: rgba(242, 243, 239, 0.5);
+  color: rgba(242, 243, 239, 0.4);
 }
 
 .breadcrumb .current {
@@ -626,11 +609,11 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .page-banner {
-    padding: 80px 0 60px;
+    padding: 80px 0 48px;
   }
 
   .page-banner h1 {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .info-grid {

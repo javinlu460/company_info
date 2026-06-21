@@ -138,31 +138,25 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.product-list-page :deep(.page-banner) {
-  min-height: 200px;
-  padding: 80px 0 40px;
-  display: flex;
-  align-items: center;
-  text-align: left;
+.page-banner {
   background: var(--graphite);
+  color: var(--paper);
+  padding: 100px 0 64px;
+  margin-top: var(--header-height);
 }
 
-.product-list-page :deep(.page-banner) .container {
+.page-banner .container {
   position: relative;
   z-index: 1;
 }
 
-.product-list-page :deep(.page-banner) .breadcrumb {
-  margin-bottom: 16px;
-  padding: 0;
-}
-
-.product-list-page :deep(.page-banner) h1 {
+.page-banner h1 {
   font-family: var(--font-serif);
-  font-size: 42px;
+  font-size: 38px;
   font-weight: 700;
-  color: var(--white);
+  color: #F2F3EF;
   margin-bottom: 8px;
+  line-height: 1.2;
 }
 
 .banner-subtitle {
@@ -170,7 +164,34 @@ onMounted(() => {
   color: var(--gold);
   letter-spacing: 4px;
   text-transform: uppercase;
+  font-weight: 500;
   margin: 0;
+}
+
+.breadcrumb {
+  padding: 0 0 16px;
+  font-size: 14px;
+  color: rgba(242, 243, 239, 0.7);
+  background: transparent;
+}
+
+.breadcrumb a {
+  color: rgba(242, 243, 239, 0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: var(--gold);
+}
+
+.breadcrumb .separator {
+  margin: 0 10px;
+  color: rgba(242, 243, 239, 0.4);
+}
+
+.breadcrumb .current {
+  color: var(--gold);
 }
 
 .main-content {
@@ -223,13 +244,12 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .product-list-page :deep(.page-banner) {
-    min-height: 160px;
-    padding: 64px 0 32px;
+  .page-banner {
+    padding: 80px 0 48px;
   }
 
-  .product-list-page :deep(.page-banner) h1 {
-    font-size: 30px;
+  .page-banner h1 {
+    font-size: 28px;
   }
 
   .products-grid {
