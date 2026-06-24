@@ -16,7 +16,7 @@
         <el-card shadow="hover" class="stat-card">
           <div class="stat-content">
             <div class="stat-info">
-              <div class="stat-label">新闻总数</div>
+              <div class="stat-label">行业洞察总数</div>
               <div class="stat-value">{{ stats.newsCount }}</div>
             </div>
             <el-icon class="stat-icon" style="color: #67c23a;"><Document /></el-icon>
@@ -64,14 +64,14 @@
       <el-col :span="12">
         <el-card shadow="hover">
           <template #header>
-            <span>最近新闻</span>
+            <span>最近行业洞察</span>
           </template>
           <el-table :data="recentNews" size="small" max-height="320">
             <el-table-column prop="title" label="标题" show-overflow-tooltip />
             <el-table-column prop="author" label="作者" width="100" />
             <el-table-column prop="createTime" label="时间" width="160" />
           </el-table>
-          <el-empty v-if="recentNews.length === 0" description="暂无新闻" />
+          <el-empty v-if="recentNews.length === 0" description="暂无行业洞察" />
         </el-card>
       </el-col>
     </el-row>

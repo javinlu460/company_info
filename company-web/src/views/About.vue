@@ -1,16 +1,8 @@
 <template>
   <div class="about-page">
-    <!-- 页面 Banner -->
-    <div class="page-banner">
-      <div class="container">
-        <nav class="breadcrumb">
-          <router-link to="/">首页</router-link>
-          <span class="separator">/</span>
-          <span class="current">关于我们</span>
-        </nav>
-        <h1>关于我们</h1>
-        <p class="banner-subtitle">ABOUT US</p>
-      </div>
+    <!-- Banner轮播 -->
+    <div class="banner-wrap">
+      <Banner v-if="banners.length" :banners="banners" />
     </div>
 
     <!-- 公司简介区 -->
@@ -25,6 +17,9 @@
               <span>加载中...</span>
             </div>
             <div v-else class="intro-body" v-html="decodeHtml(configData.aboutContent)"></div>
+            <router-link to="/contact" class="btn-red cta-btn">
+              发图纸，获取报价及解决方案 →
+            </router-link>
           </div>
           <div class="intro-visual">
             <div class="intro-image-wrap">
@@ -46,44 +41,11 @@
       </div>
     </section>
 
-    <!-- 核心数据统计 -->
-    <section class="section-dark stats-section">
-      <div class="container">
-        <div class="stats-grid">
-          <div v-for="(item, index) in statList" :key="index" class="stat-item">
-            <div class="stat-number">{{ item.value }}</div>
-            <div class="stat-label">{{ item.label }}</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 发展历程 -->
-    <section class="section-white timeline-section">
-      <div class="container">
-        <div class="section-title">
-          <h2>发展历程</h2>
-          <p>DEVELOPMENT HISTORY</p>
-          <div class="title-line"></div>
-        </div>
-        <div class="timeline">
-          <div v-for="(m, index) in milestones" :key="index" class="timeline-item">
-            <div class="timeline-year">{{ m.year }}</div>
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h4>{{ m.title }}</h4>
-              <p>{{ m.desc }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 企业文化 Tab -->
+    <!-- 业务与贸易范围 Tab -->
     <section class="section-light culture-section">
       <div class="container">
         <div class="section-title">
-          <h2>企业文化</h2>
+          <h2>业务与贸易范围</h2>
           <p>CORPORATE CULTURE</p>
           <div class="title-line"></div>
         </div>
@@ -118,7 +80,7 @@
     <section class="section-white honor-section">
       <div class="container">
         <div class="section-title">
-          <h2>资质荣誉</h2>
+          <h2>荣誉资质</h2>
           <p>QUALIFICATIONS & HONORS</p>
           <div class="title-line"></div>
         </div>
@@ -147,13 +109,15 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { getSiteConfig } from '../api/home'
+import { getSiteConfig, getHomeData } from '../api/home'
+import Banner from '../components/Banner.vue'
+
+const banners = ref([])
 
 const tabs = [
   { key: 'about', name: '公司简介' },
-  { key: 'culture', name: '企业文化' },
-  { key: 'honor', name: '资质荣誉' },
-  { key: 'vision', name: '公司愿景' }
+  { key: 'culture', name: '业务与贸易范围' },
+  { key: 'honor', name: '荣誉资质' }
 ]
 
 const activeTab = ref('about')
@@ -187,8 +151,7 @@ const tabContent = computed(() => {
   const keyMap = {
     about: 'aboutContent',
     culture: 'cultureContent',
-    honor: 'honorContent',
-    vision: 'visionContent'
+    honor: 'honorContent'
   }
   const field = keyMap[activeTab.value]
   return decodeHtml(configData.value[field] || '')
@@ -226,71 +189,29 @@ async function loadConfig() {
   }
 }
 
+async function loadBanners() {
+  try {
+    const data = await getHomeData()
+    banners.value = data.banners || []
+  } catch (e) {
+    console.error('加载banner失败:', e)
+  }
+}
+
 function switchTab(key) {
   activeTab.value = key
 }
 
 onMounted(() => {
   loadConfig()
+  loadBanners()
 })
 </script>
 
 <style scoped>
-/* 页面 Banner */
-.page-banner {
-  background: var(--graphite);
-  color: var(--paper);
-  padding: 100px 0 64px;
+/* Banner轮播 */
+.banner-wrap {
   margin-top: var(--header-height);
-}
-
-.page-banner .container {
-  position: relative;
-  z-index: 1;
-}
-
-.page-banner h1 {
-  font-family: var(--font-serif);
-  font-size: 38px;
-  font-weight: 700;
-  color: #F2F3EF;
-  margin-bottom: 8px;
-  line-height: 1.2;
-}
-
-.banner-subtitle {
-  font-size: 14px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin: 0;
-}
-
-.breadcrumb {
-  padding: 0 0 16px;
-  font-size: 14px;
-  color: rgba(242, 243, 239, 0.7);
-  background: transparent;
-}
-
-.breadcrumb a {
-  color: rgba(242, 243, 239, 0.7);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.breadcrumb a:hover {
-  color: var(--gold);
-}
-
-.breadcrumb .separator {
-  margin: 0 10px;
-  color: rgba(242, 243, 239, 0.4);
-}
-
-.breadcrumb .current {
-  color: var(--gold);
 }
 
 /* 公司简介区 */
@@ -710,14 +631,6 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .page-banner {
-    padding: 80px 0 48px;
-  }
-
-  .page-banner h1 {
-    font-size: 28px;
-  }
-
   .intro-title {
     font-size: 26px;
   }
@@ -773,5 +686,14 @@ onMounted(() => {
   .honor-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* CTA */
+.cta-btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 600;
 }
 </style>

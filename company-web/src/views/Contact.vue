@@ -1,165 +1,180 @@
-<template>
+﻿<template>
   <div class="contact-page">
-    <!-- 页面 Banner -->
-    <div class="page-banner">
+    <!-- 主体内容区 -->
+    <section class="contact-body">
       <div class="container">
-        <nav class="breadcrumb">
-          <router-link to="/">首页</router-link>
-          <span class="separator">/</span>
-          <span class="current">联系我们</span>
-        </nav>
-        <h1>联系我们</h1>
-        <p class="banner-subtitle">CONTACT</p>
-      </div>
-    </div>
-
-    <!-- 联系信息卡片区 -->
-    <section class="section-light info-section">
-      <div class="container">
-        <div class="info-grid">
-          <div class="info-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 4C16.268 4 10 9.82 10 17c0 7.18 10 23 14 23s14-15.82 14-23C38 9.82 31.732 4 24 4z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
-                <circle cx="24" cy="17" r="5" stroke="currentColor" stroke-width="2.5" />
-              </svg>
-            </div>
-            <h3>公司地址</h3>
-            <p>{{ contactInfo.address || '暂未填写地址' }}</p>
-          </div>
-
-          <div class="info-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 10h20a4 4 0 014 4v20a4 4 0 01-4 4H14a4 4 0 01-4-4V14a4 4 0 014-4z" stroke="currentColor" stroke-width="2.5" />
-                <path d="M14 14l10 8 10-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-            <h3>电子邮箱</h3>
-            <p>
-              <a v-if="contactInfo.email" :href="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
-              <span v-else>暂未填写邮箱</span>
-            </p>
-          </div>
-
-          <div class="info-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 12c0 10 6 22 16 26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                <path d="M12 18c0 8 5 17 13 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                <path d="M30 30c5-7 8-14 8-20a6 6 0 00-6-6c-4 0-6 3-6 6 0 4 3 8 6 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-            <h3>联系电话</h3>
-            <p>
-              <a v-if="contactInfo.phone" :href="'tel:' + contactInfo.phone">{{ contactInfo.phone }}</a>
-              <span v-else>暂未填写电话</span>
-            </p>
-          </div>
-
-          <div class="info-card">
-            <div class="info-icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5" />
-                <path d="M24 14v10l7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </div>
-            <h3>工作时间</h3>
-            <p>{{ contactInfo.workTime || '周一至周五 09:00 - 18:00' }}</p>
-          </div>
+        <!-- 页面标题 -->
+        <div class="section-header">
+          <p class="ew-label">— CONTACT · 联系我们</p>
+          <h2 class="section-title">联系工厂，直接对接</h2>
         </div>
-      </div>
-    </section>
 
-    <!-- RFQ 报价表单区 -->
-    <section class="rfq-section">
-      <div class="container">
-        <div class="rfq-layout">
-          <div class="rfq-intro">
-            <h2>获取报价</h2>
-            <p class="rfq-subtitle">REQUEST FOR QUOTE</p>
-            <p class="rfq-desc">留下您的需求信息，我们将在 24 小时内与您取得联系，为您提供专业的产品方案与报价服务。</p>
-            <ul class="rfq-features">
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#BF8E2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                <span>快速响应</span>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#BF8E2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                <span>专业方案</span>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#BF8E2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                <span>全程跟踪</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="rfq-form-card">
-            <h3 class="form-title">在线留言</h3>
+        <!-- 两栏布局 -->
+        <div class="contact-layout">
+          <!-- 左侧：留言表单 -->
+          <div class="form-column">
+            <p class="ew-label form-section-label">— 留言/快速咨询</p>
             <form class="message-form" @submit.prevent="handleSubmit">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="name">姓名 <span class="required">*</span></label>
+                  <label for="name">姓名</label>
                   <input
                     id="name"
                     v-model="form.name"
                     type="text"
-                    placeholder="请输入您的姓名"
-                    :class="{ error: errors.name }"
+                    placeholder="请输入姓名"
+                    :class="{ 'input-error': errors.name }"
                   />
                   <span v-if="errors.name" class="error-msg">{{ errors.name }}</span>
                 </div>
                 <div class="form-group">
-                  <label for="phone">电话 <span class="required">*</span></label>
-                  <input
-                    id="phone"
-                    v-model="form.phone"
-                    type="tel"
-                    placeholder="请输入您的联系电话"
-                    :class="{ error: errors.phone }"
-                  />
-                  <span v-if="errors.phone" class="error-msg">{{ errors.phone }}</span>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="email">邮箱</label>
-                  <input
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    placeholder="请输入您的邮箱地址"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="company">公司名称</label>
+                  <label for="company">公司</label>
                   <input
                     id="company"
                     v-model="form.companyName"
                     type="text"
-                    placeholder="请输入您的公司名称"
+                    placeholder="请输入公司名称"
                   />
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="content">留言内容 <span class="required">*</span></label>
+                <label for="email">邮箱 <span class="required">*</span></label>
+                <input
+                  id="email"
+                  v-model="form.email"
+                  type="email"
+                  placeholder="请输入邮箱地址"
+                  :class="{ 'input-error': errors.email }"
+                />
+                <span v-if="errors.email" class="error-msg">{{ errors.email }}</span>
+              </div>
+
+              <div class="form-group">
+                <label for="content">留言内容</label>
                 <textarea
                   id="content"
                   v-model="form.content"
-                  rows="5"
-                  placeholder="请输入您的留言内容，包括产品需求、数量、应用场景等"
-                  :class="{ error: errors.content }"
+                  rows="6"
+                  placeholder="零件加工需求问题描述..."
+                  :class="{ 'input-error': errors.content }"
                 ></textarea>
                 <span v-if="errors.content" class="error-msg">{{ errors.content }}</span>
               </div>
 
-              <button type="submit" class="btn-red submit-btn" :disabled="submitting">
-                {{ submitting ? '提交中...' : '提交留言' }}
+              <input type="hidden" v-model="form.phone" />
+
+              <button type="submit" class="btn-submit" :disabled="submitting">
+                {{ submitting ? '发送中...' : '发送留言' }}
               </button>
             </form>
+          </div>
+
+          <!-- 右侧：联系方式侧边栏 -->
+          <div class="sidebar-column">
+            <div class="sidebar-card">
+              <h3 class="sidebar-title">工厂直接联系方式</h3>
+
+              <ul class="contact-list">
+                <li class="contact-item">
+                  <div class="contact-icon">📞</div>
+                  <div class="contact-info">
+                    <div class="contact-header">
+                      <span class="contact-label">联系电话</span>
+                      <span class="badge">必拨</span>
+                    </div>
+                    <div class="contact-value">
+                      <a v-if="contactInfo.phone" :href="'tel:' + contactInfo.phone">{{ contactInfo.phone }}</a>
+                      <span v-else>暂未填写</span>
+                    </div>
+                    <div class="contact-hint">工作日 6:30—17:30</div>
+                  </div>
+                </li>
+
+                <li class="contact-item">
+                  <div class="contact-icon">✉</div>
+                  <div class="contact-info">
+                    <div class="contact-header">
+                      <span class="contact-label">邮箱</span>
+                      <span class="badge">非转发</span>
+                    </div>
+                    <div class="contact-value">
+                      <a v-if="contactInfo.email" :href="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
+                      <span v-else>暂未填写</span>
+                    </div>
+                    <div class="contact-hint">回邮/询价请发至此</div>
+                  </div>
+                </li>
+
+                <li class="contact-item">
+                  <div class="contact-icon">💬</div>
+                  <div class="contact-info">
+                    <div class="contact-header">
+                      <span class="contact-label">微信</span>
+                      <span class="badge">非转发</span>
+                    </div>
+                    <div class="contact-value">
+                      <span>{{ contactInfo.wechat || '请来电获取' }}</span>
+                    </div>
+                    <div class="contact-hint">国内客户优先推荐</div>
+                  </div>
+                </li>
+
+                <li class="contact-item">
+                  <div class="contact-icon">📍</div>
+                  <div class="contact-info">
+                    <div class="contact-header">
+                      <span class="contact-label">工厂地址</span>
+                    </div>
+                    <div class="contact-value">
+                      <span>{{ contactInfo.address || '山东省淄博市博山区白塔镇工业园' }}</span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="contact-item">
+                  <div class="contact-icon">🚗</div>
+                  <div class="contact-info">
+                    <div class="contact-header">
+                      <span class="contact-label">到厂</span>
+                    </div>
+                    <div class="contact-value">
+                      <span>济南章丘出口，导航"白塔镇工业园"</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <!-- 报价流程 -->
+              <div class="quote-process">
+                <div class="process-title">
+                  <span class="process-icon">📋</span>
+                  <span>报价流程</span>
+                </div>
+                <ol class="process-steps">
+                  <li>
+                    <span class="step-num">1</span>
+                    <span class="step-text">发送图纸/样品描述</span>
+                  </li>
+                  <li>
+                    <span class="step-num">2</span>
+                    <span class="step-text">工程师评估工艺（工作日）</span>
+                  </li>
+                  <li>
+                    <span class="step-num">3</span>
+                    <span class="step-text">确认报价：材质·交期</span>
+                  </li>
+                  <li>
+                    <span class="step-num">4</span>
+                    <span class="step-text">打样 → 确认 → 批量生产</span>
+                  </li>
+                  <li>
+                    <span class="step-num">5</span>
+                    <span class="step-text">跟检出报告 → 发货跟踪</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -202,6 +217,7 @@ const form = reactive({
 const errors = reactive({
   name: '',
   phone: '',
+  email: '',
   content: ''
 })
 
@@ -217,14 +233,15 @@ function validate() {
   let valid = true
   errors.name = ''
   errors.phone = ''
+  errors.email = ''
   errors.content = ''
 
   if (!form.name.trim()) {
     errors.name = '请输入姓名'
     valid = false
   }
-  if (!form.phone.trim()) {
-    errors.phone = '请输入联系电话'
+  if (!form.email.trim()) {
+    errors.email = '请输入邮箱'
     valid = false
   }
   if (!form.content.trim()) {
@@ -268,205 +285,65 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 页面 Banner */
-.page-banner {
-  background: var(--graphite);
-  color: var(--paper);
-  padding: 100px 0 64px;
+/* ===== Body ===== */
+.contact-body {
+  background: #FAFAF8;
+  padding: 72px 0 80px;
   margin-top: var(--header-height);
 }
 
-.page-banner .container {
-  position: relative;
-  z-index: 1;
+/* ===== Section Header ===== */
+.section-header {
+  margin-bottom: 48px;
 }
 
-.page-banner h1 {
-  font-family: var(--font-serif);
-  font-size: 38px;
-  font-weight: 700;
-  color: #F2F3EF;
-  margin-bottom: 8px;
-  line-height: 1.2;
-}
-
-.banner-subtitle {
-  font-size: 14px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
+.ew-label {
+  font-size: 13px;
+  color: #B22B2B;
+  letter-spacing: 1px;
   font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 700;
+  color: #1E1F20;
+  line-height: 1.25;
   margin: 0;
 }
 
-.breadcrumb {
-  padding: 0 0 16px;
-  font-size: 14px;
-  color: rgba(242, 243, 239, 0.7);
-  background: transparent;
-}
-
-.breadcrumb a {
-  color: rgba(242, 243, 239, 0.7);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.breadcrumb a:hover {
-  color: var(--gold);
-}
-
-.breadcrumb .separator {
-  margin: 0 10px;
-  color: rgba(242, 243, 239, 0.4);
-}
-
-.breadcrumb .current {
-  color: var(--gold);
-}
-
-/* 联系信息卡片区 */
-.info-section {
-  padding: var(--section-padding) 0;
-}
-
-.info-grid {
+/* ===== Two-column layout ===== */
+.contact-layout {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-}
-
-.info-card {
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-md);
-  padding: 36px 24px;
-  text-align: center;
-  transition: all var(--transition-base);
-}
-
-.info-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-6px);
-  border-color: var(--gold);
-}
-
-.info-icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 18px;
-  color: var(--red);
-}
-
-.info-card h3 {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  color: var(--ink);
-  margin-bottom: 10px;
-}
-
-.info-card p {
-  font-size: 14px;
-  color: var(--gray-600);
-  line-height: 1.6;
-  word-break: break-all;
-}
-
-.info-card a {
-  color: var(--blue);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-.info-card a:hover {
-  color: var(--red);
-}
-
-/* RFQ 报价表单区 */
-.rfq-section {
-  padding: var(--section-padding) 0;
-  background: var(--graphite);
-  color: var(--paper);
-}
-
-.rfq-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 60px;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
   align-items: start;
 }
 
-.rfq-intro h2 {
-  font-family: var(--font-serif);
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 8px;
+/* ===== Form Column ===== */
+.form-column {
+  background: #fff;
+  border: 1px solid #D0D3CC;
+  border-radius: 8px;
+  padding: 36px 40px;
 }
 
-.rfq-subtitle {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  color: var(--gold);
-  letter-spacing: 3px;
+.form-section-label {
   margin-bottom: 24px;
-}
-
-.rfq-desc {
-  font-size: 15px;
-  line-height: 1.8;
-  color: rgba(242, 243, 239, 0.72);
-  margin-bottom: 32px;
-  max-width: 420px;
-}
-
-.rfq-features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.rfq-features li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 16px;
-}
-
-.rfq-features svg {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.rfq-form-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(242, 243, 239, 0.1);
-  border-radius: var(--radius-lg);
-  padding: 40px;
-  backdrop-filter: blur(4px);
-}
-
-.form-title {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 28px;
-  color: var(--paper);
 }
 
 .message-form {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 20px;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 22px;
+  gap: 20px;
 }
 
 .form-group {
@@ -475,73 +352,255 @@ onMounted(() => {
 }
 
 .form-group label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  color: rgba(242, 243, 239, 0.85);
-  margin-bottom: 8px;
+  color: #1E1F20;
+  margin-bottom: 6px;
 }
 
 .required {
-  color: var(--red);
+  color: #B22B2B;
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 12px 16px;
-  border: 1px solid rgba(242, 243, 239, 0.15);
-  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  border: 1px solid #D0D3CC;
+  border-radius: 4px;
   font-size: 14px;
-  color: var(--paper);
-  background: rgba(255, 255, 255, 0.06);
-  transition: all var(--transition-base);
+  color: #1E1F20;
+  background: #fff;
+  transition: border-color 0.2s;
   outline: none;
+  font-family: inherit;
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(242, 243, 239, 0.35);
+  color: #9a9d9f;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: var(--gold);
-  background: rgba(255, 255, 255, 0.1);
+  border-color: #B22B2B;
 }
 
-.form-group input.error,
-.form-group textarea.error {
-  border-color: var(--red);
+.form-group input.input-error,
+.form-group textarea.input-error {
+  border-color: #B22B2B;
 }
 
 .error-msg {
   font-size: 12px;
-  color: #ff7a7a;
-  margin-top: 6px;
+  color: #B22B2B;
+  margin-top: 4px;
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 130px;
 }
 
-.submit-btn {
-  width: 100%;
-  padding: 14px 40px;
-  font-size: 16px;
+.btn-submit {
+  display: inline-block;
+  padding: 12px 36px;
+  background: #B22B2B;
+  color: #fff;
+  font-size: 15px;
   font-weight: 600;
   border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+  letter-spacing: 0.5px;
 }
 
-.submit-btn:disabled {
+.btn-submit:hover {
+  background: #9a1f1f;
+}
+
+.btn-submit:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-/* 成功提示 */
+/* ===== Sidebar Column ===== */
+.sidebar-column {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+}
+
+.sidebar-card {
+  background: #F8F9F6;
+  border: 1px solid #D0D3CC;
+  border-radius: 8px;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.sidebar-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E1F20;
+  margin: 0 0 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #D0D3CC;
+}
+
+/* Contact List */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #E8EAE4;
+}
+
+.contact-item:last-child {
+  border-bottom: none;
+}
+
+.contact-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 22px;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.contact-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.contact-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1E1F20;
+}
+
+.badge {
+  font-size: 11px;
+  background: #B22B2B;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+.contact-value {
+  font-size: 13px;
+  color: #1E1F20;
+  margin-bottom: 2px;
+  word-break: break-all;
+}
+
+.contact-value a {
+  color: #1E1F20;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-value a:hover {
+  color: #B22B2B;
+}
+
+.contact-hint {
+  font-size: 12px;
+  color: #6A6D70;
+}
+
+/* Quote Process */
+.quote-process {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px dashed #D0D3CC;
+}
+
+.process-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E1F20;
+  margin-bottom: 14px;
+}
+
+.process-icon {
+  font-size: 16px;
+}
+
+.process-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.process-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  position: relative;
+}
+
+.process-steps li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 28px;
+  bottom: -6px;
+  width: 1px;
+  border-left: 1px dashed #C0C3BC;
+}
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  background: #B22B2B;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-text {
+  font-size: 13px;
+  color: #3a3d40;
+  line-height: 1.5;
+  padding-top: 3px;
+}
+
+/* ===== Success Modal ===== */
 .success-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -549,79 +608,53 @@ onMounted(() => {
 }
 
 .success-modal {
-  background: var(--white);
-  border-radius: var(--radius-lg);
+  background: #fff;
+  border-radius: 8px;
   padding: 40px;
   text-align: center;
-  max-width: 400px;
+  max-width: 380px;
   width: 90%;
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
 }
 
 .success-icon {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   margin: 0 auto 16px;
 }
 
 .success-modal h3 {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  color: var(--ink);
+  color: #1E1F20;
   margin-bottom: 8px;
 }
 
 .success-modal p {
   font-size: 14px;
-  color: var(--gray-600);
+  color: #6A6D70;
   margin-bottom: 24px;
 }
 
-.success-modal .btn-red {
-  padding: 10px 32px;
-}
-
-/* 响应式 */
-@media (max-width: 992px) {
-  .info-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .rfq-layout {
+/* ===== Responsive ===== */
+@media (max-width: 960px) {
+  .contact-layout {
     grid-template-columns: 1fr;
-    gap: 40px;
   }
 
-  .rfq-intro {
-    text-align: center;
-  }
-
-  .rfq-desc {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .rfq-features {
-    align-items: center;
+  .sidebar-column {
+    position: static;
   }
 }
 
 @media (max-width: 768px) {
-  .page-banner {
-    padding: 80px 0 48px;
+  .contact-body {
+    padding: 48px 0 60px;
   }
 
-  .page-banner h1 {
-    font-size: 28px;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .rfq-form-card {
-    padding: 28px 20px;
+  .form-column {
+    padding: 24px 20px;
   }
 
   .form-row {
@@ -629,8 +662,8 @@ onMounted(() => {
     gap: 16px;
   }
 
-  .rfq-intro h2 {
-    font-size: 28px;
+  .section-title {
+    font-size: 26px;
   }
 }
 </style>

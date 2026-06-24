@@ -14,10 +14,7 @@
             <span class="brand-name">{{ siteConfig.siteName || '企业官网' }}</span>
           </div>
           <p class="brand-desc">{{ companyDesc || '致力于为客户提供优质的产品和专业的技术服务，以创新驱动发展，以品质赢得信赖。' }}</p>
-          <div class="brand-badges">
-            <span class="badge">ISO 9001</span>
-            <span class="badge">高新技术企业</span>
-          </div>
+
         </div>
 
         <!-- 第2列：产品分类 -->

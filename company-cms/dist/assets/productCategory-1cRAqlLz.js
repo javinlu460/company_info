@@ -1,1 +1,0 @@
-import{v as r}from"./index-Bro6NylL.js";function o(){return r({url:"/admin/product-category/tree",method:"get"})}function u(t){return r({url:"/admin/product-category",method:"post",data:t})}function d(t){return r({url:"/admin/product-category",method:"put",data:t})}function a(t){return r({url:`/admin/product-category/${t}`,method:"delete"})}export{u as a,a as d,o as g,d as u};

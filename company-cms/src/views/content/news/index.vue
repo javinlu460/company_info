@@ -4,7 +4,7 @@
     <el-card shadow="never" class="search-card">
       <el-form :inline="true" :model="queryParams">
         <el-form-item label="关键词">
-          <el-input v-model="queryParams.keyword" placeholder="新闻标题" clearable @keyup.enter="handleSearch" />
+          <el-input v-model="queryParams.keyword" placeholder="标题关键词" clearable @keyup.enter="handleSearch" />
         </el-form-item>
         <el-form-item label="分类">
           <el-select v-model="queryParams.categoryId" clearable placeholder="请选择" style="width: 160px;">
@@ -84,7 +84,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="标题" prop="title">
-              <el-input v-model="form.title" placeholder="请输入新闻标题" />
+              <el-input v-model="form.title" placeholder="请输入标题" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -185,7 +185,7 @@ const formRules = {
   categoryId: [{ required: true, message: '请选择分类', trigger: 'change' }]
 }
 
-const dialogTitle = computed(() => form.id ? '编辑新闻' : '新增新闻')
+const dialogTitle = computed(() => form.id ? '编辑行业洞察' : '新增行业洞察')
 
 onMounted(() => {
   loadData()
@@ -257,7 +257,7 @@ async function handleStatusChange(row) {
 }
 
 async function handleDelete(row) {
-  await ElMessageBox.confirm(`确定要删除新闻「${row.title}」吗？`, '提示', {
+  await ElMessageBox.confirm(`确定要删除行业洞察「${row.title}」吗？`, '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'

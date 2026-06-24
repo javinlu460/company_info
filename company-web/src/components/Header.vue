@@ -93,9 +93,9 @@ const navItems = [
   { name: '关于我们', path: '/about' },
   { name: '产品中心', path: '/products' },
   { name: '解决方案', path: '/business' },
-  { name: '客户案例', path: '/#cases' },
+  { name: '客户案例', path: '/cases' },
   { name: '行业洞察', path: '/news' },
-  { name: '常见问题', path: '/#faq' },
+  { name: '常见问题', path: '/faq' },
   { name: '联系我们', path: '/contact' }
 ]
 

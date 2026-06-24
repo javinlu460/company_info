@@ -12,8 +12,39 @@
           <router-link to="/contact" class="btn-outline-light">获取报价</router-link>
         </div>
       </div>
-      <div class="scroll-indicator" @click="scrollToNext">
-        <span class="scroll-arrow"></span>
+    </section>
+
+    <!-- 轮播展示区 -->
+    <section class="showcase-carousel">
+      <div class="container">
+        <div class="carousel-wrapper">
+          <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+            <div class="carousel-slide" v-for="(slide, idx) in showcaseSlides" :key="idx">
+              <div class="slide-content">
+                <div class="slide-info">
+                  <span class="slide-tag">{{ slide.tag }}</span>
+                  <h3 class="slide-title">{{ slide.title }}</h3>
+                  <p class="slide-desc">{{ slide.desc }}</p>
+                  <router-link :to="slide.link" class="slide-link">了解更多 →</router-link>
+                </div>
+                <div class="slide-visual">
+                  <div class="slide-icon" v-html="slide.icon"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn prev" @click="prevSlide" aria-label="上一个">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="carousel-dots">
+              <span v-for="(slide, idx) in showcaseSlides" :key="idx" class="dot" :class="{ active: currentSlide === idx }" @click="currentSlide = idx"></span>
+            </div>
+            <button class="carousel-btn next" @click="nextSlide" aria-label="下一个">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -305,9 +336,7 @@ function stripHtml(html) {
 // === 硬编码数据 ===
 const trustItems = [
   'ISO9001认证',
-  '国家高新技术企业',
-  'CE认证',
-  '15年行业经验',
+  '10年+行业经验',
   '500+合作客户',
   '专业研发团队',
   '全国服务网络'
@@ -428,6 +457,60 @@ const faqItems = [
   }
 ]
 
+// === 轮播展示数据 ===
+const showcaseSlides = ref([
+  {
+    tag: '产品中心',
+    title: '精密机械零部件加工',
+    desc: '泵类配件 / 传动运动件 / 农机配件 / 通用机械设备配件，支持来图定制',
+    link: '/products',
+    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="24" stroke="currentColor" stroke-width="2.5"/><path d="M32 16v16l12 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
+  },
+  {
+    tag: '解决方案',
+    title: 'OEM定制 · 按图加工 · 逆向工程',
+    desc: '从图纸到成品，覆盖打样、小批量、批量生产全流程',
+    link: '/business',
+    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="40" height="40" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M22 32h20M32 22v20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
+  },
+  {
+    tag: '行业洞察',
+    title: '机械加工专业知识与行业趋势',
+    desc: '选材指南、精度知识、工艺指导、行业趋势分析',
+    link: '/news',
+    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="10" width="36" height="44" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M22 22h20M22 30h20M22 38h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
+  },
+  {
+    tag: '关于我们',
+    title: '15年精密加工经验 · 值得信赖',
+    desc: '国家高新技术企业，ISO9001认证，500+合作客户',
+    link: '/about',
+    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 54V22l22-12 22 12v32" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M26 54V38h12v16" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>'
+  }
+])
+
+const currentSlide = ref(0)
+let slideInterval = null
+
+function nextSlide() {
+  currentSlide.value = (currentSlide.value + 1) % showcaseSlides.value.length
+}
+
+function prevSlide() {
+  currentSlide.value = (currentSlide.value - 1 + showcaseSlides.value.length) % showcaseSlides.value.length
+}
+
+function startAutoSlide() {
+  slideInterval = setInterval(nextSlide, 5000)
+}
+
+function stopAutoSlide() {
+  if (slideInterval) {
+    clearInterval(slideInterval)
+    slideInterval = null
+  }
+}
+
 // === 计算属性 ===
 const filteredProducts = computed(() => {
   if (!homeData.value.products) return []
@@ -438,13 +521,6 @@ const filteredProducts = computed(() => {
 // === 交互方法 ===
 function toggleFaq(idx) {
   activeFaq.value = activeFaq.value === idx ? null : idx
-}
-
-function scrollToNext() {
-  const trustStrip = document.querySelector('.trust-strip')
-  if (trustStrip) {
-    trustStrip.scrollIntoView({ behavior: 'smooth' })
-  }
 }
 
 // === 滚动动画 ===
@@ -484,6 +560,7 @@ function initHeroAnimations() {
 // === 生命周期 ===
 onMounted(async () => {
   initHeroAnimations()
+  startAutoSlide()
 
   try {
     const [homeRes, configRes, catRes] = await Promise.all([
@@ -508,6 +585,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   if (observer) observer.disconnect()
+  stopAutoSlide()
 })
 </script>
 
@@ -515,8 +593,9 @@ onUnmounted(() => {
 /* ==================== Hero区 ==================== */
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 600px;
+  height: 70vh;
+  min-height: 480px;
+  max-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -566,7 +645,7 @@ onUnmounted(() => {
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: 56px;
+  font-size: 44px;
   font-weight: 700;
   color: var(--white);
   line-height: 1.2;
@@ -578,7 +657,7 @@ onUnmounted(() => {
   font-size: 18px;
   color: rgba(242, 243, 239, 0.65);
   line-height: 1.6;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
   max-width: 560px;
 }
 
@@ -587,29 +666,148 @@ onUnmounted(() => {
   gap: 16px;
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+/* ==================== 轮播展示区 ==================== */
+.showcase-carousel {
+  background: var(--graphite);
+  padding: 48px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  padding: 48px 56px;
+}
+
+.slide-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.slide-info {
+  flex: 1;
+}
+
+.slide-tag {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding: 4px 12px;
+  border: 1px solid rgba(191, 142, 42, 0.3);
+  border-radius: 2px;
+}
+
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: #F2F3EF;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.slide-desc {
+  font-size: 15px;
+  color: rgba(242, 243, 239, 0.6);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.slide-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 500;
+  text-decoration: none;
+  transition: gap 0.2s;
+  gap: 4px;
+}
+
+.slide-link:hover {
+  gap: 8px;
+}
+
+.slide-visual {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(191, 142, 42, 0.08);
+  border: 1px solid rgba(191, 142, 42, 0.2);
+}
+
+.slide-icon {
+  width: 64px;
+  height: 64px;
+  color: var(--gold);
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 0 28px;
+}
+
+.carousel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: rgba(242, 243, 239, 0.7);
   cursor: pointer;
-  z-index: 1;
+  transition: all 0.2s;
 }
 
-.scroll-arrow {
-  display: block;
+.carousel-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dot.active {
+  background: var(--gold);
   width: 24px;
-  height: 24px;
-  border-right: 2px solid rgba(242, 243, 239, 0.5);
-  border-bottom: 2px solid rgba(242, 243, 239, 0.5);
-  transform: rotate(45deg);
-  animation: bounceArrow 2s ease infinite;
-}
-
-@keyframes bounceArrow {
-  0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
-  40% { transform: rotate(45deg) translateY(-8px); }
-  60% { transform: rotate(45deg) translateY(-4px); }
+  border-radius: 4px;
 }
 
 /* ==================== Trust Strip ==================== */
@@ -1206,7 +1404,7 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 500px;
+    min-height: 400px;
   }
 
   .hero-title {
@@ -1227,6 +1425,30 @@ onUnmounted(() => {
   .hero-actions .btn-outline-light {
     width: 100%;
     justify-content: center;
+  }
+
+  .carousel-slide {
+    padding: 32px 24px;
+  }
+
+  .slide-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .slide-title {
+    font-size: 22px;
+  }
+
+  .slide-visual {
+    width: 100px;
+    height: 100px;
+  }
+
+  .slide-icon {
+    width: 48px;
+    height: 48px;
   }
 
   .capabilities-grid {

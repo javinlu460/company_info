@@ -1,18 +1,13 @@
 <template>
   <div class="product-list-page">
-    <div class="page-banner">
-      <div class="container">
-        <nav class="breadcrumb">
-          <router-link to="/">首页</router-link>
-          <span class="separator">/</span>
-          <span class="current">产品中心</span>
-        </nav>
-        <h1>产品中心</h1>
-        <p class="banner-subtitle">PRODUCTS</p>
-      </div>
-    </div>
-
     <div class="container main-content">
+      <!-- 页面标签 -->
+      <div class="section-head">
+        <span class="ew">PRODUCTS · 产品中心</span>
+        <h2>专业制造，精密加工</h2>
+        <p class="lead">涵盖泵类配件、传动运动件、农机配件、通用机械设备配件等多个品类，支持来图定制。</p>
+      </div>
+
       <!-- 分类筛选 -->
       <div class="category-filter">
         <button
@@ -50,31 +45,31 @@
           <div class="empty-icon">📦</div>
           <p>暂无相关产品</p>
         </div>
-        <Pagination
-          :total="total"
-          v-model:currentPage="currentPage"
-          :pageSize="pageSize"
-        />
       </template>
     </div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container">
+        <router-link to="/contact" class="btn-red cta-btn">
+          发图纸，获取报价及解决方案 →
+        </router-link>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getProductList, getProductCategories } from '../api/product'
 import ProductCard from '../components/ProductCard.vue'
-import Pagination from '../components/Pagination.vue'
 
 const route = useRoute()
 const router = useRouter()
 
 const categories = ref([])
 const products = ref([])
-const total = ref(0)
-const currentPage = ref(1)
-const pageSize = ref(12)
 const activeCategory = ref(null)
 const loading = ref(false)
 
@@ -90,15 +85,14 @@ async function loadProducts() {
   loading.value = true
   try {
     const params = {
-      pageNum: currentPage.value,
-      pageSize: pageSize.value
+      pageNum: 1,
+      pageSize: 999
     }
     if (activeCategory.value) {
       params.categoryId = activeCategory.value
     }
     const res = await getProductList(params)
     products.value = res.records || res.list || []
-    total.value = res.total || 0
   } catch (e) {
     console.error('加载产品列表失败:', e)
   } finally {
@@ -108,27 +102,13 @@ async function loadProducts() {
 
 function selectCategory(catId) {
   activeCategory.value = catId
-  currentPage.value = 1
-  updateQuery()
   loadProducts()
-}
-
-function updateQuery() {
-  const query = { page: currentPage.value }
-  if (activeCategory.value) query.categoryId = activeCategory.value
-  router.replace({ query })
 }
 
 function initFromQuery() {
-  const { page, categoryId } = route.query
-  if (page) currentPage.value = Number(page)
+  const { categoryId } = route.query
   if (categoryId) activeCategory.value = Number(categoryId)
 }
-
-watch(currentPage, () => {
-  updateQuery()
-  loadProducts()
-})
 
 onMounted(() => {
   initFromQuery()
@@ -138,65 +118,49 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.page-banner {
-  background: var(--graphite);
-  color: var(--paper);
-  padding: 100px 0 64px;
+.main-content {
   margin-top: var(--header-height);
+  padding-top: 30px;
+  padding-bottom: 60px;
 }
 
-.page-banner .container {
-  position: relative;
-  z-index: 1;
+.section-head {
+  margin-bottom: 32px;
 }
 
-.page-banner h1 {
+.section-head h2 {
   font-family: var(--font-serif);
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 700;
-  color: #F2F3EF;
-  margin-bottom: 8px;
-  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 14px;
+  line-height: 1.25;
 }
 
-.banner-subtitle {
-  font-size: 14px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
+.section-head .lead {
+  font-size: 15px;
+  color: #6A6D70;
+  line-height: 1.8;
+  max-width: 720px;
   margin: 0;
 }
 
-.breadcrumb {
-  padding: 0 0 16px;
-  font-size: 14px;
-  color: rgba(242, 243, 239, 0.7);
-  background: transparent;
+.ew {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.breadcrumb a {
-  color: rgba(242, 243, 239, 0.7);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.breadcrumb a:hover {
-  color: var(--gold);
-}
-
-.breadcrumb .separator {
-  margin: 0 10px;
-  color: rgba(242, 243, 239, 0.4);
-}
-
-.breadcrumb .current {
-  color: var(--gold);
-}
-
-.main-content {
-  padding-top: 40px;
-  padding-bottom: 60px;
+.ew::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  background: var(--red);
 }
 
 .category-filter {
@@ -235,6 +199,8 @@ onMounted(() => {
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   padding-bottom: 20px;
+  max-height: calc(2 * 320px + 24px);
+  overflow: hidden;
 }
 
 @media (max-width: 992px) {
@@ -244,14 +210,6 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .page-banner {
-    padding: 80px 0 48px;
-  }
-
-  .page-banner h1 {
-    font-size: 28px;
-  }
-
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -266,5 +224,18 @@ onMounted(() => {
     padding: 8px 18px;
     font-size: 13px;
   }
+}
+
+/* CTA */
+.cta-section {
+  padding: 60px 0 80px;
+  background: #F2F3EF;
+  text-align: center;
+}
+
+.cta-btn {
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
 }
 </style>

@@ -1,15 +1,13 @@
 <template>
   <div class="news-list-page">
-    <!-- 页面Banner -->
-    <div class="page-banner">
+    <!-- 页面标签 -->
+    <div class="page-label">
       <div class="container">
-        <nav class="breadcrumb">
-          <router-link to="/">首页</router-link>
-          <span class="separator">/</span>
-          <span class="current">行业洞察</span>
-        </nav>
-        <h1>行业洞察</h1>
-        <p class="banner-subtitle">INSIGHTS</p>
+        <div class="section-head">
+          <span class="ew">INSIGHTS · 行业洞察</span>
+          <h2>深入行业前沿，洞察制造趋势</h2>
+          <p class="lead">分享行业动态、制造工艺、技术创新等专业内容，助力客户了解行业最新发展。</p>
+        </div>
       </div>
     </div>
 
@@ -56,11 +54,11 @@
             <div class="empty-icon">📰</div>
             <p>暂无相关资讯</p>
           </div>
-          <Pagination
-            :total="total"
-            v-model:currentPage="currentPage"
-            :pageSize="pageSize"
-          />
+          <div class="cta-wrapper">
+            <router-link to="/contact" class="btn-red cta-btn">
+              发图纸，获取报价及解决方案 →
+            </router-link>
+          </div>
         </template>
       </div>
     </div>
@@ -68,20 +66,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getNewsList, getNewsCategories } from '../api/news'
 import NewsItem from '../components/NewsItem.vue'
-import Pagination from '../components/Pagination.vue'
 
 const route = useRoute()
 const router = useRouter()
 
 const categories = ref([])
 const newsList = ref([])
-const total = ref(0)
-const currentPage = ref(1)
-const pageSize = ref(9)
 const activeCategory = ref(null)
 const loading = ref(false)
 
@@ -97,15 +91,14 @@ async function loadNews() {
   loading.value = true
   try {
     const params = {
-      pageNum: currentPage.value,
-      pageSize: pageSize.value
+      pageNum: 1,
+      pageSize: 999
     }
     if (activeCategory.value) {
       params.categoryId = activeCategory.value
     }
     const res = await getNewsList(params)
     newsList.value = res.records || res.list || []
-    total.value = res.total || 0
   } catch (e) {
     console.error('加载新闻列表失败:', e)
   } finally {
@@ -115,27 +108,13 @@ async function loadNews() {
 
 function selectCategory(catId) {
   activeCategory.value = catId
-  currentPage.value = 1
-  updateQuery()
   loadNews()
-}
-
-function updateQuery() {
-  const query = { page: currentPage.value }
-  if (activeCategory.value) query.categoryId = activeCategory.value
-  router.replace({ query })
 }
 
 function initFromQuery() {
-  const { page, categoryId } = route.query
-  if (page) currentPage.value = Number(page)
+  const { categoryId } = route.query
   if (categoryId) activeCategory.value = Number(categoryId)
 }
-
-watch(currentPage, () => {
-  updateQuery()
-  loadNews()
-})
 
 onMounted(() => {
   initFromQuery()
@@ -145,66 +124,55 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Banner */
-.page-banner {
-  background: var(--graphite);
-  color: var(--paper);
-  padding: 100px 0 64px;
+/* 页面标签 */
+.page-label {
   margin-top: var(--header-height);
+  padding: 30px 0 0;
+  background: #F2F3EF;
 }
 
-.page-banner .container {
-  position: relative;
-  z-index: 1;
+.section-head {
+  margin-bottom: 0;
 }
 
-.page-banner h1 {
+.section-head h2 {
   font-family: var(--font-serif);
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 700;
-  color: #F2F3EF;
-  margin-bottom: 8px;
-  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 14px;
+  line-height: 1.25;
 }
 
-.banner-subtitle {
-  font-size: 14px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
+.section-head .lead {
+  font-size: 15px;
+  color: #6A6D70;
+  line-height: 1.8;
+  max-width: 720px;
   margin: 0;
 }
 
-.breadcrumb {
-  padding: 0 0 16px;
-  font-size: 14px;
-  color: rgba(242, 243, 239, 0.7);
-  background: transparent;
+.ew {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.breadcrumb a {
-  color: rgba(242, 243, 239, 0.7);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.breadcrumb a:hover {
-  color: var(--gold);
-}
-
-.breadcrumb .separator {
-  margin: 0 10px;
-  color: rgba(242, 243, 239, 0.4);
-}
-
-.breadcrumb .current {
-  color: var(--gold);
+.ew::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  background: var(--red);
 }
 
 /* 分类筛选条 */
 .category-bar {
-  background: var(--white);
+  background: #F2F3EF;
   border-bottom: 1px solid var(--gray-200);
   position: sticky;
   top: var(--header-height);
@@ -244,6 +212,7 @@ onMounted(() => {
 /* 新闻区域 */
 .news-section {
   padding: 48px 0 64px;
+  background: #F2F3EF;
 }
 
 /* 3列网格 */
@@ -261,14 +230,6 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .page-banner {
-    padding: 80px 0 48px;
-  }
-
-  .page-banner h1 {
-    font-size: 28px;
-  }
-
   .news-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -282,5 +243,29 @@ onMounted(() => {
     padding: 6px 14px;
     font-size: 13px;
   }
+}
+
+/* CTA */
+.cta-wrapper {
+  text-align: center;
+  margin-top: 48px;
+  padding-bottom: 20px;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--red);
+  color: var(--white);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+
+.cta-btn:hover {
+  background: #a02020;
+  transform: translateY(-2px);
 }
 </style>

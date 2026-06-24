@@ -263,17 +263,17 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perm
 (34, 31, '产品修改', 3, NULL, NULL, 'content:product:edit', NULL, 3, 1, 1),
 (35, 31, '产品删除', 3, NULL, NULL, 'content:product:delete', NULL, 4, 1, 1);
 
--- ---- 内容管理 -> 新闻分类 ----
+-- ---- 内容管理 -> 行业洞察分类 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(36, 20, '新闻分类', 2, 'news-category', 'content/newsCategory/index', NULL, 'Folder', 4, 1, 1),
+(36, 20, '行业洞察分类', 2, 'news-category', 'content/newsCategory/index', NULL, 'Folder', 4, 1, 1),
 (37, 36, '分类查询', 3, NULL, NULL, 'content:newsCategory:list', NULL, 1, 1, 1),
 (38, 36, '分类新增', 3, NULL, NULL, 'content:newsCategory:add', NULL, 2, 1, 1),
 (39, 36, '分类修改', 3, NULL, NULL, 'content:newsCategory:edit', NULL, 3, 1, 1),
 (40, 36, '分类删除', 3, NULL, NULL, 'content:newsCategory:delete', NULL, 4, 1, 1);
 
--- ---- 内容管理 -> 新闻管理 ----
+-- ---- 内容管理 -> 行业洞察管理 ----
 INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, perms, icon, sort, visible, status) VALUES
-(41, 20, '新闻管理', 2, 'news', 'content/news/index', NULL, 'Notebook', 5, 1, 1),
+(41, 20, '行业洞察管理', 2, 'news', 'content/news/index', NULL, 'Notebook', 5, 1, 1),
 (42, 41, '新闻查询', 3, NULL, NULL, 'content:news:list', NULL, 1, 1, 1),
 (43, 41, '新闻新增', 3, NULL, NULL, 'content:news:add', NULL, 2, 1, 1),
 (44, 41, '新闻修改', 3, NULL, NULL, 'content:news:edit', NULL, 3, 1, 1),

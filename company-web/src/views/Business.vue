@@ -1,18 +1,5 @@
 <template>
   <div class="business-page">
-    <!-- 页面 Banner -->
-    <div class="page-banner">
-      <div class="container">
-        <nav class="breadcrumb">
-          <router-link to="/">首页</router-link>
-          <span class="separator">/</span>
-          <span class="current">解决方案</span>
-        </nav>
-        <h1>解决方案</h1>
-        <p class="banner-subtitle">SOLUTIONS</p>
-      </div>
-    </div>
-
     <!-- 解决方案 -->
     <section class="solutions-section">
       <div class="container">
@@ -80,7 +67,7 @@
     <section class="cta-section">
       <div class="container">
         <router-link to="/contact" class="btn-red cta-btn">
-          立即上传图纸 · 获取报价 →
+          发图纸，获取报价及解决方案 →
         </router-link>
       </div>
     </section>
@@ -208,63 +195,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 页面 Banner */
-.page-banner {
-  background: var(--graphite);
-  color: var(--paper);
-  padding: 100px 0 64px;
-  margin-top: var(--header-height);
-}
-
-.page-banner .container {
-  position: relative;
-  z-index: 1;
-}
-
-.page-banner h1 {
-  font-family: var(--font-serif);
-  font-size: 38px;
-  font-weight: 700;
-  color: #F2F3EF;
-  margin-bottom: 8px;
-  line-height: 1.2;
-}
-
-.banner-subtitle {
-  font-size: 14px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
-  margin: 0;
-}
-
-.breadcrumb {
-  padding: 0 0 16px;
-  font-size: 14px;
-  color: rgba(242, 243, 239, 0.7);
-  background: transparent;
-}
-
-.breadcrumb a {
-  color: rgba(242, 243, 239, 0.7);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.breadcrumb a:hover {
-  color: var(--gold);
-}
-
-.breadcrumb .separator {
-  margin: 0 10px;
-  color: rgba(242, 243, 239, 0.4);
-}
-
-.breadcrumb .current {
-  color: var(--gold);
-}
-
 /* 公共标题区 */
 .section-head {
   margin-bottom: 44px;
@@ -313,7 +243,8 @@ onMounted(() => {
 /* 解决方案网格 */
 .solutions-section {
   padding: var(--section-padding) 0;
-  background: #fff;
+  padding-top: calc(var(--header-height) + 30px);
+  background: #F2F3EF;
 }
 
 .cap-grid {
@@ -518,14 +449,6 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .page-banner {
-    padding: 80px 0 48px;
-  }
-
-  .page-banner h1 {
-    font-size: 28px;
-  }
-
   .process-steps {
     grid-template-columns: 1fr;
     gap: 28px;
