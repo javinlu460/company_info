@@ -153,20 +153,23 @@
     <!-- 6. 解决方案 -->
     <section class="solutions section-dark">
       <div class="container">
-        <div class="section-title reveal">
-          <div class="title-line"></div>
-          <h2>行业解决方案</h2>
-          <p class="section-subtitle">Industry Solutions</p>
+        <div class="sol-header reveal">
+          <p class="sol-label">— SOLUTIONS · 行业解决方案</p>
+          <h2 class="sol-main-title">覆盖多场景的专业制造服务</h2>
+          <p class="sol-main-desc">从图纸到成品，我们为客户提供灵活、可靠的定制化制造解决方案，满足多元化需求。</p>
         </div>
         <div class="solutions-grid">
           <div
             v-for="(sol, idx) in solutions"
-            :key="idx"
+            :key="sol.id || idx"
             class="solution-card reveal"
           >
-            <div class="sol-icon" v-html="sol.icon"></div>
+            <span class="sol-letter">{{ String.fromCharCode(65 + idx) }}</span>
+            <div class="sol-icon-box">
+              <div class="sol-icon" v-html="defaultSolutionIcons[idx % defaultSolutionIcons.length]"></div>
+            </div>
             <h3 class="sol-title">{{ sol.title }}</h3>
-            <p class="sol-desc">{{ sol.desc }}</p>
+            <p class="sol-desc">{{ sol.summary }}</p>
             <router-link to="/business" class="sol-link">了解更多 →</router-link>
           </div>
         </div>
@@ -182,17 +185,18 @@
           <div class="title-line"></div>
         </div>
         <div class="cases-grid">
-          <div
+          <router-link
             v-for="(c, idx) in cases"
-            :key="idx"
+            :key="c.id || idx"
+            :to="`/cases/${c.id}`"
             class="case-card reveal"
           >
-            <div class="case-image" :style="{ backgroundImage: `url(${c.image})` }"></div>
+            <div class="case-image" :style="{ backgroundImage: `url(${getCaseImageUrl(c.coverImage) || 'https://images.unsplash.com/photo-1504328341540-c860949d477d?w=600&h=400&fit=crop'})` }"></div>
             <div class="case-overlay">
-              <h3 class="case-name">{{ c.name }}</h3>
-              <span class="case-tag">{{ c.tag }}</span>
+              <h3 class="case-name">{{ c.title }}</h3>
+              <span class="case-tag">{{ c.industry }}</span>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </section>
@@ -232,17 +236,17 @@
         <div class="faq-list reveal">
           <div
             v-for="(item, idx) in faqItems"
-            :key="idx"
+            :key="item.id || idx"
             class="faq-item"
             :class="{ active: activeFaq === idx }"
           >
             <div class="faq-question" @click="toggleFaq(idx)">
-              <span>{{ item.q }}</span>
+              <span>{{ item.question }}</span>
               <span class="faq-icon">{{ activeFaq === idx ? '−' : '+' }}</span>
             </div>
             <transition name="faq-expand">
               <div v-if="activeFaq === idx" class="faq-answer">
-                <p>{{ item.a }}</p>
+                <p>{{ item.answer }}</p>
               </div>
             </transition>
           </div>
@@ -304,6 +308,9 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { getHomeData, getSiteConfig } from '../api/home'
 import { getProductCategories } from '../api/product'
+import { getSolutionList } from '../api/solution'
+import { getCaseList } from '../api/case'
+import { getFaqList } from '../api/faq'
 import ProductCard from '../components/ProductCard.vue'
 import NewsItem from '../components/NewsItem.vue'
 
@@ -337,7 +344,6 @@ function stripHtml(html) {
 const trustItems = [
   'ISO9001认证',
   '10年+行业经验',
-  '500+合作客户',
   '专业研发团队',
   '全国服务网络'
 ]
@@ -350,7 +356,7 @@ const capabilities = [
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 20h12M18 28h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-    title: '定制设计',
+    title: '定制化加工',
     desc: '专业设计团队，根据客户需求量身定制专属解决方案，满足个性化生产要求。'
   },
   {
@@ -374,88 +380,26 @@ const processSteps = [
   { title: '售后服务', desc: '终身技术支持' }
 ]
 
-const solutions = [
-  {
-    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 38V18l16-10 16 10v20H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 38V26h8v12" stroke="currentColor" stroke-width="2"/></svg>`,
-    title: '矿山机械',
-    desc: '为矿山开采提供高效、耐用的成套设备解决方案，适应各种恶劣工况环境。'
-  },
-  {
-    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="24" width="12" height="18" stroke="currentColor" stroke-width="2"/><rect x="18" y="14" width="12" height="28" stroke="currentColor" stroke-width="2"/><rect x="30" y="6" width="12" height="36" stroke="currentColor" stroke-width="2"/></svg>`,
-    title: '建筑工程',
-    desc: '基础设施建设配套设备，助力城市工程建设高效、安全推进。'
-  },
-  {
-    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2"/><path d="M24 12v12l8 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-    title: '石油化工',
-    desc: '为石化行业提供耐腐蚀、高密封性的专业设备，保障生产安全稳定运行。'
-  },
-  {
-    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8c-8 0-14 6-14 14s14 22 14 22 14-14 14-22-6-14-14-14z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="22" r="4" stroke="currentColor" stroke-width="2"/></svg>`,
-    title: '环保设备',
-    desc: '提供高效节能的环保处理设备，助力企业实现绿色可持续发展。'
-  }
+const solutions = ref([])
+const cases = ref([])
+const faqItems = ref([])
+
+// 行业解决方案默认图标（后台无 icon 字段时兜底）
+const defaultSolutionIcons = [
+  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 38V18l16-10 16 10v20H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 38V26h8v12" stroke="currentColor" stroke-width="2"/></svg>`,
+  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="24" width="12" height="18" stroke="currentColor" stroke-width="2"/><rect x="18" y="14" width="12" height="28" stroke="currentColor" stroke-width="2"/><rect x="30" y="6" width="12" height="36" stroke="currentColor" stroke-width="2"/></svg>`,
+  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2"/><path d="M24 12v12l8 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8c-8 0-14 6-14 14s14 22 14 22 14-14 14-22-6-14-14-14z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="22" r="4" stroke="currentColor" stroke-width="2"/></svg>`,
+  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 20h12M18 28h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`
 ]
 
-const cases = [
-  {
-    name: '某矿业集团设备升级项目',
-    tag: '矿山行业',
-    image: 'https://images.unsplash.com/photo-1504328341540-c860949d477d?w=600&h=400&fit=crop'
-  },
-  {
-    name: '城市基建工程配套',
-    tag: '建筑工程',
-    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=400&fit=crop'
-  },
-  {
-    name: '化工厂设备定制',
-    tag: '石油化工',
-    image: 'https://images.unsplash.com/photo-1504307651254-65602e4bba56?w=600&h=400&fit=crop'
-  },
-  {
-    name: '环保水处理设备供应',
-    tag: '环保行业',
-    image: 'https://images.unsplash.com/photo-1581093458791-9d42e3c7e117?w=600&h=400&fit=crop'
-  },
-  {
-    name: '大型钢结构项目',
-    tag: '重工制造',
-    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee2e6514f?w=600&h=400&fit=crop'
-  },
-  {
-    name: '自动化产线改造',
-    tag: '智能制造',
-    image: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&h=400&fit=crop'
-  }
-]
-
-const faqItems = [
-  {
-    q: '你们的交货周期是多少？',
-    a: '标准产品3-7个工作日即可发货，定制产品根据复杂程度通常为15-30个工作日。我们会在签订合同后提供详细的交货时间表，确保按时交付。'
-  },
-  {
-    q: '是否提供定制服务？',
-    a: '是的，我们提供全方位定制服务。从需求分析、方案设计到生产制造，专业团队全程跟进，确保产品完全符合客户的个性化需求。'
-  },
-  {
-    q: '产品质保期多长？',
-    a: '所有产品均享受12个月质保服务，质保期内因产品质量问题导致的故障，我们免费提供维修或更换。部分核心部件享有更长的质保期。'
-  },
-  {
-    q: '如何获取报价？',
-    a: '您可以通过在线表单提交需求，拨打我们的服务热线，或发送邮件至销售部门。我们会在收到需求后24小时内为您提供详细的报价方案。'
-  },
-  {
-    q: '是否提供安装服务？',
-    a: '我们提供专业安装调试服务，经验丰富的工程师团队现场指导安装，确保设备正确安装并顺利投入运行。同时提供操作培训，确保客户熟练使用。'
-  },
-  {
-    q: '售后服务包括哪些内容？',
-    a: '售后服务包括7×24小时技术支持、定期维护保养、零配件供应、远程诊断及现场维修等。我们建立了完善的客户服务档案，主动跟踪设备运行状态。'
-  }
-]
+function getCaseImageUrl(url) {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  if (url.startsWith('/api/')) return url
+  return '/api' + (url.startsWith('/') ? url : '/' + url)
+}
 
 // === 轮播展示数据 ===
 const showcaseSlides = ref([
@@ -483,7 +427,7 @@ const showcaseSlides = ref([
   {
     tag: '关于我们',
     title: '15年精密加工经验 · 值得信赖',
-    desc: '国家高新技术企业，ISO9001认证，500+合作客户',
+    desc: '国家高新技术企业，ISO9001认证，值得信赖',
     link: '/about',
     icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 54V22l22-12 22 12v32" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M26 54V38h12v16" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>'
   }
@@ -563,14 +507,20 @@ onMounted(async () => {
   startAutoSlide()
 
   try {
-    const [homeRes, configRes, catRes] = await Promise.all([
+    const [homeRes, configRes, catRes, solutionRes, caseRes, faqRes] = await Promise.all([
       getHomeData(),
       getSiteConfig(),
-      getProductCategories()
+      getProductCategories(),
+      getSolutionList().catch(() => []),
+      getCaseList().catch(() => []),
+      getFaqList().catch(() => [])
     ])
     homeData.value = homeRes || {}
     config.value = configRes || {}
     categories.value = catRes || []
+    solutions.value = (solutionRes || []).slice(0, 6)
+    cases.value = (caseRes || []).slice(0, 6)
+    faqItems.value = faqRes || []
   } catch (e) {
     console.error('加载首页数据失败:', e)
   } finally {
@@ -1036,27 +986,94 @@ onUnmounted(() => {
 .solutions-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 2px;
 }
 
+/* === Sol Header === */
+.sol-header {
+  margin-bottom: 48px;
+}
+
+.sol-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.sol-main-title {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.sol-main-desc {
+  font-size: 15px;
+  color: rgba(242, 243, 239, 0.55);
+  line-height: 1.8;
+  max-width: 600px;
+}
+
+/* === Sol Cards === */
 .solution-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  padding: 36px 28px;
-  transition: transform var(--transition-base), border-color var(--transition-base);
+  position: relative;
+  background: #111214;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 36px 28px 32px;
+  transition: border-color 0.3s, background 0.3s;
+  overflow: hidden;
 }
 
 .solution-card:hover {
-  transform: translateY(-4px);
+  background: #18191f;
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* 大号字母序号 */
+.sol-letter {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  font-family: var(--font-serif);
+  font-size: 52px;
+  font-weight: 700;
+  color: rgba(212, 175, 55, 0.12);
+  line-height: 1;
+  user-select: none;
+  transition: color 0.3s;
+}
+
+.solution-card:hover .sol-letter {
+  color: rgba(212, 175, 55, 0.22);
+}
+
+/* 图标容器 */
+.sol-icon-box {
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  background: rgba(212, 175, 55, 0.06);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.solution-card:hover .sol-icon-box {
+  background: rgba(212, 175, 55, 0.12);
   border-color: var(--gold);
 }
 
 .sol-icon {
-  width: 48px;
-  height: 48px;
+  width: 28px;
+  height: 28px;
   color: var(--gold);
-  margin-bottom: 20px;
 }
 
 .sol-icon svg {
@@ -1065,25 +1082,28 @@ onUnmounted(() => {
 }
 
 .sol-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--white);
   margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 .sol-desc {
-  font-size: 14px;
-  color: rgba(242, 243, 239, 0.6);
-  line-height: 1.7;
-  margin-bottom: 20px;
+  font-size: 13px;
+  color: rgba(242, 243, 239, 0.5);
+  line-height: 1.75;
+  margin-bottom: 24px;
+  min-height: 60px;
 }
 
 .sol-link {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--gold);
   text-decoration: none;
   font-weight: 500;
-  transition: color var(--transition-base);
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
 }
 
 .sol-link:hover {
@@ -1099,6 +1119,8 @@ onUnmounted(() => {
 
 .case-card {
   position: relative;
+  display: block;
+  text-decoration: none;
   border-radius: var(--radius-lg);
   overflow: hidden;
   aspect-ratio: 16 / 10;

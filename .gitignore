@@ -1,0 +1,92 @@
+# ===== Java / Spring Boot =====
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Gradle（备用）
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ===== IDE =====
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# ===== Node.js / Vue =====
+node_modules/
+dist/
+.local
+
+# npm / yarn / pnpm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# vite 缓存
+.vite/
+*.local
+
+# ===== 环境变量 / 敏感配置 =====
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ===== 上传文件目录（本地资源，不提交） =====
+uploads/
+
+# ===== 系统文件 =====
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encdata
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ===== 日志 =====
+*.log
+logs/
+
+# ===== 测试覆盖率 =====
+coverage/
+*.lcov
+.nyc_output/
+
+# ===== 其他 =====
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig

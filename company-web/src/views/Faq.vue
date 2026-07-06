@@ -33,18 +33,18 @@
         <!-- FAQ列表 -->
         <div class="faq-list">
           <div
-            v-for="(item, idx) in filteredFaq"
-            :key="idx"
+            v-for="item in filteredFaq"
+            :key="item.id"
             class="faq-item"
-            :class="{ active: activeFaq === idx }"
+            :class="{ active: activeFaq === item.id }"
           >
-            <div class="faq-question" @click="toggleFaq(idx)">
-              <span>{{ item.q }}</span>
-              <span class="faq-icon" :class="{ rotated: activeFaq === idx }">&#8744;</span>
+            <div class="faq-question" @click="toggleFaq(item.id)">
+              <span>{{ item.question }}</span>
+              <span class="faq-icon" :class="{ rotated: activeFaq === item.id }">&#8744;</span>
             </div>
             <transition name="faq-expand">
-              <div v-if="activeFaq === idx" class="faq-answer">
-                <p>{{ item.a }}</p>
+              <div v-if="activeFaq === item.id" class="faq-answer">
+                <p>{{ item.answer }}</p>
               </div>
             </transition>
           </div>
@@ -60,40 +60,49 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { getFaqList, getFaqCategories } from '../api/faq'
 
-const activeFaq = ref(-1)
+const activeFaq = ref(null)
 const searchKeyword = ref('')
 const activeCategory = ref('全部')
+const categories = ref(['全部'])
+const faqItems = ref([])
 
-const categories = ['全部', '加工能力', '定制流程', '交期与质量']
-
-function toggleFaq(idx) {
-  activeFaq.value = activeFaq.value === idx ? -1 : idx
+function toggleFaq(id) {
+  activeFaq.value = activeFaq.value === id ? null : id
 }
 
-const faqItems = [
-  { q: '你们能加工的最大/最小直径是多少？', a: '我们的车削加工范围为Φ5mm~Φ1000mm，铣削最大行程为1200×600×500mm，可满足从小型精密件到中大型结构件的加工需求。', cat: '加工能力' },
-  { q: '能达到的最高精度等级是多少？', a: '常规加工精度为IT7~IT8级，精密加工可达IT6级，表面粗糙度最低可达Ra0.4。具体精度需根据零件结构和材质综合评估。', cat: '加工能力' },
-  { q: '可以加工哪些材质？', a: '支持碳钢、不锈钢（304/316L）、铝合金、铜合金、钛合金、工程塑料等多种材质。特殊材质可来样咨询。', cat: '加工能力' },
-  { q: '没有图纸，只有旧零件样品，可以加工吗？', a: '可以。我们支持逆向工程服务，通过三坐标测量和3D扫描对样品进行数据采集，生成加工图纸后进行生产。', cat: '定制流程' },
-  { q: '接受什么格式的图纸？', a: '支持STEP、IGES、DWG、DXF、PDF等常见格式。如果您有3D模型（SolidWorks、Pro/E等），也可以直接发送原始文件。', cat: '定制流程' },
-  { q: '起订量是多少？', a: '单件起订，支持打样。小批量（1~50件）、中批量（50~500件）、批量（500件以上）均可灵活安排生产。', cat: '定制流程' },
-  { q: '一般交货周期是多久？', a: '打样件通常5~7个工作日，小批量7~15个工作日，批量订单根据数量和工艺复杂度另行排产。急件可协商加急处理。', cat: '交期与质量' },
-  { q: '如何保证产品质量？', a: '我们通过ISO9001体系管理，配备三坐标测量仪、粗糙度仪等专业检测设备，每批次提供完整的尺寸检测报告。', cat: '交期与质量' },
-  { q: '出现质量问题如何处理？', a: '如因我方原因导致的质量不合格，我们承诺免费返工或重新生产，并承担相应物流费用。质保期内提供全程售后支持。', cat: '交期与质量' }
-]
+async function loadFaqData() {
+  try {
+    const [listRes, catRes] = await Promise.all([getFaqList(), getFaqCategories()])
+    faqItems.value = listRes || []
+    const cats = catRes || []
+    categories.value = ['全部', ...cats]
+  } catch (e) {
+    console.error('加载FAQ失败:', e)
+    faqItems.value = []
+    categories.value = ['全部']
+  }
+}
 
 const filteredFaq = computed(() => {
-  let list = faqItems
+  let list = faqItems.value
   if (activeCategory.value !== '全部') {
-    list = list.filter(item => item.cat === activeCategory.value)
+    list = list.filter(item => item.category === activeCategory.value)
   }
   if (searchKeyword.value.trim()) {
     const kw = searchKeyword.value.trim().toLowerCase()
-    list = list.filter(item => item.q.toLowerCase().includes(kw) || item.a.toLowerCase().includes(kw))
+    list = list.filter(item =>
+      item.question.toLowerCase().includes(kw) ||
+      item.answer.toLowerCase().includes(kw)
+    )
   }
   return list
+})
+
+onMounted(() => {
+  loadFaqData()
 })
 </script>
 

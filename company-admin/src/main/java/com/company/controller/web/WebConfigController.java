@@ -1,6 +1,5 @@
 package com.company.controller.web;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.company.common.result.R;
 import com.company.entity.SysConfig;
 import com.company.service.SysConfigService;

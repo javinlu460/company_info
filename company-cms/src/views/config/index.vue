@@ -41,6 +41,25 @@
         </el-row>
         <el-row :gutter="20">
           <el-col :span="12">
+            <el-form-item label="微信号" prop="company_wechat">
+              <el-input v-model="form.company_wechat" placeholder="请输入微信号" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="工作时间" prop="company_work_time">
+              <el-input v-model="form.company_work_time" placeholder="请输入工作时间" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="到厂路线" prop="company_route">
+              <el-input v-model="form.company_route" placeholder="请输入到厂路线" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
             <el-form-item label="备案号" prop="icp_number">
               <el-input v-model="form.icp_number" placeholder="请输入备案号" />
             </el-form-item>
@@ -86,6 +105,9 @@ const form = reactive({
   company_email: '',
   company_address: '',
   company_fax: '',
+  company_wechat: '',
+  company_work_time: '',
+  company_route: '',
   icp_number: '',
   company_description: '',
   company_culture: '',

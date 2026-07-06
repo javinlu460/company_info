@@ -76,7 +76,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { getNewsList, getNewsCategories } from '../api/news'
+import { getSolutionList } from '../api/solution'
 
 const businessList = ref([])
 const loading = ref(false)
@@ -151,14 +151,18 @@ const displayList = computed(() => {
 
 function buildSpecs(item, index) {
   const tags = []
-  if (item.categoryName || item.category) {
-    tags.push({ label: item.categoryName || item.category })
+  let tagArr = []
+  if (item.tags) {
+    try {
+      tagArr = JSON.parse(item.tags)
+      if (!Array.isArray(tagArr)) tagArr = []
+    } catch (e) {
+      tagArr = []
+    }
   }
-  const highlights = ['交期灵活', '保密协议', '可追溯', '小批量']
-  const extra = highlights[index % highlights.length]
-  if (extra) {
-    tags.push({ label: extra, highlight: true })
-  }
+  tagArr.forEach((label, idx) => {
+    tags.push({ label, highlight: idx === tagArr.length - 1 })
+  })
   return tags
 }
 
@@ -170,17 +174,8 @@ function truncateText(text, maxLen) {
 async function loadBusiness() {
   loading.value = true
   try {
-    const categories = await getNewsCategories()
-    const bizCat = categories.find(c =>
-      c.name.includes('业务') ||
-      c.name.includes('领域') ||
-      c.name.includes('应用') ||
-      c.name.includes('方案')
-    )
-    const params = { pageNum: 1, pageSize: 20 }
-    if (bizCat) params.categoryId = bizCat.id
-    const res = await getNewsList(params)
-    businessList.value = res.records || res.list || []
+    const res = await getSolutionList()
+    businessList.value = res || []
   } catch (e) {
     console.error('加载解决方案失败:', e)
     businessList.value = []
@@ -210,7 +205,7 @@ onMounted(() => {
   gap: 10px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--red);
+  color: var(--gold);
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 14px;
@@ -220,21 +215,21 @@ onMounted(() => {
   content: '';
   width: 18px;
   height: 2px;
-  background: var(--red);
+  background: var(--gold);
 }
 
 .section-head h2 {
   font-family: var(--font-serif);
   font-size: 34px;
   font-weight: 700;
-  color: var(--ink);
+  color: #F0F0EE;
   margin-bottom: 14px;
   line-height: 1.25;
 }
 
 .section-head .lead {
   font-size: 15px;
-  color: #6A6D70;
+  color: rgba(242, 243, 239, 0.55);
   line-height: 1.8;
   max-width: 720px;
   margin: 0;
@@ -244,23 +239,23 @@ onMounted(() => {
 .solutions-section {
   padding: var(--section-padding) 0;
   padding-top: calc(var(--header-height) + 30px);
-  background: #F2F3EF;
+  background: #0d0d10;
 }
 
 .cap-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+  gap: 2px;
 }
 
 .cap-card {
   position: relative;
-  background: #fff;
-  border: 1px solid #D0D3CC;
-  border-radius: 4px;
-  padding: 30px 28px;
+  background: #111214;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+  padding: 36px 32px 32px;
   overflow: hidden;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: background 0.3s, border-color 0.3s;
 }
 
 .cap-card::before {
@@ -270,12 +265,18 @@ onMounted(() => {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: var(--red);
+  background: var(--gold);
+  opacity: 0.5;
+  transition: opacity 0.3s;
 }
 
 .cap-card:hover {
-  border-color: var(--red);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: #18191f;
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+.cap-card:hover::before {
+  opacity: 1;
 }
 
 .cap-num {
@@ -283,23 +284,22 @@ onMounted(() => {
   font-family: var(--font-serif);
   font-size: 52px;
   font-weight: 700;
-  color: #D0D3CC;
+  color: rgba(212, 175, 55, 0.15);
   line-height: 1;
   margin-bottom: 12px;
-  opacity: 0.6;
 }
 
 .cap-card h3 {
   font-size: 18px;
   font-weight: 700;
-  color: var(--ink);
+  color: #F0F0EE;
   margin-bottom: 10px;
   line-height: 1.35;
 }
 
 .cap-card p {
   font-size: 14px;
-  color: #6A6D70;
+  color: rgba(242, 243, 239, 0.5);
   line-height: 1.85;
   margin-bottom: 16px;
 }
@@ -316,21 +316,21 @@ onMounted(() => {
   font-size: 12px;
   padding: 4px 11px;
   border-radius: 2px;
-  background: #E8EAE4;
-  border: 1px solid #D0D3CC;
-  color: #6A6D70;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(242, 243, 239, 0.55);
 }
 
 .tag.r {
-  background: #F2DADA;
-  border-color: #E0C0C0;
-  color: #8C1F1F;
+  background: rgba(212, 175, 55, 0.12);
+  border-color: rgba(212, 175, 55, 0.35);
+  color: var(--gold);
 }
 
 /* 合作流程 */
 .process-section {
   padding: var(--section-padding) 0;
-  background: #F2F3EF;
+  background: #111214;
 }
 
 .process-steps {
@@ -355,8 +355,8 @@ onMounted(() => {
   top: 28px;
   left: 50%;
   right: -50%;
-  height: 2px;
-  background: #D0D3CC;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.2);
   z-index: 0;
 }
 
@@ -370,9 +370,9 @@ onMounted(() => {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid var(--red);
-  color: var(--red);
+  background: #0d0d10;
+  border: 2px solid var(--gold);
+  color: var(--gold);
   font-family: var(--font-serif);
   font-size: 18px;
   font-weight: 700;
@@ -385,13 +385,13 @@ onMounted(() => {
 .process-step h5 {
   font-size: 14px;
   font-weight: 700;
-  color: var(--ink);
+  color: #F0F0EE;
   margin-bottom: 6px;
 }
 
 .process-step p {
   font-size: 12.5px;
-  color: #6A6D70;
+  color: rgba(242, 243, 239, 0.45);
   line-height: 1.6;
   margin: 0;
   max-width: 160px;
@@ -400,7 +400,7 @@ onMounted(() => {
 /* 底部 CTA */
 .cta-section {
   padding: 60px 0 80px;
-  background: #fff;
+  background: #0d0d10;
   text-align: center;
 }
 
@@ -417,15 +417,15 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   min-height: 240px;
-  color: #6A6D70;
+  color: rgba(242, 243, 239, 0.45);
   font-size: 14px;
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #D0D3CC;
-  border-top-color: var(--red);
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--gold);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 16px;

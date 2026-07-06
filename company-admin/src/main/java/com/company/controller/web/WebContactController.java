@@ -1,6 +1,5 @@
 package com.company.controller.web;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.company.common.result.R;
 import com.company.dto.MessageDTO;
 import com.company.entity.CmsMessage;
@@ -46,6 +45,9 @@ public class WebContactController {
         data.put("email", configMap.getOrDefault("company_email", ""));
         data.put("address", configMap.getOrDefault("company_address", ""));
         data.put("fax", configMap.getOrDefault("company_fax", ""));
+        data.put("wechat", configMap.getOrDefault("company_wechat", ""));
+        data.put("workTime", configMap.getOrDefault("company_work_time", "工作日 6:30—17:30"));
+        data.put("route", configMap.getOrDefault("company_route", ""));
         return R.ok(data);
     }
 

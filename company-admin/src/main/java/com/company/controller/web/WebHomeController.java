@@ -52,11 +52,11 @@ public class WebHomeController {
                         .orderByAsc(CmsBanner::getOrderNum));
         data.put("banners", banners);
 
-        // 推荐产品(is_recommend=1, limit 8)
+        // 产品列表(status=1, limit 8)
         List<CmsProduct> products = cmsProductService.list(
                 new LambdaQueryWrapper<CmsProduct>()
-                        .eq(CmsProduct::getIsRecommend, 1)
                         .eq(CmsProduct::getStatus, 1)
+                        .orderByAsc(CmsProduct::getOrderNum)
                         .orderByDesc(CmsProduct::getCreateTime)
                         .last("LIMIT 8"));
         data.put("products", products);

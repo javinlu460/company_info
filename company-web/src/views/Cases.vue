@@ -8,17 +8,18 @@
           <p class="lead">服务覆盖矿山、建筑、化工、环保、重工、智能制造等多个行业，累计服务客户超千家。</p>
         </div>
         <div class="cases-grid">
-          <div
+          <router-link
             v-for="(c, idx) in cases"
             :key="idx"
+            :to="`/cases/${c.id}`"
             class="case-card"
           >
-            <div class="case-image" :style="{ backgroundImage: `url(${c.image})` }"></div>
+            <div class="case-image" :style="{ backgroundImage: `url(${c.coverImage || defaultCaseImage})` }"></div>
             <div class="case-overlay">
-              <h3 class="case-name">{{ c.name }}</h3>
-              <span class="case-tag">{{ c.tag }}</span>
+              <h3 class="case-name">{{ c.title }}</h3>
+              <span class="case-tag">{{ c.industry }}</span>
             </div>
-          </div>
+          </router-link>
         </div>
         <div class="cta-wrapper">
           <router-link to="/contact" class="btn-red cta-btn">发图纸，获取报价及解决方案 →</router-link>
@@ -29,38 +30,25 @@
 </template>
 
 <script setup>
-const cases = [
-  {
-    name: '某矿业集团设备升级项目',
-    tag: '矿山行业',
-    image: 'https://images.unsplash.com/photo-1504328341540-c860949d477d?w=600&h=400&fit=crop'
-  },
-  {
-    name: '城市基建工程配套',
-    tag: '建筑工程',
-    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=400&fit=crop'
-  },
-  {
-    name: '化工厂设备定制',
-    tag: '石油化工',
-    image: 'https://images.unsplash.com/photo-1504307651254-65602e4bba56?w=600&h=400&fit=crop'
-  },
-  {
-    name: '环保水处理设备供应',
-    tag: '环保行业',
-    image: 'https://images.unsplash.com/photo-1581093458791-9d42e3c7e117?w=600&h=400&fit=crop'
-  },
-  {
-    name: '大型钢结构项目',
-    tag: '重工制造',
-    image: 'https://images.unsplash.com/photo-1565193566173-7a0ee2e6514f?w=600&h=400&fit=crop'
-  },
-  {
-    name: '自动化产线改造',
-    tag: '智能制造',
-    image: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&h=400&fit=crop'
+import { ref, onMounted } from 'vue'
+import { getCaseList } from '../api/case'
+
+const cases = ref([])
+const defaultCaseImage = 'https://images.unsplash.com/photo-1504328341540-c860949d477d?w=600&h=400&fit=crop'
+
+async function loadCases() {
+  try {
+    const res = await getCaseList()
+    cases.value = res || []
+  } catch (e) {
+    console.error('加载客户案例失败:', e)
+    cases.value = []
   }
-]
+}
+
+onMounted(() => {
+  loadCases()
+})
 </script>
 
 <style scoped>
@@ -119,6 +107,8 @@ const cases = [
 
 .case-card {
   position: relative;
+  display: block;
+  text-decoration: none;
   border-radius: var(--radius-lg);
   overflow: hidden;
   aspect-ratio: 16 / 10;

@@ -87,7 +87,7 @@
                       <a v-if="contactInfo.phone" :href="'tel:' + contactInfo.phone">{{ contactInfo.phone }}</a>
                       <span v-else>暂未填写</span>
                     </div>
-                    <div class="contact-hint">工作日 6:30—17:30</div>
+                    <div class="contact-hint">{{ contactInfo.workTime || '工作日 6:30—17:30' }}</div>
                   </div>
                 </li>
 
@@ -139,7 +139,7 @@
                       <span class="contact-label">到厂</span>
                     </div>
                     <div class="contact-value">
-                      <span>济南章丘出口，导航"白塔镇工业园"</span>
+                      <span>{{ contactInfo.route || '济南章丘出口，导航"白塔镇工业园"' }}</span>
                     </div>
                   </div>
                 </li>
@@ -287,7 +287,7 @@ onMounted(() => {
 <style scoped>
 /* ===== Body ===== */
 .contact-body {
-  background: #FAFAF8;
+  background: #0d0d10;
   padding: 72px 0 80px;
   margin-top: var(--header-height);
 }
@@ -299,7 +299,7 @@ onMounted(() => {
 
 .ew-label {
   font-size: 13px;
-  color: #B22B2B;
+  color: var(--gold);
   letter-spacing: 1px;
   font-weight: 500;
   margin-bottom: 12px;
@@ -309,7 +309,7 @@ onMounted(() => {
   font-family: var(--font-serif);
   font-size: 34px;
   font-weight: 700;
-  color: #1E1F20;
+  color: #F0F0EE;
   line-height: 1.25;
   margin: 0;
 }
@@ -324,8 +324,8 @@ onMounted(() => {
 
 /* ===== Form Column ===== */
 .form-column {
-  background: #fff;
-  border: 1px solid #D0D3CC;
+  background: #111214;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
   padding: 36px 40px;
 }
@@ -354,7 +354,7 @@ onMounted(() => {
 .form-group label {
   font-size: 13px;
   font-weight: 500;
-  color: #1E1F20;
+  color: #C8C8C6;
   margin-bottom: 6px;
 }
 
@@ -365,11 +365,11 @@ onMounted(() => {
 .form-group input,
 .form-group textarea {
   padding: 10px 14px;
-  border: 1px solid #D0D3CC;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 4px;
   font-size: 14px;
-  color: #1E1F20;
-  background: #fff;
+  color: #E8E8E6;
+  background: #0d0d10;
   transition: border-color 0.2s;
   outline: none;
   font-family: inherit;
@@ -377,12 +377,12 @@ onMounted(() => {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #9a9d9f;
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #B22B2B;
+  border-color: var(--gold);
 }
 
 .form-group input.input-error,
@@ -432,21 +432,21 @@ onMounted(() => {
 }
 
 .sidebar-card {
-  background: #F8F9F6;
-  border: 1px solid #D0D3CC;
+  background: #14161f;
+  border: 1px solid #252836;
   border-radius: 8px;
   padding: 28px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35);
 }
 
 .sidebar-title {
   font-family: var(--font-serif);
   font-size: 16px;
   font-weight: 700;
-  color: #1E1F20;
+  color: #F0F0EE;
   margin: 0 0 20px;
   padding-bottom: 14px;
-  border-bottom: 1px solid #D0D3CC;
+  border-bottom: 1px solid #2c2f3e;
 }
 
 /* Contact List */
@@ -462,7 +462,7 @@ onMounted(() => {
   display: flex;
   gap: 12px;
   padding: 14px 0;
-  border-bottom: 1px solid #E8EAE4;
+  border-bottom: 1px solid #252836;
 }
 
 .contact-item:last-child {
@@ -492,7 +492,7 @@ onMounted(() => {
 .contact-label {
   font-size: 13px;
   font-weight: 600;
-  color: #1E1F20;
+  color: #E8E8E6;
 }
 
 .badge {
@@ -508,13 +508,13 @@ onMounted(() => {
 
 .contact-value {
   font-size: 13px;
-  color: #1E1F20;
+  color: #C8C8C6;
   margin-bottom: 2px;
   word-break: break-all;
 }
 
 .contact-value a {
-  color: #1E1F20;
+  color: #C8C8C6;
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -525,14 +525,14 @@ onMounted(() => {
 
 .contact-hint {
   font-size: 12px;
-  color: #6A6D70;
+  color: #7a7d88;
 }
 
 /* Quote Process */
 .quote-process {
   margin-top: 20px;
   padding-top: 18px;
-  border-top: 1px dashed #D0D3CC;
+  border-top: 1px dashed #2c2f3e;
 }
 
 .process-title {
@@ -541,7 +541,7 @@ onMounted(() => {
   gap: 6px;
   font-size: 14px;
   font-weight: 700;
-  color: #1E1F20;
+  color: #E8E8E6;
   margin-bottom: 14px;
 }
 
@@ -572,7 +572,7 @@ onMounted(() => {
   top: 28px;
   bottom: -6px;
   width: 1px;
-  border-left: 1px dashed #C0C3BC;
+  border-left: 1px dashed #353848;
 }
 
 .step-num {
@@ -591,7 +591,7 @@ onMounted(() => {
 
 .step-text {
   font-size: 13px;
-  color: #3a3d40;
+  color: #A8ABBA;
   line-height: 1.5;
   padding-top: 3px;
 }
@@ -608,13 +608,14 @@ onMounted(() => {
 }
 
 .success-modal {
-  background: #fff;
+  background: #1a1b22;
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 8px;
   padding: 40px;
   text-align: center;
   max-width: 380px;
   width: 90%;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
 }
 
 .success-icon {
@@ -627,13 +628,13 @@ onMounted(() => {
   font-family: var(--font-serif);
   font-size: 20px;
   font-weight: 700;
-  color: #1E1F20;
+  color: #F0F0EE;
   margin-bottom: 8px;
 }
 
 .success-modal p {
   font-size: 14px;
-  color: #6A6D70;
+  color: rgba(242, 243, 239, 0.55);
   margin-bottom: 24px;
 }
 
