@@ -324,8 +324,8 @@ onMounted(() => {
 
 /* ===== Form Column ===== */
 .form-column {
-  background: #111214;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #F5EDE0;
+  border: 1px solid rgba(180, 140, 90, 0.2);
   border-radius: 8px;
   padding: 36px 40px;
 }
@@ -354,7 +354,7 @@ onMounted(() => {
 .form-group label {
   font-size: 13px;
   font-weight: 500;
-  color: #C8C8C6;
+  color: #3A2E24;
   margin-bottom: 6px;
 }
 
@@ -365,11 +365,11 @@ onMounted(() => {
 .form-group input,
 .form-group textarea {
   padding: 10px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(120, 90, 60, 0.25);
   border-radius: 4px;
   font-size: 14px;
-  color: #E8E8E6;
-  background: #0d0d10;
+  color: #2A2018;
+  background: #FBF6F0;
   transition: border-color 0.2s;
   outline: none;
   font-family: inherit;
@@ -377,12 +377,12 @@ onMounted(() => {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(42, 32, 24, 0.35);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: var(--gold);
+  border-color: #C9941A;
 }
 
 .form-group input.input-error,
@@ -432,21 +432,21 @@ onMounted(() => {
 }
 
 .sidebar-card {
-  background: #14161f;
-  border: 1px solid #252836;
+  background: #F5EDE0;
+  border: 1px solid rgba(180, 140, 90, 0.2);
   border-radius: 8px;
   padding: 28px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
 }
 
 .sidebar-title {
   font-family: var(--font-serif);
   font-size: 16px;
   font-weight: 700;
-  color: #F0F0EE;
+  color: #2A2018;
   margin: 0 0 20px;
   padding-bottom: 14px;
-  border-bottom: 1px solid #2c2f3e;
+  border-bottom: 1px solid rgba(120, 90, 60, 0.2);
 }
 
 /* Contact List */
@@ -462,7 +462,7 @@ onMounted(() => {
   display: flex;
   gap: 12px;
   padding: 14px 0;
-  border-bottom: 1px solid #252836;
+  border-bottom: 1px solid rgba(120, 90, 60, 0.15);
 }
 
 .contact-item:last-child {
@@ -492,12 +492,12 @@ onMounted(() => {
 .contact-label {
   font-size: 13px;
   font-weight: 600;
-  color: #E8E8E6;
+  color: #2A2018;
 }
 
 .badge {
   font-size: 11px;
-  background: #B22B2B;
+  background: #C9941A;
   color: #fff;
   padding: 1px 6px;
   border-radius: 2px;
@@ -508,31 +508,31 @@ onMounted(() => {
 
 .contact-value {
   font-size: 13px;
-  color: #C8C8C6;
+  color: #5A4A3A;
   margin-bottom: 2px;
   word-break: break-all;
 }
 
 .contact-value a {
-  color: #C8C8C6;
+  color: #5A4A3A;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .contact-value a:hover {
-  color: #B22B2B;
+  color: #C9941A;
 }
 
 .contact-hint {
   font-size: 12px;
-  color: #7a7d88;
+  color: #8A7A6A;
 }
 
 /* Quote Process */
 .quote-process {
   margin-top: 20px;
   padding-top: 18px;
-  border-top: 1px dashed #2c2f3e;
+  border-top: 1px dashed rgba(120, 90, 60, 0.25);
 }
 
 .process-title {
@@ -541,7 +541,7 @@ onMounted(() => {
   gap: 6px;
   font-size: 14px;
   font-weight: 700;
-  color: #E8E8E6;
+  color: #2A2018;
   margin-bottom: 14px;
 }
 
@@ -572,13 +572,13 @@ onMounted(() => {
   top: 28px;
   bottom: -6px;
   width: 1px;
-  border-left: 1px dashed #353848;
+  border-left: 1px dashed rgba(120, 90, 60, 0.3);
 }
 
 .step-num {
   width: 22px;
   height: 22px;
-  background: #B22B2B;
+  background: #C9941A;
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -591,7 +591,7 @@ onMounted(() => {
 
 .step-text {
   font-size: 13px;
-  color: #A8ABBA;
+  color: #6A5A4A;
   line-height: 1.5;
   padding-top: 3px;
 }
