@@ -41,11 +41,11 @@
       </div>
     </section>
 
-    <!-- 业务与贸易范围 Tab -->
+    <!-- 企业文化 Tab -->
     <section class="section-light culture-section">
       <div class="container">
         <div class="section-title">
-          <h2>业务与贸易范围</h2>
+          <h2>企业文化</h2>
           <p>CORPORATE CULTURE</p>
           <div class="title-line"></div>
         </div>
@@ -80,7 +80,7 @@
     <section class="section-white honor-section">
       <div class="container">
         <div class="section-title">
-          <h2>荣誉资质</h2>
+          <h2>资质荣誉</h2>
           <p>QUALIFICATIONS & HONORS</p>
           <div class="title-line"></div>
         </div>
@@ -98,7 +98,7 @@
                 <path d="M32 18L36 28H47L38 35L41 46L32 39L23 46L26 35L17 28H28L32 18Z" fill="#BF8E2A" />
               </svg>
             </div>
-            <h4>荣誉资质 {{ n }}</h4>
+            <h4>资质荣誉 {{ n }}</h4>
             <p>行业认可与企业实力认证</p>
           </div>
         </div>
@@ -116,8 +116,8 @@ const banners = ref([])
 
 const tabs = [
   { key: 'about', name: '公司简介' },
-  { key: 'culture', name: '业务与贸易范围' },
-  { key: 'honor', name: '荣誉资质' }
+  { key: 'culture', name: '企业文化' },
+  { key: 'honor', name: '资质荣誉' }
 ]
 
 const activeTab = ref('about')
@@ -142,7 +142,7 @@ const statList = computed(() => [
 const milestones = [
   { year: '2010', title: '公司成立', desc: '在行业内正式注册成立，开启专业化服务之路。' },
   { year: '2014', title: '规模扩张', desc: '业务覆盖全国多个省市，团队规模突破百人。' },
-  { year: '2018', title: '技术升级', desc: '引进先进生产设备与管理体系，通过 ISO 质量体系认证。' },
+  { year: '2018', title: '技术升级', desc: '引进先进生产设备与管理体系，通过 ISO9001 质量体系认证。' },
   { year: '2022', title: '行业领先', desc: '成为细分领域标杆企业，服务客户超过千家。' },
   { year: '2026', title: '持续创新', desc: '持续加大研发投入，推动数字化转型与智能化升级。' }
 ]

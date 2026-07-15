@@ -76,7 +76,6 @@
           >
             <div class="cap-icon" v-html="item.icon"></div>
             <h3 class="cap-title">{{ item.title }}</h3>
-            <p class="cap-desc">{{ item.desc }}</p>
           </div>
         </div>
       </div>
@@ -260,23 +259,23 @@
         <div class="about-inner">
           <div class="about-stats reveal">
             <div class="stat-item">
-              <span class="stat-num">{{ config.establishYear || '15' }}</span>
+              <span class="stat-num">{{ config.establishYear || '10' }}</span>
               <span class="stat-unit">年+</span>
               <span class="stat-label">成立年限</span>
             </div>
             <div class="stat-item">
-              <span class="stat-num">{{ config.registeredCapital || '5000' }}</span>
-              <span class="stat-unit">万</span>
-              <span class="stat-label">注册资金</span>
+              <span class="stat-num">{{ config.registeredCapital || 'ISO9001' }}</span>
+              <span class="stat-unit">认证</span>
+              <span class="stat-label">资质</span>
             </div>
             <div class="stat-item">
-              <span class="stat-num">{{ config.agentCount || '500' }}</span>
+              <span class="stat-num">{{ config.agentCount || 'CNC' }}</span>
               <span class="stat-unit">+</span>
-              <span class="stat-label">合作伙伴</span>
+              <span class="stat-label">精密加工</span>
             </div>
             <div class="stat-item">
-              <span class="stat-num">{{ config.caseCount || '1000' }}</span>
-              <span class="stat-unit">+</span>
+              <span class="stat-num">{{ config.caseCount || 'OEM' }}</span>
+              <span class="stat-unit">定制</span>
               <span class="stat-label">服务案例</span>
             </div>
           </div>
@@ -344,30 +343,26 @@ function stripHtml(html) {
 const trustItems = [
   'ISO9001认证',
   '10年+行业经验',
-  '专业研发团队',
-  '全国服务网络'
+  '定制化',
+  '非标件·三体系'
 ]
 
 const capabilities = [
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
     title: '精密加工',
-    desc: '先进加工设备，公差控制在0.01mm以内，确保每一个零部件的精度与品质。'
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 20h12M18 28h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
     title: '定制化加工',
-    desc: '专业设计团队，根据客户需求量身定制专属解决方案，满足个性化生产要求。'
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4l4 8 9 1.5-6.5 6 1.5 9-8-4.5-8 4.5 1.5-9-6.5-6 9-1.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
     title: '质量管控',
-    desc: '全流程质量管理体系，从原材料到成品，层层把关，确保产品零缺陷交付。'
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="20" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 40c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M30 38l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
     title: '售后保障',
-    desc: '终身技术支持，7×24小时响应，专业售后团队随时为客户提供高效服务。'
   }
 ]
 
@@ -377,7 +372,7 @@ const processSteps = [
   { title: '生产制造', desc: '精密加工严格品控' },
   { title: '质量检测', desc: '全流程质量把关' },
   { title: '物流配送', desc: '安全快捷送达' },
-  { title: '售后服务', desc: '终身技术支持' }
+  { title: '售后服务', desc: '长期技术支持' }
 ]
 
 const solutions = ref([])
@@ -426,7 +421,7 @@ const showcaseSlides = ref([
   },
   {
     tag: '关于我们',
-    title: '15年精密加工经验 · 值得信赖',
+    title: '10年+精密加工经验 · 值得信赖',
     desc: '国家高新技术企业，ISO9001认证，值得信赖',
     link: '/about',
     icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 54V22l22-12 22 12v32" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M26 54V38h12v16" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>'

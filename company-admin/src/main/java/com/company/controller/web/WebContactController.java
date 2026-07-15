@@ -46,7 +46,7 @@ public class WebContactController {
         data.put("address", configMap.getOrDefault("company_address", ""));
         data.put("fax", configMap.getOrDefault("company_fax", ""));
         data.put("wechat", configMap.getOrDefault("company_wechat", ""));
-        data.put("workTime", configMap.getOrDefault("company_work_time", "工作日 6:30—17:30"));
+        data.put("workTime", configMap.getOrDefault("company_work_time", "工作日正常工作时间"));
         data.put("route", configMap.getOrDefault("company_route", ""));
         return R.ok(data);
     }
