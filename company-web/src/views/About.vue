@@ -45,7 +45,7 @@
     <section class="section-light culture-section">
       <div class="container">
         <div class="section-title">
-          <h2>企业文化</h2>
+          <h2>关于我们</h2>
           <p>CORPORATE CULTURE</p>
           <div class="title-line"></div>
         </div>
@@ -116,7 +116,7 @@ const banners = ref([])
 
 const tabs = [
   { key: 'about', name: '公司简介' },
-  { key: 'culture', name: '企业文化' },
+  { key: 'culture', name: '业务与贸易范围' },
   { key: 'honor', name: '资质荣誉' }
 ]
 

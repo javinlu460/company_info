@@ -102,7 +102,7 @@
                       <a v-if="contactInfo.email" :href="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
                       <span v-else>暂未填写</span>
                     </div>
-                    <div class="contact-hint">回邮/询价请发至此</div>
+                    <div class="contact-hint">图纸/需求询价请发至此</div>
                   </div>
                 </li>
 
@@ -154,23 +154,23 @@
                 <ol class="process-steps">
                   <li>
                     <span class="step-num">1</span>
-                    <span class="step-text">发送图纸/样品描述</span>
+                    <span class="step-text">发图纸/需求描述</span>
                   </li>
                   <li>
                     <span class="step-num">2</span>
-                    <span class="step-text">工程师评估工艺（工作日）</span>
+                    <span class="step-text">工程师评估(工作日)</span>
                   </li>
                   <li>
                     <span class="step-num">3</span>
-                    <span class="step-text">确认报价：材质·交期</span>
+                    <span class="step-text">预估报价，材质，交期</span>
                   </li>
                   <li>
                     <span class="step-num">4</span>
-                    <span class="step-text">打样 → 确认 → 批量生产</span>
+                    <span class="step-text">正式签约</span>
                   </li>
                   <li>
                     <span class="step-num">5</span>
-                    <span class="step-text">跟检出报告 → 发货跟踪</span>
+                    <span class="step-text">打样--确认--批量生产</span>
                   </li>
                 </ol>
               </div>

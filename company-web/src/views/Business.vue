@@ -133,8 +133,8 @@ const processSteps = [
   { title: '工程师审核', desc: '评估工艺、材料与交期' },
   { title: '报价签约', desc: '双方拟定合同和正式签约' },
   { title: '确认打样', desc: '报价确认后安排样品制作' },
-  { title: '质检/交样报告', desc: '全尺寸检测并出具报告' },
-  { title: '批量生产及交付', desc: '按订单批量生产准时交付' }
+  { title: '质检/交样报告', desc: '检测/出具报告' },
+  { title: '批量生产及交付', desc: '按合同交付' }
 ]
 
 const displayList = computed(() => {

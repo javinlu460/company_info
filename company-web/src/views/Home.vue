@@ -259,24 +259,24 @@
         <div class="about-inner">
           <div class="about-stats reveal">
             <div class="stat-item">
-              <span class="stat-num">{{ config.establishYear || '10' }}</span>
-              <span class="stat-unit">年+</span>
+              <span class="stat-num">{{ config.establishYear || '10年+' }}</span>
+              <span class="stat-unit"></span>
               <span class="stat-label">成立年限</span>
             </div>
             <div class="stat-item">
               <span class="stat-num">{{ config.registeredCapital || 'ISO9001' }}</span>
-              <span class="stat-unit">认证</span>
-              <span class="stat-label">资质</span>
+              <span class="stat-unit"></span>
+              <span class="stat-label">认证</span>
             </div>
             <div class="stat-item">
               <span class="stat-num">{{ config.agentCount || 'CNC' }}</span>
-              <span class="stat-unit">+</span>
+              <span class="stat-unit"></span>
               <span class="stat-label">精密加工</span>
             </div>
             <div class="stat-item">
               <span class="stat-num">{{ config.caseCount || 'OEM' }}</span>
-              <span class="stat-unit">定制</span>
-              <span class="stat-label">服务案例</span>
+              <span class="stat-unit"></span>
+              <span class="stat-label">定制</span>
             </div>
           </div>
           <div class="about-text reveal">
@@ -367,12 +367,12 @@ const capabilities = [
 ]
 
 const processSteps = [
-  { title: '需求沟通', desc: '深入了解客户需求' },
-  { title: '方案设计', desc: '定制专属解决方案' },
-  { title: '生产制造', desc: '精密加工严格品控' },
-  { title: '质量检测', desc: '全流程质量把关' },
-  { title: '物流配送', desc: '安全快捷送达' },
-  { title: '售后服务', desc: '长期技术支持' }
+  { title: '需求沟通', desc: '' },
+  { title: '方案设计', desc: '' },
+  { title: '生产制造', desc: '' },
+  { title: '质量检测', desc: '' },
+  { title: '物流配送', desc: '' },
+  { title: '售后服务', desc: '' }
 ]
 
 const solutions = ref([])
@@ -415,14 +415,14 @@ const showcaseSlides = ref([
   {
     tag: '行业洞察',
     title: '机械加工专业知识与行业趋势',
-    desc: '选材指南、精度知识、工艺指导、行业趋势分析',
+    desc: '',
     link: '/news',
     icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="10" width="36" height="44" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M22 22h20M22 30h20M22 38h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
   },
   {
     tag: '关于我们',
     title: '10年+精密加工经验 · 值得信赖',
-    desc: '国家高新技术企业，ISO9001认证，值得信赖',
+    desc: 'ISO9001认证，值得信赖',
     link: '/about',
     icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 54V22l22-12 22 12v32" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M26 54V38h12v16" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>'
   }
