@@ -95,8 +95,9 @@ const imageUrl = computed(() => {
 })
 
 const decodedContent = computed(() => {
-  if (!product.value.content) return ''
-  return decodeHtmlEntities(product.value.content)
+  const raw = product.value.detail || product.value.content
+  if (!raw) return ''
+  return decodeHtmlEntities(raw)
 })
 
 function getImageUrl(url) {

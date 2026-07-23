@@ -70,13 +70,13 @@
         <el-form-item label="公司简介" prop="company_description">
           <RichEditor v-model="form.company_description" />
         </el-form-item>
-        <el-form-item label="企业文化" prop="company_culture">
+        <el-form-item label="业务与贸易范围" prop="company_culture">
           <RichEditor v-model="form.company_culture" />
         </el-form-item>
         <el-form-item label="资质荣誉" prop="company_honor">
           <RichEditor v-model="form.company_honor" />
         </el-form-item>
-        <el-form-item label="公司愿景" prop="company_vision">
+        <el-form-item label="工贸一体" prop="company_vision">
           <RichEditor v-model="form.company_vision" />
         </el-form-item>
 

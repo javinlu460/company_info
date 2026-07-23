@@ -341,10 +341,10 @@ function stripHtml(html) {
 
 // === 硬编码数据 ===
 const trustItems = [
-  'ISO9001认证',
+  'ISO9001认证·三体系',
   '10年+行业经验',
   '定制化',
-  '非标件·三体系'
+  '非标件'
 ]
 
 const capabilities = [

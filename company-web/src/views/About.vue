@@ -115,12 +115,11 @@ import Banner from '../components/Banner.vue'
 const banners = ref([])
 
 const tabs = [
-  { key: 'about', name: '公司简介' },
-  { key: 'culture', name: '业务与贸易范围' },
-  { key: 'honor', name: '资质荣誉' }
+  { key: 'vision', name: '业务与贸易范围' },
+  { key: 'culture', name: '工贸一体' }
 ]
 
-const activeTab = ref('about')
+const activeTab = ref('vision')
 const loading = ref(false)
 const configData = ref({})
 const siteConfig = ref({})
@@ -149,7 +148,7 @@ const milestones = [
 
 const tabContent = computed(() => {
   const keyMap = {
-    about: 'aboutContent',
+    vision: 'visionContent',
     culture: 'cultureContent',
     honor: 'honorContent'
   }

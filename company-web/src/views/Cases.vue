@@ -14,7 +14,7 @@
             :to="`/cases/${c.id}`"
             class="case-card"
           >
-            <div class="case-image" :style="{ backgroundImage: `url(${c.coverImage || defaultCaseImage})` }"></div>
+            <div class="case-image" :style="{ backgroundImage: `url(${getCaseImageUrl(c.coverImage) || defaultCaseImage})` }"></div>
             <div class="case-overlay">
               <h3 class="case-name">{{ c.title }}</h3>
               <span class="case-tag">{{ c.industry }}</span>
@@ -35,6 +35,13 @@ import { getCaseList } from '../api/case'
 
 const cases = ref([])
 const defaultCaseImage = 'https://images.unsplash.com/photo-1504328341540-c860949d477d?w=600&h=400&fit=crop'
+
+function getCaseImageUrl(url) {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  if (url.startsWith('/api/')) return url
+  return '/api' + (url.startsWith('/') ? url : '/' + url)
+}
 
 async function loadCases() {
   try {

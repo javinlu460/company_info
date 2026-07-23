@@ -21,19 +21,23 @@
             <div
               v-for="(item, index) in displayList"
               :key="item.id || index"
-              class="cap-card"
+              class="cap-wrap"
             >
-              <span class="cap-num">{{ item.num }}</span>
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.summary }}</p>
-              <div v-if="item.specs && item.specs.length" class="cap-specs">
-                <span
-                  v-for="(spec, sIdx) in item.specs"
-                  :key="sIdx"
-                  :class="['tag', { r: spec.highlight }]"
-                >
-                  {{ spec.label }}
-                </span>
+              <div class="cap-card">
+                <div class="cap-top">
+                  <div class="cap-icon" v-html="solutionIcons[index % solutionIcons.length]"></div>
+                </div>
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.summary }}</p>
+                <div v-if="item.specs && item.specs.length" class="cap-specs">
+                  <span
+                    v-for="(spec, sIdx) in item.specs"
+                    :key="sIdx"
+                    :class="['tag', { r: spec.highlight }]"
+                  >
+                    {{ spec.label }}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -46,18 +50,19 @@
       <div class="container">
         <div class="section-head center">
           <span class="ew">PROCESS · 合作流程</span>
-          <h2>从发图纸到收货——五步搞定</h2>
+          <h2>从发图纸到收货——六步搞定</h2>
         </div>
 
-        <div class="process-steps">
+        <div class="flow-grid">
           <div
             v-for="(step, idx) in processSteps"
             :key="idx"
-            class="process-step"
+            class="step-box-wrap"
           >
-            <div class="step-circle">{{ idx + 1 }}</div>
-            <h5>{{ step.title }}</h5>
-            <p>{{ step.desc }}</p>
+            <div class="step-box">
+              <span class="st-title">{{ step.title }}</span>
+              <span class="st-desc">{{ step.desc }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -128,6 +133,18 @@ const defaultSolutions = [
   }
 ]
 
+// 解决方案卡片图标（贴合制造业务，白色描边，置于酒红渐变徽标块内）
+const solutionIcons = [
+  // OEM 按图加工 —— 齿轮/精密加工
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  // 快速打样 —— 闪电
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  // 小批量·维修/替换 —— 扳手
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-2.4-.6-.6-2.4 2.7-2.7z"/></svg>`,
+  // 逆向工程·来样复制 —— 循环/逆向箭头
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>`
+]
+
 const processSteps = [
   { title: '提交图纸', desc: '上传图纸、样品或需求说明' },
   { title: '工程师审核', desc: '评估工艺、材料与交期' },
@@ -191,13 +208,25 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* ========== 工业对比风格 (Final Contrast Industrial) ========== */
+.business-page {
+  --maroon: #8a352d;
+  --surface: #ffffff;
+  --tp: #1a1917;
+  --tb: #55524a;
+}
+
 /* 公共标题区 */
 .section-head {
-  margin-bottom: 44px;
+  margin-bottom: 40px;
 }
 
 .section-head.center {
   text-align: center;
+}
+
+.section-head.center .lead {
+  margin: 0 auto;
 }
 
 .ew {
@@ -205,243 +234,230 @@ onMounted(() => {
   align-items: center;
   gap: 10px;
   font-size: 13px;
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: 1px;
+  font-weight: 800;
+  color: var(--maroon);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .ew::before {
   content: '';
-  width: 18px;
+  width: 20px;
   height: 2px;
-  background: var(--gold);
+  background: var(--maroon);
 }
 
 .section-head h2 {
-  font-family: var(--font-serif);
-  font-size: 34px;
-  font-weight: 700;
-  color: #F0F0EE;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--tp);
   margin-bottom: 14px;
   line-height: 1.25;
 }
 
 .section-head .lead {
   font-size: 15px;
-  color: rgba(242, 243, 239, 0.55);
+  color: var(--tb);
   line-height: 1.8;
   max-width: 720px;
   margin: 0;
 }
 
-/* 解决方案网格 */
+/* 解决方案 */
 .solutions-section {
   padding: var(--section-padding) 0;
   padding-top: calc(var(--header-height) + 30px);
-  background: #0d0d10;
+  background: var(--paper);
 }
 
 .cap-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 35px 25px;
+}
+
+/* 卡片：底/右偏移酒红叠层 */
+.cap-wrap {
+  position: relative;
+  padding-bottom: 12px;
+  padding-right: 12px;
+}
+
+.cap-wrap::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 0;
+  bottom: 0;
+  background: var(--maroon);
+  border-radius: 2px;
+  z-index: 0;
 }
 
 .cap-card {
   position: relative;
-  background: #111214;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 0;
-  padding: 36px 32px 32px;
-  overflow: hidden;
-  transition: background 0.3s, border-color 0.3s;
+  z-index: 1;
+  background: var(--surface);
+  border: 2px solid var(--maroon);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 22px 20px 25px;
+  transition: transform var(--transition-base);
 }
 
-.cap-card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--gold);
-  opacity: 0.5;
-  transition: opacity 0.3s;
+.cap-wrap:hover .cap-card {
+  transform: translate(-3px, -3px);
 }
 
-.cap-card:hover {
-  background: #18191f;
-  border-color: rgba(212, 175, 55, 0.35);
+.cap-top {
+  margin-bottom: 15px;
 }
 
-.cap-card:hover::before {
-  opacity: 1;
+.cap-icon {
+  color: var(--maroon);
+  display: inline-flex;
 }
 
-.cap-num {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: 52px;
-  font-weight: 700;
-  color: rgba(212, 175, 55, 0.15);
-  line-height: 1;
-  margin-bottom: 12px;
+.cap-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.cap-letter {
+  display: none;
 }
 
 .cap-card h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #F0F0EE;
-  margin-bottom: 10px;
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--tp);
+  margin-bottom: 12px;
   line-height: 1.35;
 }
 
 .cap-card p {
-  font-size: 14px;
-  color: rgba(242, 243, 239, 0.5);
-  line-height: 1.85;
-  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--tb);
+  line-height: 1.6;
+  margin-bottom: 25px;
+  flex: 1;
 }
 
 .cap-specs {
   display: flex;
+  gap: 8px;
   flex-wrap: wrap;
-  gap: 7px;
+  margin-top: auto;
 }
 
 .tag {
-  display: inline-flex;
-  align-items: center;
-  font-size: 12px;
-  padding: 4px 11px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(242, 243, 239, 0.55);
+  font-size: 11px;
+  padding: 3px 10px;
+  border: 1.5px solid var(--maroon);
+  color: var(--tb);
+  font-weight: 700;
+  background: #fff;
 }
 
 .tag.r {
-  background: rgba(212, 175, 55, 0.12);
-  border-color: rgba(212, 175, 55, 0.35);
-  color: var(--gold);
+  background: rgba(138, 53, 45, 0.05);
 }
 
 /* 合作流程 */
 .process-section {
   padding: var(--section-padding) 0;
-  background: #111214;
+  background: var(--paper);
 }
 
-.process-steps {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0;
-  position: relative;
-}
-
-.process-step {
-  position: relative;
+.flow-grid {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 0 14px;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 22px;
+  position: relative;
+  padding: 0 10px;
 }
 
-.process-step::before {
+.flow-grid::before {
   content: '';
   position: absolute;
-  top: 28px;
-  left: 50%;
-  right: -50%;
-  height: 1px;
-  background: rgba(212, 175, 55, 0.2);
+  top: 30px;
+  left: 60px;
+  right: 60px;
+  height: 4px;
+  background: var(--maroon);
   z-index: 0;
 }
 
-.process-step:last-child::before {
-  display: none;
-}
-
-.step-circle {
+.step-box-wrap {
   position: relative;
+  flex: 1;
   z-index: 1;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #0d0d10;
-  border: 2px solid var(--gold);
-  color: var(--gold);
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 18px;
+  padding-bottom: 8px;
+  padding-right: 8px;
 }
 
-.process-step h5 {
-  font-size: 14px;
-  font-weight: 700;
-  color: #F0F0EE;
+.step-box-wrap::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 0;
+  bottom: 0;
+  background: var(--maroon);
+  z-index: -1;
+}
+
+.step-box {
+  background: #fff;
+  border: 2px solid var(--maroon);
+  padding: 15px 10px;
+  text-align: center;
+  height: 100%;
+}
+
+.step-box .st-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--tp);
   margin-bottom: 6px;
 }
 
-.process-step p {
-  font-size: 12.5px;
-  color: rgba(242, 243, 239, 0.45);
-  line-height: 1.6;
-  margin: 0;
-  max-width: 140px;
+.step-box .st-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--tb);
+  line-height: 1.35;
 }
 
 /* 底部 CTA */
 .cta-section {
   padding: 60px 0 80px;
-  background: #0d0d10;
+  background: var(--paper);
   text-align: center;
 }
 
 .cta-btn {
-  padding: 14px 40px;
+  padding: 16px 42px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 800;
+  background: var(--maroon);
+  border-radius: 2px;
 }
 
-/* 加载状态 */
-.loading-wrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 240px;
-  color: rgba(242, 243, 239, 0.45);
-  font-size: 14px;
-}
-
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+.cta-btn:hover {
+  background: #722a23;
 }
 
 /* 响应式 */
 @media (max-width: 992px) {
   .cap-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .section-head h2 {
@@ -450,34 +466,18 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .process-steps {
+  .cap-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
   }
 
-  .process-step {
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: left;
-    padding: 0;
+  .flow-grid {
+    flex-direction: column;
     gap: 16px;
+    padding: 0;
   }
 
-  .process-step::before {
+  .flow-grid::before {
     display: none;
-  }
-
-  .step-circle {
-    flex-shrink: 0;
-    margin-bottom: 0;
-  }
-
-  .process-step h5 {
-    margin-top: 4px;
-  }
-
-  .process-step p {
-    max-width: none;
   }
 
   .cta-btn {

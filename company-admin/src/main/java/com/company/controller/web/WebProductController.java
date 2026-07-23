@@ -38,6 +38,8 @@ public class WebProductController {
         if (categoryId != null) {
             wrapper.eq(CmsProduct::getCategoryId, categoryId);
         }
+        wrapper.orderByDesc(CmsProduct::getIsRecommend);
+        wrapper.orderByAsc(CmsProduct::getOrderNum);
         wrapper.orderByDesc(CmsProduct::getCreateTime);
         return R.ok(cmsProductService.page(page, wrapper));
     }
