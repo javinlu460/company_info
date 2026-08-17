@@ -122,7 +122,7 @@ onUnmounted(() => {
 
 .banner-slide img {
   width: 100%;
-  height: 500px;
+  height: 580px;
   object-fit: cover;
 }
 
@@ -204,7 +204,7 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
   .banner-slide img {
-    height: 250px;
+    height: 300px;
   }
 
   .banner-caption {

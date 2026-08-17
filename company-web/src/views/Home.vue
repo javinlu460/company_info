@@ -14,38 +14,9 @@
       </div>
     </section>
 
-    <!-- 轮播展示区 -->
-    <section class="showcase-carousel">
-      <div class="container">
-        <div class="carousel-wrapper">
-          <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
-            <div class="carousel-slide" v-for="(slide, idx) in showcaseSlides" :key="idx">
-              <div class="slide-content">
-                <div class="slide-info">
-                  <span class="slide-tag">{{ slide.tag }}</span>
-                  <h3 class="slide-title">{{ slide.title }}</h3>
-                  <p class="slide-desc">{{ slide.desc }}</p>
-                  <router-link :to="slide.link" class="slide-link">了解更多 →</router-link>
-                </div>
-                <div class="slide-visual">
-                  <div class="slide-icon" v-html="slide.icon"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-controls">
-            <button class="carousel-btn prev" @click="prevSlide" aria-label="上一个">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <div class="carousel-dots">
-              <span v-for="(slide, idx) in showcaseSlides" :key="idx" class="dot" :class="{ active: currentSlide === idx }" @click="currentSlide = idx"></span>
-            </div>
-            <button class="carousel-btn next" @click="nextSlide" aria-label="下一个">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
+    <!-- 轮播展示区（与“关于我们”页顶部同一轮播图组件） -->
+    <section v-if="homeData.banners && homeData.banners.length" class="showcase-banner">
+      <Banner :banners="homeData.banners" />
     </section>
 
     <!-- 2. Trust Strip -->
@@ -69,6 +40,10 @@
           <p class="section-subtitle">Core Capabilities</p>
         </div>
         <div class="capabilities-grid">
+          <div class="cap-card capabilities-highlight reveal">
+            <p>Φ250mm - 1000mm</p>
+            <p>IT3-IT6（可达IT6级）</p>
+          </div>
           <div
             v-for="(item, idx) in capabilities"
             :key="idx"
@@ -163,7 +138,6 @@
             :key="sol.id || idx"
             class="solution-card reveal"
           >
-            <span class="sol-letter">{{ String.fromCharCode(65 + idx) }}</span>
             <div class="sol-icon-box">
               <div class="sol-icon" v-html="defaultSolutionIcons[idx % defaultSolutionIcons.length]"></div>
             </div>
@@ -312,6 +286,7 @@ import { getCaseList } from '../api/case'
 import { getFaqList } from '../api/faq'
 import ProductCard from '../components/ProductCard.vue'
 import NewsItem from '../components/NewsItem.vue'
+import Banner from '../components/Banner.vue'
 
 const homeData = ref({})
 const config = ref({})
@@ -381,10 +356,14 @@ const faqItems = ref([])
 
 // 行业解决方案默认图标（后台无 icon 字段时兜底）
 const defaultSolutionIcons = [
-  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 38V18l16-10 16 10v20H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M20 38V26h8v12" stroke="currentColor" stroke-width="2"/></svg>`,
-  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="24" width="12" height="18" stroke="currentColor" stroke-width="2"/><rect x="18" y="14" width="12" height="28" stroke="currentColor" stroke-width="2"/><rect x="30" y="6" width="12" height="36" stroke="currentColor" stroke-width="2"/></svg>`,
-  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2"/><path d="M24 12v12l8 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8c-8 0-14 6-14 14s14 22 14 22 14-14 14-22-6-14-14-14z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="22" r="4" stroke="currentColor" stroke-width="2"/></svg>`,
+  // OEM 定制 · 按图加工 —— 齿轮
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  // 快速打样 —— 烧瓶/样品验证
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v5.6L5.6 17A2 2 0 0 0 7.4 20h9.2a2 2 0 0 0 1.8-3L14 8.6V3"/><path d="M7.6 14h8.8"/></svg>`,
+  // 小批量 · 维修/替换用件 —— 立方体/备件
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg>`,
+  // 逆向工程 · 来样复制 —— 测绘取景框
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="8.5" y="8.5" width="7" height="7" rx="1"/></svg>`,
   `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 20h12M18 28h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`
 ]
@@ -394,60 +373,6 @@ function getCaseImageUrl(url) {
   if (url.startsWith('http')) return url
   if (url.startsWith('/api/')) return url
   return '/api' + (url.startsWith('/') ? url : '/' + url)
-}
-
-// === 轮播展示数据 ===
-const showcaseSlides = ref([
-  {
-    tag: '产品中心',
-    title: '精密机械零部件加工',
-    desc: '泵类配件 / 传动运动件 / 农机配件 / 通用机械设备配件，支持来图定制',
-    link: '/products',
-    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="24" stroke="currentColor" stroke-width="2.5"/><path d="M32 16v16l12 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
-  },
-  {
-    tag: '解决方案',
-    title: 'OEM定制 · 按图加工 · 逆向工程',
-    desc: '从图纸到成品，覆盖打样、小批量、批量生产全流程',
-    link: '/business',
-    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="40" height="40" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M22 32h20M32 22v20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
-  },
-  {
-    tag: '行业洞察',
-    title: '机械加工专业知识与行业趋势',
-    desc: '',
-    link: '/news',
-    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="10" width="36" height="44" rx="4" stroke="currentColor" stroke-width="2.5"/><path d="M22 22h20M22 30h20M22 38h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>'
-  },
-  {
-    tag: '关于我们',
-    title: '10年+精密加工经验 · 值得信赖',
-    desc: 'ISO9001认证，值得信赖',
-    link: '/about',
-    icon: '<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 54V22l22-12 22 12v32" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M26 54V38h12v16" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>'
-  }
-])
-
-const currentSlide = ref(0)
-let slideInterval = null
-
-function nextSlide() {
-  currentSlide.value = (currentSlide.value + 1) % showcaseSlides.value.length
-}
-
-function prevSlide() {
-  currentSlide.value = (currentSlide.value - 1 + showcaseSlides.value.length) % showcaseSlides.value.length
-}
-
-function startAutoSlide() {
-  slideInterval = setInterval(nextSlide, 5000)
-}
-
-function stopAutoSlide() {
-  if (slideInterval) {
-    clearInterval(slideInterval)
-    slideInterval = null
-  }
 }
 
 // === 计算属性 ===
@@ -499,7 +424,6 @@ function initHeroAnimations() {
 // === 生命周期 ===
 onMounted(async () => {
   initHeroAnimations()
-  startAutoSlide()
 
   try {
     const [homeRes, configRes, catRes, solutionRes, caseRes, faqRes] = await Promise.all([
@@ -530,7 +454,6 @@ onMounted(async () => {
 
 onUnmounted(() => {
   if (observer) observer.disconnect()
-  stopAutoSlide()
 })
 </script>
 
@@ -538,15 +461,16 @@ onUnmounted(() => {
 /* ==================== Hero区 ==================== */
 .hero {
   position: relative;
-  height: 70vh;
-  min-height: 480px;
-  max-height: 600px;
+  height: 40vh;
+  min-height: 300px;
+  max-height: 380px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: var(--graphite);
   margin-top: 0;
   overflow: hidden;
+  padding-top: 7vh;
 }
 
 .hero-bg {
@@ -577,6 +501,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 10px;
 }
 
 .hero-tag {
@@ -584,25 +509,25 @@ onUnmounted(() => {
   color: var(--gold);
   letter-spacing: 4px;
   text-transform: uppercase;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   font-weight: 500;
 }
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: 44px;
+  font-size: 40px;
   font-weight: 700;
   color: var(--white);
   line-height: 1.2;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   max-width: 800px;
 }
 
 .hero-subtitle {
-  font-size: 18px;
+  font-size: 17px;
   color: rgba(242, 243, 239, 0.65);
   line-height: 1.6;
-  margin-bottom: 28px;
+  margin-bottom: 22px;
   max-width: 560px;
 }
 
@@ -612,147 +537,9 @@ onUnmounted(() => {
 }
 
 /* ==================== 轮播展示区 ==================== */
-.showcase-carousel {
+.showcase-banner {
   background: var(--graphite);
-  padding: 48px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.carousel-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-.carousel-slide {
-  min-width: 100%;
-  padding: 48px 56px;
-}
-
-.slide-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 48px;
-}
-
-.slide-info {
-  flex: 1;
-}
-
-.slide-tag {
-  display: inline-block;
-  font-size: 12px;
-  color: var(--gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  padding: 4px 12px;
-  border: 1px solid rgba(191, 142, 42, 0.3);
-  border-radius: 2px;
-}
-
-.slide-title {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 700;
-  color: #F2F3EF;
-  margin-bottom: 14px;
-  line-height: 1.4;
-}
-
-.slide-desc {
-  font-size: 15px;
-  color: rgba(242, 243, 239, 0.6);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-
-.slide-link {
-  display: inline-flex;
-  align-items: center;
-  font-size: 14px;
-  color: var(--gold);
-  font-weight: 500;
-  text-decoration: none;
-  transition: gap 0.2s;
-  gap: 4px;
-}
-
-.slide-link:hover {
-  gap: 8px;
-}
-
-.slide-visual {
-  width: 140px;
-  height: 140px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(191, 142, 42, 0.08);
-  border: 1px solid rgba(191, 142, 42, 0.2);
-}
-
-.slide-icon {
-  width: 64px;
-  height: 64px;
-  color: var(--gold);
-}
-
-.carousel-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px 0 28px;
-}
-
-.carousel-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: transparent;
-  color: rgba(242, 243, 239, 0.7);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.carousel-btn:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-}
-
-.carousel-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.dot.active {
-  background: var(--gold);
-  width: 24px;
-  border-radius: 4px;
 }
 
 /* ==================== Trust Strip ==================== */
@@ -803,8 +590,34 @@ onUnmounted(() => {
 /* ==================== 能力展示 ==================== */
 .capabilities-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 24px;
+}
+
+.capabilities-highlight {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 36px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.8;
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.capabilities-highlight:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+
+.capabilities-highlight p {
+  margin: 0;
 }
 
 .cap-card {
@@ -1016,52 +829,34 @@ onUnmounted(() => {
 /* === Sol Cards === */
 .solution-card {
   position: relative;
-  background: #111214;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #18191f;
+  border: 1px solid rgba(212, 175, 55, 0.4);
   padding: 36px 28px 32px;
   transition: border-color 0.3s, background 0.3s;
   overflow: hidden;
 }
 
 .solution-card:hover {
-  background: #18191f;
-  border-color: rgba(212, 175, 55, 0.4);
-}
-
-/* 大号字母序号 */
-.sol-letter {
-  position: absolute;
-  top: 20px;
-  right: 22px;
-  font-family: var(--font-serif);
-  font-size: 52px;
-  font-weight: 700;
-  color: rgba(212, 175, 55, 0.12);
-  line-height: 1;
-  user-select: none;
-  transition: color 0.3s;
-}
-
-.solution-card:hover .sol-letter {
-  color: rgba(212, 175, 55, 0.22);
+  background: #12141a;
+  border-color: rgba(212, 175, 55, 0.75);
 }
 
 /* 图标容器 */
 .sol-icon-box {
   width: 56px;
   height: 56px;
-  border: 1px solid rgba(212, 175, 55, 0.45);
+  border: 1px solid var(--gold);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 22px;
-  background: rgba(212, 175, 55, 0.06);
+  background: #2E3037;
   transition: background 0.3s, border-color 0.3s;
 }
 
 .solution-card:hover .sol-icon-box {
-  background: rgba(212, 175, 55, 0.12);
+  background: #24262B;
   border-color: var(--gold);
 }
 
@@ -1389,7 +1184,11 @@ onUnmounted(() => {
   }
 
   .capabilities-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .capabilities-highlight {
+    padding: 28px 16px;
   }
 
   .products-grid {
@@ -1421,7 +1220,12 @@ onUnmounted(() => {
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 400px;
+    min-height: 260px;
+    padding-top: 5vh;
+  }
+
+  .hero-content {
+    padding-top: 0;
   }
 
   .hero-title {
@@ -1444,32 +1248,13 @@ onUnmounted(() => {
     justify-content: center;
   }
 
-  .carousel-slide {
-    padding: 32px 24px;
-  }
-
-  .slide-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 24px;
-  }
-
-  .slide-title {
-    font-size: 22px;
-  }
-
-  .slide-visual {
-    width: 100px;
-    height: 100px;
-  }
-
-  .slide-icon {
-    width: 48px;
-    height: 48px;
-  }
-
   .capabilities-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capabilities-highlight {
+    padding: 28px 16px;
+    font-size: 15px;
   }
 
   .products-grid {

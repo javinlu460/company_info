@@ -11,69 +11,68 @@
           </p>
         </div>
 
-        <div v-if="loading" class="loading-wrap">
-          <div class="loading-spinner"></div>
-          <span>加载中...</span>
-        </div>
+        <div class="content-block">
+          <div v-if="loading" class="loading-wrap">
+            <div class="loading-spinner"></div>
+            <span>加载中...</span>
+          </div>
 
-        <template v-else>
-          <div class="cap-grid">
-            <div
-              v-for="(item, index) in displayList"
-              :key="item.id || index"
-              class="cap-wrap"
-            >
-              <div class="cap-card">
-                <div class="cap-top">
-                  <div class="cap-icon" v-html="solutionIcons[index % solutionIcons.length]"></div>
+          <template v-else>
+            <div class="cap-grid">
+              <div
+                v-for="(item, index) in displayList"
+                :key="item.id || index"
+                class="cap-wrap"
+              >
+                <div class="cap-card">
+                  <div class="cap-top">
+                    <div class="cap-icon" v-html="solutionIcons[index % solutionIcons.length]"></div>
+                  </div>
+                  <h3>{{ item.title }}</h3>
+                  <span v-if="item.subtitle" class="cap-subtitle">{{ item.subtitle }}</span>
+                  <p>{{ item.summary }}</p>
+                  <div v-if="item.specs && item.specs.length" class="cap-specs">
+                    <span
+                      v-for="(spec, sIdx) in item.specs"
+                      :key="sIdx"
+                      :class="['tag', { r: spec.highlight }]"
+                    >
+                      {{ spec.label }}
+                    </span>
+                  </div>
                 </div>
-                <h3>{{ item.title }}</h3>
-                <p>{{ item.summary }}</p>
-                <div v-if="item.specs && item.specs.length" class="cap-specs">
-                  <span
-                    v-for="(spec, sIdx) in item.specs"
-                    :key="sIdx"
-                    :class="['tag', { r: spec.highlight }]"
-                  >
-                    {{ spec.label }}
-                  </span>
+              </div>
+            </div>
+          </template>
+
+          <!-- 合作流程 -->
+          <div class="process-container">
+            <div class="section-head center">
+              <span class="ew">PROCESS · 合作流程</span>
+              <h2>从发图纸到收货——六步搞定</h2>
+            </div>
+
+            <div class="flow-grid">
+              <div
+                v-for="(step, idx) in processSteps"
+                :key="idx"
+                class="step-box-wrap"
+              >
+                <div class="step-box">
+                  <span class="st-title">{{ step.title }}</span>
+                  <span class="st-desc">{{ step.desc }}</span>
                 </div>
               </div>
             </div>
           </div>
-        </template>
-      </div>
-    </section>
 
-    <!-- 合作流程 -->
-    <section class="process-section">
-      <div class="container">
-        <div class="section-head center">
-          <span class="ew">PROCESS · 合作流程</span>
-          <h2>从发图纸到收货——六步搞定</h2>
-        </div>
-
-        <div class="flow-grid">
-          <div
-            v-for="(step, idx) in processSteps"
-            :key="idx"
-            class="step-box-wrap"
-          >
-            <div class="step-box">
-              <span class="st-title">{{ step.title }}</span>
-              <span class="st-desc">{{ step.desc }}</span>
-            </div>
+          <!-- 底部 CTA -->
+          <div class="cta-bar">
+            <router-link to="/contact" class="btn-red cta-btn">
+              发图纸，获取报价及解决方案 →
+            </router-link>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- 底部 CTA -->
-    <section class="cta-section">
-      <div class="container">
-        <router-link to="/contact" class="btn-red cta-btn">
-          发图纸，获取报价及解决方案 →
-        </router-link>
       </div>
     </section>
   </div>
@@ -91,21 +90,21 @@ const defaultSolutions = [
     id: 'default-1',
     num: 'A',
     title: 'OEM 定制 · 按图加工',
+    subtitle: 'Contract Manufacturing',
     summary: '客户提供图纸或样品，我们按规格进行精密加工与组装，确保尺寸、材质、工艺完全符合要求。',
     specs: [
       { label: '来图加工' },
-      { label: '批量稳定' },
-      { label: '保密协议', highlight: true }
+      { label: '批量稳定', highlight: true }
     ]
   },
   {
     id: 'default-2',
     num: 'B',
     title: '快速打样 · 新品开发验证',
+    subtitle: 'Rapid Prototyping',
     summary: '针对新品开发阶段提供小批量打样服务，快速验证结构设计与工艺可行性，缩短研发周期。',
     specs: [
       { label: '7-15 天交样' },
-      { label: '工艺建议' },
       { label: '小批量', highlight: true }
     ]
   },
@@ -113,21 +112,21 @@ const defaultSolutions = [
     id: 'default-3',
     num: 'C',
     title: '小批量 · 维修/替换用件',
+    subtitle: 'Medium-Small Batch Production',
     summary: '为设备维护、备件更换提供灵活的小批量生产，无需开模大批囤货，降低库存与资金压力。',
     specs: [
       { label: '按需生产' },
-      { label: '交期灵活' },
-      { label: '可追溯', highlight: true }
+      { label: '交期灵活', highlight: true }
     ]
   },
   {
     id: 'default-4',
     num: 'D',
     title: '逆向工程 · 来样复制',
+    subtitle: 'Reverse Engineering',
     summary: '仅有实物样品即可完成测绘、建模与生产复制，帮助客户延续供应或优化老旧零部件。',
     specs: [
       { label: '三维测绘' },
-      { label: '结构优化' },
       { label: '老旧件替代', highlight: true }
     ]
   }
@@ -160,6 +159,7 @@ const displayList = computed(() => {
       id: item.id,
       num: String.fromCharCode(65 + index),
       title: item.title,
+      subtitle: item.subtitle || '',
       summary: truncateText(item.summary || item.description, 140),
       specs: buildSpecs(item, index)
     }))
@@ -264,6 +264,26 @@ onMounted(() => {
   margin: 0;
 }
 
+/* 内容整合大框架 */
+.content-block {
+  background: #f9f8f4;
+  border: 1px solid var(--maroon);
+  border-radius: 4px;
+  padding: 60px 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.content-block::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--maroon);
+}
+
 /* 解决方案 */
 .solutions-section {
   padding: var(--section-padding) 0;
@@ -274,47 +294,49 @@ onMounted(() => {
 .cap-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 35px 25px;
+  gap: 16px;
 }
 
 /* 卡片：底/右偏移酒红叠层 */
 .cap-wrap {
   position: relative;
-  padding-bottom: 12px;
-  padding-right: 12px;
+  z-index: 1;
+  padding-bottom: 8px;
+  padding-right: 8px;
 }
 
 .cap-wrap::after {
   content: '';
   position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 0;
-  bottom: 0;
+  top: 8px;
+  left: 8px;
+  right: -8px;
+  bottom: -8px;
   background: var(--maroon);
   border-radius: 2px;
-  z-index: 0;
+  z-index: -1;
+  transition: all 0.3s ease;
 }
 
 .cap-card {
   position: relative;
   z-index: 1;
   background: var(--surface);
-  border: 2px solid var(--maroon);
+  border: 1.5px solid var(--maroon);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 22px 20px 25px;
-  transition: transform var(--transition-base);
+  padding: 42px 35px;
+  transition: transform 0.3s ease;
 }
 
 .cap-wrap:hover .cap-card {
-  transform: translate(-3px, -3px);
+  transform: translate(-4px, -4px);
 }
 
 .cap-top {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .cap-icon {
@@ -323,54 +345,61 @@ onMounted(() => {
 }
 
 .cap-icon svg {
-  width: 32px;
-  height: 32px;
-}
-
-.cap-letter {
-  display: none;
+  width: 40px;
+  height: 40px;
 }
 
 .cap-card h3 {
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 900;
   color: var(--tp);
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   line-height: 1.35;
 }
 
+.cap-subtitle {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 14px;
+  display: block;
+  font-family: 'Helvetica', sans-serif;
+}
+
 .cap-card p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--tb);
-  line-height: 1.6;
-  margin-bottom: 25px;
+  line-height: 1.7;
+  margin-bottom: 22px;
   flex: 1;
 }
 
 .cap-specs {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 22px;
   margin-top: auto;
 }
 
 .tag {
-  font-size: 11px;
-  padding: 3px 10px;
-  border: 1.5px solid var(--maroon);
+  font-size: 12px;
+  padding: 5px 14px;
+  border: 1px solid #ddd;
   color: var(--tb);
   font-weight: 700;
   background: #fff;
 }
 
 .tag.r {
+  border-color: var(--maroon);
+  color: var(--maroon);
   background: rgba(138, 53, 45, 0.05);
 }
 
 /* 合作流程 */
-.process-section {
-  padding: var(--section-padding) 0;
-  background: var(--paper);
+.process-container {
+  margin-top: 60px;
 }
 
 .flow-grid {
@@ -436,9 +465,8 @@ onMounted(() => {
 }
 
 /* 底部 CTA */
-.cta-section {
-  padding: 60px 0 80px;
-  background: var(--paper);
+.cta-bar {
+  margin-top: 60px;
   text-align: center;
 }
 
@@ -456,8 +484,30 @@ onMounted(() => {
 
 /* 响应式 */
 @media (max-width: 992px) {
+  .content-block {
+    padding: 40px 24px;
+  }
+
   .cap-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .cap-card {
+    padding: 35px 28px;
+  }
+
+  .cap-icon svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cap-card h3 {
+    font-size: 18px;
+  }
+
+  .cap-card p {
+    font-size: 13px;
   }
 
   .section-head h2 {
@@ -466,8 +516,17 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .content-block {
+    padding: 32px 20px;
+  }
+
   .cap-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cap-card {
+    padding: 32px 24px;
   }
 
   .flow-grid {

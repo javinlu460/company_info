@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企业官网宣传介绍 - 山东尧舜机械制造有限公司</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      overflow: hidden;
+    }
+    .presentation {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .slide-bg-dark { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); }
+    .slide-bg-red { background: linear-gradient(135deg, #8B2323 0%, #B22B2B 100%); }
+    .slide-bg-light { background: #F2F3EF; color: #1E1F20; }
+    .slide-bg-white { background: #fff; color: #1E1F20; }
+
+    .slide-number {
+      position: absolute;
+      top: 30px;
+      right: 80px;
+      font-size: 14px;
+      opacity: 0.6;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    h2 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      line-height: 1.3;
+    }
+    h3 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .subtitle {
+      font-size: 24px;
+      opacity: 0.9;
+      margin-bottom: 48px;
+    }
+    .lead {
+      font-size: 20px;
+      line-height: 1.8;
+      opacity: 0.85;
+      max-width: 900px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 20px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 32px;
+      border-left: 4px solid #B22B2B;
+    }
+    .slide-bg-light .feature-card,
+    .slide-bg-white .feature-card {
+      background: #fff;
+      border: 1px solid #E0E2DC;
+      border-left: 4px solid #B22B2B;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .feature-card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .feature-card p {
+      font-size: 15px;
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .two-column ul {
+      list-style: none;
+    }
+    .two-column li {
+      font-size: 18px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-bg-light .two-column li,
+    .slide-bg-white .two-column li {
+      border-bottom-color: #E0E2DC;
+    }
+    .two-column li::before {
+      content: "✓";
+      color: #B22B2B;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 30px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 12px;
+    }
+    .slide-bg-light .stat-item,
+    .slide-bg-white .stat-item {
+      background: #fff;
+      border: 1px solid #E0E2DC;
+    }
+    .stat-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: #B22B2B;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    .tech-stack {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .tech-item {
+      background: rgba(255,255,255,0.08);
+      padding: 24px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .slide-bg-light .tech-item,
+    .slide-bg-white .tech-item {
+      background: #fff;
+      border: 1px solid #E0E2DC;
+    }
+
+    .highlight-box {
+      background: rgba(178, 43, 43, 0.15);
+      border-left: 4px solid #B22B2B;
+      padding: 24px 32px;
+      border-radius: 0 12px 12px 0;
+      margin-top: 30px;
+    }
+    .slide-bg-light .highlight-box,
+    .slide-bg-white .highlight-box {
+      background: rgba(178, 43, 43, 0.06);
+    }
+
+    .cta {
+      display: inline-block;
+      background: #B22B2B;
+      color: #fff;
+      padding: 16px 40px;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: 500;
+      margin-top: 40px;
+      text-decoration: none;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 100;
+      background: rgba(0,0,0,0.4);
+      padding: 12px 24px;
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+    }
+    .nav button {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    .nav button:hover {
+      background: #B22B2B;
+      border-color: #B22B2B;
+    }
+
+    .small-text {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-top: 20px;
+    }
+
+    .page-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .page-item {
+      background: rgba(255,255,255,0.06);
+      padding: 24px;
+      border-radius: 10px;
+      text-align: center;
+      border-top: 3px solid #B22B2B;
+    }
+    .slide-bg-light .page-item,
+    .slide-bg-white .page-item {
+      background: #fff;
+      border: 1px solid #E0E2DC;
+      border-top: 3px solid #B22B2B;
+    }
+    .page-item h4 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .page-item p {
+      font-size: 13px;
+      opacity: 0.7;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1200px) {
+      .slide { padding: 40px; }
+      h1 { font-size: 40px; }
+      h2 { font-size: 32px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .two-column { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .tech-stack { grid-template-columns: repeat(2, 1fr); }
+      .page-list { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="presentation">
+
+    <!-- Slide 1: 封面 -->
+    <div class="slide slide-bg-red active">
+      <div class="slide-number">01 / 10</div>
+      <h1>山东尧舜机械制造有限公司</h1>
+      <p class="subtitle">企业官网 + 后台管理系统</p>
+      <p class="lead">一套基于 Vue 3 + Spring Boot 前后端分离架构的企业级官网解决方案，面向访客提供品牌展示与产品服务，面向管理员提供灵活的内容管理与权限控制。</p>
+      <a href="#" class="cta">项目宣传介绍</a>
+    </div>
+
+    <!-- Slide 2: 项目定位 -->
+    <div class="slide slide-bg-dark">
+      <div class="slide-number">02 / 10</div>
+      <h2>项目定位</h2>
+      <p class="lead">为中小型机械制造企业打造的一套完整的数字化门户平台，集品牌展示、产品管理、内容运营、客户询盘、后台管理于一体。</p>
+      <div class="feature-grid" style="margin-top: 48px;">
+        <div class="feature-card">
+          <h3>前台官网</h3>
+          <p>面向潜在客户的品牌官网，支持首页、关于我们、产品中心、解决方案、客户案例、行业洞察、常见问题、联系我们等核心页面。</p>
+        </div>
+        <div class="feature-card">
+          <h3>后台 CMS</h3>
+          <p>面向运营人员的内容管理系统，支持轮播图、产品、新闻、案例、FAQ、解决方案、网站配置、留言等模块的在线维护。</p>
+        </div>
+        <div class="feature-card">
+          <h3>权限体系</h3>
+          <p>基于 RBAC 模型的用户-角色-菜单权限控制，支持管理员、编辑等多角色协同，按钮级细粒度权限管理。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: 前台页面架构 -->
+    <div class="slide slide-bg-light">
+      <div class="slide-number" style="color:#1E1F20;opacity:0.5;">03 / 10</div>
+      <h2>前台页面架构</h2>
+      <p class="lead">覆盖企业官网全链路场景，信息架构清晰，用户转化路径完整。</p>
+      <div class="page-list">
+        <div class="page-item">
+          <h4>首页</h4>
+          <p>Banner、核心能力、产品展示、工艺流程、解决方案、案例、FAQ、CTA</p>
+        </div>
+        <div class="page-item">
+          <h4>关于我们</h4>
+          <p>公司简介、业务与贸易范围、荣誉资质三大 Tab 配置</p>
+        </div>
+        <div class="page-item">
+          <h4>产品中心</h4>
+          <p>分类筛选、产品卡片、详情展示，支持最多两行展示</p>
+        </div>
+        <div class="page-item">
+          <h4>解决方案</h4>
+          <p>OEM定制、快速打样、中小批量、逆向工程，后台可配置</p>
+        </div>
+        <div class="page-item">
+          <h4>客户案例</h4>
+          <p>图文卡片展示，覆盖矿山、建筑、化工、环保等行业</p>
+        </div>
+        <div class="page-item">
+          <h4>行业洞察</h4>
+          <p>新闻文章列表，支持分类与全文检索</p>
+        </div>
+        <div class="page-item">
+          <h4>常见问题</h4>
+          <p>搜索框、分类筛选、手风琴 FAQ 列表，后台可配置</p>
+        </div>
+        <div class="page-item">
+          <h4>联系我们</h4>
+          <p>留言表单、联系方式、报价流程，信息可后台配置</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: 首页亮点 -->
+    <div class="slide slide-bg-dark">
+      <div class="slide-number">04 / 10</div>
+      <h2>首页亮点</h2>
+      <p class="lead">首屏即转化，完整呈现企业实力与制造服务能力。</p>
+      <div class="two-column" style="margin-top: 20px;">
+        <div>
+          <h3>品牌首屏</h3>
+          <ul>
+            <li>企业 Logo 与核心标语展示</li>
+            <li>动态轮播 Banner 图</li>
+            <li>信任背书条：ISO9001、10年+经验</li>
+            <li>社交媒体入口（抖音、领英等）</li>
+          </ul>
+        </div>
+        <div>
+          <h3>业务转化区</h3>
+          <ul>
+            <li>四大核心能力：精密加工、定制化加工、质量管控、售后保障</li>
+            <li>产品中心展示 + 分类筛选</li>
+            <li>行业解决方案卡片</li>
+            <li>客户案例与常见问题</li>
+            <li>底部 CTA：立即获取报价</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: 核心能力 -->
+    <div class="slide slide-bg-white">
+      <div class="slide-number" style="color:#1E1F20;opacity:0.5;">05 / 10</div>
+      <h2>核心制造能力</h2>
+      <p class="lead">从图纸到成品，覆盖精密加工、定制生产、质量管控、售后服务的完整闭环。</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>精密加工</h3>
+          <p>先进加工设备，公差控制在 0.01mm 以内，确保每一个零部件的精度与品质。</p>
+        </div>
+        <div class="feature-card">
+          <h3>定制化加工</h3>
+          <p>专业团队根据客户需求量身定制专属方案，满足个性化生产要求。</p>
+        </div>
+        <div class="feature-card">
+          <h3>质量管控</h3>
+          <p>全流程质量管理体系，从原材料到成品层层把关，确保产品零缺陷交付。</p>
+        </div>
+        <div class="feature-card">
+          <h3>售后保障</h3>
+          <p>终身技术支持，7×24 小时响应，专业售后团队随时为客户提供高效服务。</p>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <p style="font-size:18px;line-height:1.8;">服务流程：需求沟通 → 方案设计 → 生产制造 → 质量检测 → 物流配送 → 售后服务</p>
+      </div>
+    </div>
+
+    <!-- Slide 6: 解决方案 -->
+    <div class="slide slide-bg-red">
+      <div class="slide-number">06 / 10</div>
+      <h2>四大解决方案</h2>
+      <p class="lead">灵活、可靠的定制化制造解决方案，满足新品开发、批量生产、维修替换等多元需求。</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>A · OEM 定制 · 按图加工</h3>
+          <p>客户提供图纸或样品，按规格精密加工与组装，确保尺寸、材质、工艺完全符合要求。</p>
+        </div>
+        <div class="feature-card">
+          <h3>B · 快速打样 · 新品开发验证</h3>
+          <p>针对新品开发提供小批量打样，快速验证结构设计与工艺可行性，缩短研发周期。</p>
+        </div>
+        <div class="feature-card">
+          <h3>C · 中小批量 · 维修/替换用件</h3>
+          <p>为设备维护、备件更换提供灵活小批量生产，降低库存与资金压力。</p>
+        </div>
+        <div class="feature-card">
+          <h3>D · 逆向工程 · 来样复制</h3>
+          <p>仅有实物样品即可完成测绘、建模与生产复制，帮助客户延续供应或优化老旧零部件。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: 后台 CMS 能力 -->
+    <div class="slide slide-bg-dark">
+      <div class="slide-number">07 / 10</div>
+      <h2>后台 CMS 能力</h2>
+      <p class="lead">一站式内容管理平台，所有前台模块均可后台在线配置，无需改代码。</p>
+      <div class="two-column">
+        <div>
+          <h3>内容管理</h3>
+          <ul>
+            <li>轮播图管理</li>
+            <li>产品分类 / 产品管理</li>
+            <li>行业洞察分类 / 文章管理</li>
+            <li>解决方案管理</li>
+            <li>客户案例管理</li>
+            <li>常见问题 FAQ 管理</li>
+            <li>友情链接 / 留言管理</li>
+          </ul>
+        </div>
+        <div>
+          <h3>系统管理</h3>
+          <ul>
+            <li>网站配置（公司信息、联系方式、SEO）</li>
+            <li>用户管理</li>
+            <li>角色管理</li>
+            <li>菜单 / 权限管理</li>
+            <li>RBAC 细粒度权限控制</li>
+            <li>仪表盘数据统计</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: 技术架构 -->
+    <div class="slide slide-bg-light">
+      <div class="slide-number" style="color:#1E1F20;opacity:0.5;">08 / 10</div>
+      <h2>技术架构</h2>
+      <p class="lead">采用成熟稳定的前后端分离架构，三端独立部署，便于扩展与维护。</p>
+      <div class="tech-stack">
+        <div class="tech-item">Vue 3</div>
+        <div class="tech-item">Vite 5</div>
+        <div class="tech-item">Element Plus</div>
+        <div class="tech-item">Vue Router</div>
+        <div class="tech-item">Spring Boot</div>
+        <div class="tech-item">MyBatis-Plus</div>
+        <div class="tech-item">MySQL</div>
+        <div class="tech-item">RBAC 权限</div>
+      </div>
+      <div class="highlight-box">
+        <p style="font-size:18px;line-height:1.8;"><strong>三端分离：</strong>company-web（前台官网）+ company-cms（后台管理）+ company-admin（REST API），独立构建、独立部署。</p>
+      </div>
+    </div>
+
+    <!-- Slide 9: 项目优势 -->
+    <div class="slide slide-bg-dark">
+      <div class="slide-number">09 / 10</div>
+      <h2>项目优势</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>开箱即用</h3>
+          <p>提供完整的数据库初始化脚本与默认数据，部署即可运行，快速上线企业官网。</p>
+        </div>
+        <div class="feature-card">
+          <h3>内容可配</h3>
+          <p>首页、产品、解决方案、案例、FAQ、联系方式等全部模块支持后台配置，运营零代码。</p>
+        </div>
+        <div class="feature-card">
+          <h3>权限安全</h3>
+          <p>完整的 RBAC 权限体系，支持多角色协同与按钮级权限，保障后台管理安全。</p>
+        </div>
+        <div class="feature-card">
+          <h3>响应式设计</h3>
+          <p>前台官网适配桌面与移动端，确保不同设备下的一致用户体验。</p>
+        </div>
+        <div class="feature-card">
+          <h3>SEO 友好</h3>
+          <p>静态化页面结构、合理的标题与描述配置，便于搜索引擎收录。</p>
+        </div>
+        <div class="feature-card">
+          <h3>易于扩展</h3>
+          <p>模块化代码结构，新增页面或功能可快速接入现有权限与内容体系。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 10: 结尾 -->
+    <div class="slide slide-bg-red">
+      <div class="slide-number">10 / 10</div>
+      <h1>谢谢观看</h1>
+      <p class="subtitle">山东尧舜机械制造有限公司 · 企业官网</p>
+      <p class="lead">Vue 3 + Spring Boot 前后端分离企业官网，助力机械制造企业数字化品牌升级。</p>
+      <div class="stat-row" style="max-width: 800px;">
+        <div class="stat-item">
+          <div class="stat-number">8+</div>
+          <div class="stat-label">前台页面</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">7+</div>
+          <div class="stat-label">CMS 模块</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3</div>
+          <div class="stat-label">独立端</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1</div>
+          <div class="stat-label">完整 RBAC</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav">
+    <button onclick="prevSlide()">上一页</button>
+    <button onclick="nextSlide()">下一页</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      showSlide(currentSlide);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+  </script>
+</body>
+</html>
