@@ -635,9 +635,9 @@ onUnmounted(() => {
 }
 
 .capabilities-highlight .cap-spec-sub {
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(242, 243, 239, 0.6);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
 }
 
 .cap-card {

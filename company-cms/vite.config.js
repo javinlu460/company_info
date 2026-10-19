@@ -5,6 +5,10 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue()],
   base: '/admin/',
+  build: {
+    // 产物输出到 dist/admin，与线上 Nginx 的 /admin/ 子路径部署目录结构对齐
+    outDir: 'dist/admin'
+  },
   server: {
     port: 3001,
     host: '0.0.0.0',
