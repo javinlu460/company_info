@@ -6,7 +6,7 @@
       <div class="hero-content container">
         <span class="hero-tag animate-item">中大型盘类精密件 · 来图定制加工</span>
         <h1 class="hero-title animate-item">山东尧舜机械制造有限公司</h1>
-        <p class="hero-subtitle animate-item">Φ250–1000mm 加工直径 | 精度 IT9~IT6 | 1400T 成形能力</p>
+        <p class="hero-subtitle animate-item">Φ250–1000mm 加工直径 | 精度 IT9~IT6</p>
         <div class="hero-actions animate-item">
           <router-link to="/products" class="btn-red">产品中心</router-link>
           <router-link to="/contact" class="btn-outline-light">获取报价</router-link>
@@ -41,8 +41,9 @@
         </div>
         <div class="capabilities-grid">
           <div class="cap-card capabilities-highlight reveal">
-            <p>Φ250mm - 1000mm</p>
-            <p>IT9~IT6（可达IT6级）</p>
+            <p class="cap-spec">Φ250–1000mm</p>
+            <p class="cap-spec">IT9~IT6</p>
+            <p class="cap-spec-sub">（可达IT6级）</p>
           </div>
           <div
             v-for="(item, idx) in capabilities"
@@ -630,6 +631,13 @@ onUnmounted(() => {
 .capabilities-highlight p {
   margin: 0;
   color: var(--gold);
+  white-space: nowrap;
+}
+
+.capabilities-highlight .cap-spec-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(242, 243, 239, 0.6);
 }
 
 .cap-card {

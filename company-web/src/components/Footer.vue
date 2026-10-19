@@ -33,7 +33,7 @@
                 <svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon">
                   <circle cx="3" cy="3" r="3" fill="var(--gold)"/>
                 </svg>
-                {{ cat.name }}
+                {{ cat.categoryName || cat.name }}
               </router-link>
             </li>
             <li v-if="!productCategories.length && !loadingCategories">

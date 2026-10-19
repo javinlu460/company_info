@@ -80,27 +80,6 @@
               </div>
 
               <div class="form-group">
-                <label for="drawingFile">图纸上传</label>
-                <div class="file-upload-area">
-                  <input
-                    id="drawingFile"
-                    type="file"
-                    accept=".pdf,.dwg,.step,.stp,.igs,.iges,.jpg,.png"
-                    multiple
-                    @change="handleFileChange"
-                    class="file-input"
-                  />
-                  <div class="file-upload-hint">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    <span>点击或拖拽上传图纸（支持 PDF / DWG / STEP / 图片）</span>
-                  </div>
-                  <div v-if="uploadedFiles.length" class="file-list">
-                    <span v-for="(f, i) in uploadedFiles" :key="i" class="file-tag">{{ f.name }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
                 <label for="content">留言内容</label>
                 <textarea
                   id="content"
@@ -248,7 +227,6 @@ import { getContactInfo, submitMessage } from '../api/contact'
 const contactInfo = ref({})
 const showSuccess = ref(false)
 const submitting = ref(false)
-const uploadedFiles = ref([])
 
 const form = reactive({
   name: '',
@@ -266,11 +244,6 @@ const errors = reactive({
   email: '',
   content: ''
 })
-
-function handleFileChange(e) {
-  const files = Array.from(e.target.files || [])
-  uploadedFiles.value = files.map(f => ({ name: f.name, file: f }))
-}
 
 async function loadContactInfo() {
   try {
@@ -324,7 +297,6 @@ async function handleSubmit() {
     form.content = ''
     form.address = ''
     form.requirementType = ''
-    uploadedFiles.value = []
   } catch (e) {
     console.error('提交留言失败:', e)
     alert('提交失败，请稍后重试')
@@ -507,60 +479,6 @@ onMounted(() => {
 .form-group textarea {
   resize: vertical;
   min-height: 140px;
-}
-
-/* 文件上传区 */
-.file-upload-area {
-  border: 2px dashed #ddd;
-  padding: 20px;
-  background: #fafafa;
-  transition: border-color var(--transition-base);
-  cursor: pointer;
-  position: relative;
-}
-
-.file-upload-area:hover {
-  border-color: var(--maroon);
-}
-
-.file-input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-
-.file-upload-hint {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #999;
-  font-size: 13px;
-  pointer-events: none;
-}
-
-.file-upload-hint svg {
-  flex-shrink: 0;
-  color: var(--maroon);
-}
-
-.file-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.file-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  background: rgba(138, 53, 45, 0.08);
-  color: var(--maroon);
-  font-size: 12px;
-  border-radius: 2px;
 }
 
 .btn-submit {
