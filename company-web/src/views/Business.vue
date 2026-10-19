@@ -4,10 +4,10 @@
     <section class="solutions-section">
       <div class="container">
         <div class="section-head">
-          <span class="ew">SOLUTIONS · 解决方案</span>
+          <span class="ew">SOLUTIONS · 制造服务与解决方案</span>
           <h2>覆盖多场景的专业制造服务</h2>
           <p class="lead">
-            从图纸到成品，我们为客户提供灵活、可靠的定制化制造解决方案，满足新品开发、批量生产、维修替换等多元需求。
+            从图纸到成品，提供新品打样、批量生产、维修替换与旧件再生四类服务场景。
           </p>
         </div>
 
@@ -91,7 +91,7 @@ const defaultSolutions = [
     num: 'A',
     title: 'OEM 定制 · 按图加工',
     subtitle: 'Contract Manufacturing',
-    summary: '客户提供图纸或样品，我们按规格进行精密加工与组装，确保尺寸、材质、工艺完全符合要求。',
+    summary: '客户提供图纸或样品，我们按规格进行精密加工与组装，按图纸与合同要求执行。',
     specs: [
       { label: '来图加工' },
       { label: '批量稳定', highlight: true }
@@ -104,7 +104,7 @@ const defaultSolutions = [
     subtitle: 'Rapid Prototyping',
     summary: '针对新品开发阶段提供小批量打样服务，快速验证结构设计与工艺可行性，缩短研发周期。',
     specs: [
-      { label: '7-15 天交样' },
+      { label: '评估后确认' },
       { label: '小批量', highlight: true }
     ]
   },
@@ -122,8 +122,8 @@ const defaultSolutions = [
   {
     id: 'default-4',
     num: 'D',
-    title: '逆向工程 · 来样复制',
-    subtitle: 'Reverse Engineering',
+    title: '精密再制造 · 来样复制',
+    subtitle: 'Precision Remanufacturing',
     summary: '仅有实物样品即可完成测绘、建模与生产复制，帮助客户延续供应或优化老旧零部件。',
     specs: [
       { label: '三维测绘' },
@@ -140,7 +140,7 @@ const solutionIcons = [
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
   // 小批量·维修/替换 —— 扳手
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.7 2.7-2.4-.6-.6-2.4 2.7-2.7z"/></svg>`,
-  // 逆向工程·来样复制 —— 循环/逆向箭头
+  // 精密再制造 · 来样复制 —— 循环/逆向箭头
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>`
 ]
 

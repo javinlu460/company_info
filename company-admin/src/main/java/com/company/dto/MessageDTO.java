@@ -17,4 +17,8 @@ public class MessageDTO {
     private String content;
 
     private String address;
+
+    private String companyName;
+
+    private String requirementType;
 }

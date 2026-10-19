@@ -60,6 +60,8 @@ public class WebContactController {
         message.setEmail(dto.getEmail());
         message.setContent(dto.getContent());
         message.setAddress(dto.getAddress());
+        message.setCompanyName(dto.getCompanyName());
+        message.setRequirementType(dto.getRequirementType());
         message.setIsRead(0);
         cmsMessageService.save(message);
         return R.ok("留言提交成功");

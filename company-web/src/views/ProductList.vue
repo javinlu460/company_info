@@ -4,8 +4,8 @@
       <!-- 页面标签 -->
       <div class="section-head">
         <span class="ew">PRODUCTS · 产品中心</span>
-        <h2>专业制造，精密加工</h2>
-        <p class="lead">涵盖泵类配件、传动运动件、农机配件、通用机械设备配件等多个品类，支持来图定制。</p>
+        <h2>专业制造，精密加工，来图定制</h2>
+        <p class="lead">以上产品仅为典型加工件示例参考，不限于示例品类；在 Φ250–1000mm 加工范围内，可按图纸要求获取专属定制方案。</p>
       </div>
 
       <!-- 分类筛选 -->
@@ -46,6 +46,9 @@
           <p>暂无相关产品</p>
         </div>
       </template>
+      <div class="product-disclaimer">
+        <p>产品示例图仅供参考，一切以实物为准。</p>
+      </div>
     </div>
 
     <!-- CTA -->
@@ -224,6 +227,21 @@ onMounted(() => {
     padding: 8px 18px;
     font-size: 13px;
   }
+}
+
+/* 产品免责提示 */
+.product-disclaimer {
+  font-size: 13px;
+  color: #999;
+  line-height: 1.8;
+  margin-top: 24px;
+  padding: 16px 20px;
+  border: 1px dashed #ddd;
+  border-radius: var(--radius-sm);
+}
+
+.product-disclaimer p {
+  margin: 0;
 }
 
 /* CTA */

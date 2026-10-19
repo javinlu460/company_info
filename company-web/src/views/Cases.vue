@@ -3,9 +3,9 @@
     <section class="cases section-light">
       <div class="container">
         <div class="section-head">
-          <span class="ew">CASES · 客户案例</span>
-          <h2>他们选择了我们</h2>
-          <p class="lead">服务覆盖矿山、建筑、化工、环保、重工、智能制造等多个行业，累计服务客户超千家。</p>
+          <span class="ew">CASES · 客户案例与行业应用</span>
+          <h2>客户案例与行业应用</h2>
+          <p class="lead">长期为泵阀、重工、传动与矿山装备行业提供精密加工配套，以下为部分合作与应用场景。</p>
         </div>
         <div class="cases-grid">
           <router-link
@@ -21,6 +21,7 @@
             </div>
           </router-link>
         </div>
+        <p class="confidential-notice">以下合作内容已按客户代工保密要求处理，不披露客户名称与项目细节；技术描述以实际产能为依据。</p>
         <div class="cta-wrapper">
           <router-link to="/contact" class="btn-red cta-btn">发图纸，获取报价及解决方案 →</router-link>
         </div>
@@ -159,6 +160,17 @@ onMounted(() => {
   font-size: 12px;
   border-radius: var(--radius-sm);
   align-self: flex-start;
+}
+
+.confidential-notice {
+  font-size: 13px;
+  color: #999;
+  text-align: center;
+  margin-top: 24px;
+  padding: 12px 20px;
+  border: 1px dashed #ddd;
+  border-radius: var(--radius-sm);
+  line-height: 1.7;
 }
 
 .cta-wrapper {

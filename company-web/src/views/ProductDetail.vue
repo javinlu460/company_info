@@ -48,6 +48,9 @@
       <section class="section-white content-section">
         <div class="container">
           <div class="content-card" v-html="decodedContent"></div>
+          <div class="product-notice">
+            <p>以上产品仅为典型加工件示例参考；在 Φ250–1000mm 加工范围内，可按图纸要求获取专属定制方案。产品示例图仅供参考，一切以实物为准。</p>
+          </div>
         </div>
       </section>
 
@@ -303,6 +306,21 @@ watch(() => route.params.id, (newId) => {
 .content-card :deep(table th) {
   border: 1px solid var(--gray-300);
   padding: 10px 14px;
+}
+
+.product-notice {
+  max-width: 900px;
+  margin: 20px auto 0;
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--gray-400);
+  line-height: 1.8;
+  border: 1px dashed var(--gray-300);
+  border-radius: var(--radius-sm);
+}
+
+.product-notice p {
+  margin: 0;
 }
 
 .related-section {

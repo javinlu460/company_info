@@ -22,6 +22,10 @@ public class CmsMessage {
 
     private String address;
 
+    private String companyName;
+
+    private String requirementType;
+
     /** 是否已读: 1-已读, 0-未读 */
     private Integer isRead;
 

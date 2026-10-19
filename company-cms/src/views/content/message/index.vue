@@ -19,9 +19,11 @@
     <!-- 表格 -->
     <el-card shadow="never">
       <el-table v-loading="loading" :data="tableData" border stripe>
-        <el-table-column prop="name" label="姓名" width="120" />
-        <el-table-column prop="phone" label="电话" width="140" />
-        <el-table-column prop="email" label="邮箱" width="180" />
+        <el-table-column prop="name" label="姓名" width="100" />
+        <el-table-column prop="companyName" label="公司" width="120" show-overflow-tooltip />
+        <el-table-column prop="phone" label="电话" width="130" />
+        <el-table-column prop="requirementType" label="需求类型" width="110" />
+        <el-table-column prop="email" label="邮箱" width="160" show-overflow-tooltip />
         <el-table-column prop="content" label="内容" min-width="200" show-overflow-tooltip />
         <el-table-column prop="isRead" label="状态" width="80" align="center">
           <template #default="{ row }">
@@ -67,8 +69,10 @@
     >
       <el-descriptions :column="1" border>
         <el-descriptions-item label="姓名">{{ viewData.name }}</el-descriptions-item>
+        <el-descriptions-item label="公司">{{ viewData.companyName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="电话">{{ viewData.phone }}</el-descriptions-item>
         <el-descriptions-item label="邮箱">{{ viewData.email }}</el-descriptions-item>
+        <el-descriptions-item label="需求类型">{{ viewData.requirementType || '-' }}</el-descriptions-item>
         <el-descriptions-item label="提交时间">{{ viewData.createTime }}</el-descriptions-item>
         <el-descriptions-item label="阅读状态">
           <el-tag :type="viewData.isRead === 1 ? 'success' : 'warning'">

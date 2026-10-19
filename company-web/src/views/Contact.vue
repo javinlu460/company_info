@@ -38,16 +38,66 @@
                 </div>
               </div>
 
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">电话 <span class="required">*</span></label>
+                  <input
+                    id="phone"
+                    v-model="form.phone"
+                    type="tel"
+                    placeholder="请输入联系电话"
+                    :class="{ 'input-error': errors.phone }"
+                  />
+                  <span v-if="errors.phone" class="error-msg">{{ errors.phone }}</span>
+                </div>
+                <div class="form-group">
+                  <label for="email">邮箱</label>
+                  <input
+                    id="email"
+                    v-model="form.email"
+                    type="email"
+                    placeholder="请输入邮箱地址"
+                    :class="{ 'input-error': errors.email }"
+                  />
+                  <span v-if="errors.email" class="error-msg">{{ errors.email }}</span>
+                </div>
+              </div>
+
               <div class="form-group">
-                <label for="email">邮箱 <span class="required">*</span></label>
-                <input
-                  id="email"
-                  v-model="form.email"
-                  type="email"
-                  placeholder="请输入邮箱地址"
-                  :class="{ 'input-error': errors.email }"
-                />
-                <span v-if="errors.email" class="error-msg">{{ errors.email }}</span>
+                <label for="requirementType">需求类型</label>
+                <select
+                  id="requirementType"
+                  v-model="form.requirementType"
+                >
+                  <option value="">请选择需求类型</option>
+                  <option value="来图加工">来图加工</option>
+                  <option value="打样">打样</option>
+                  <option value="批量生产">批量生产</option>
+                  <option value="精密再制造">精密再制造</option>
+                  <option value="外贸服务">外贸服务</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="drawingFile">图纸上传</label>
+                <div class="file-upload-area">
+                  <input
+                    id="drawingFile"
+                    type="file"
+                    accept=".pdf,.dwg,.step,.stp,.igs,.iges,.jpg,.png"
+                    multiple
+                    @change="handleFileChange"
+                    class="file-input"
+                  />
+                  <div class="file-upload-hint">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>点击或拖拽上传图纸（支持 PDF / DWG / STEP / 图片）</span>
+                  </div>
+                  <div v-if="uploadedFiles.length" class="file-list">
+                    <span v-for="(f, i) in uploadedFiles" :key="i" class="file-tag">{{ f.name }}</span>
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
@@ -56,13 +106,11 @@
                   id="content"
                   v-model="form.content"
                   rows="6"
-                  placeholder="零件加工需求问题描述..."
+                  placeholder="材质、数量、公差要求、目标交期"
                   :class="{ 'input-error': errors.content }"
                 ></textarea>
                 <span v-if="errors.content" class="error-msg">{{ errors.content }}</span>
               </div>
-
-              <input type="hidden" v-model="form.phone" />
 
               <button type="submit" class="btn-submit" :disabled="submitting">
                 {{ submitting ? '发送中...' : '发送留言' }}
@@ -200,6 +248,7 @@ import { getContactInfo, submitMessage } from '../api/contact'
 const contactInfo = ref({})
 const showSuccess = ref(false)
 const submitting = ref(false)
+const uploadedFiles = ref([])
 
 const form = reactive({
   name: '',
@@ -207,7 +256,8 @@ const form = reactive({
   email: '',
   companyName: '',
   content: '',
-  address: ''
+  address: '',
+  requirementType: ''
 })
 
 const errors = reactive({
@@ -216,6 +266,11 @@ const errors = reactive({
   email: '',
   content: ''
 })
+
+function handleFileChange(e) {
+  const files = Array.from(e.target.files || [])
+  uploadedFiles.value = files.map(f => ({ name: f.name, file: f }))
+}
 
 async function loadContactInfo() {
   try {
@@ -236,8 +291,8 @@ function validate() {
     errors.name = '请输入姓名'
     valid = false
   }
-  if (!form.email.trim()) {
-    errors.email = '请输入邮箱'
+  if (!form.phone.trim()) {
+    errors.phone = '请输入联系电话'
     valid = false
   }
   if (!form.content.trim()) {
@@ -258,7 +313,8 @@ async function handleSubmit() {
       email: form.email,
       content: form.content,
       address: form.address,
-      companyName: form.companyName
+      companyName: form.companyName,
+      requirementType: form.requirementType
     })
     showSuccess.value = true
     form.name = ''
@@ -267,6 +323,8 @@ async function handleSubmit() {
     form.companyName = ''
     form.content = ''
     form.address = ''
+    form.requirementType = ''
+    uploadedFiles.value = []
   } catch (e) {
     console.error('提交留言失败:', e)
     alert('提交失败，请稍后重试')
@@ -405,7 +463,8 @@ onMounted(() => {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
   padding: 14px 15px;
   border: 2px solid #ddd;
   border-radius: 0;
@@ -417,13 +476,19 @@ onMounted(() => {
   font-family: inherit;
 }
 
+.form-group select {
+  cursor: pointer;
+  appearance: auto;
+}
+
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   color: #a7a49c;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
   border-color: var(--maroon);
   background: #fff;
 }
@@ -442,6 +507,60 @@ onMounted(() => {
 .form-group textarea {
   resize: vertical;
   min-height: 140px;
+}
+
+/* 文件上传区 */
+.file-upload-area {
+  border: 2px dashed #ddd;
+  padding: 20px;
+  background: #fafafa;
+  transition: border-color var(--transition-base);
+  cursor: pointer;
+  position: relative;
+}
+
+.file-upload-area:hover {
+  border-color: var(--maroon);
+}
+
+.file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.file-upload-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #999;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.file-upload-hint svg {
+  flex-shrink: 0;
+  color: var(--maroon);
+}
+
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.file-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(138, 53, 45, 0.08);
+  color: var(--maroon);
+  font-size: 12px;
+  border-radius: 2px;
 }
 
 .btn-submit {

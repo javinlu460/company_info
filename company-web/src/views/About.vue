@@ -125,7 +125,7 @@ const configData = ref({})
 const siteConfig = ref({})
 
 const stats = ref({
-  founded: '2010',
+  founded: '2014',
   capital: '5000万',
   partners: '200+',
   cases: '1000+'
@@ -139,10 +139,9 @@ const statList = computed(() => [
 ])
 
 const milestones = [
-  { year: '2010', title: '公司成立', desc: '在行业内正式注册成立，开启专业化服务之路。' },
-  { year: '2014', title: '规模扩张', desc: '业务覆盖全国多个省市，团队规模突破百人。' },
+  { year: '2014', title: '公司成立', desc: '在行业内正式注册成立，开启专业化服务之路。' },
   { year: '2018', title: '技术升级', desc: '引进先进生产设备与管理体系，通过 ISO9001 质量体系认证。' },
-  { year: '2022', title: '行业领先', desc: '成为细分领域标杆企业，服务客户超过千家。' },
+  { year: '2022', title: '规模扩张', desc: '业务覆盖全国多个省市，团队规模与产能持续提升。' },
   { year: '2026', title: '持续创新', desc: '持续加大研发投入，推动数字化转型与智能化升级。' }
 ]
 

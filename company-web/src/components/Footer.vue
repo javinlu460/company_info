@@ -200,7 +200,7 @@ function stripHtml(html) {
     .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
   const div = document.createElement('div')
   div.innerHTML = text
-  return (div.textContent || div.innerText || '').trim().substring(0, 200)
+  return (div.textContent || div.innerText || '').trim().substring(0, 300)
 }
 const companyDesc = computed(() => stripHtml(siteConfig.value.siteDesc))
 

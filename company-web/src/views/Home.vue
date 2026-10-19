@@ -4,9 +4,9 @@
     <section class="hero">
       <div class="hero-bg"></div>
       <div class="hero-content container">
-        <span class="hero-tag animate-item">专业机械制造</span>
-        <h1 class="hero-title animate-item">{{ config.siteName || '精工智造 · 品质致远' }}</h1>
-        <p class="hero-subtitle animate-item">{{ config.siteDesc ? stripHtml(decodeHtml(config.siteDesc)).slice(0, 60) : '专注于机械制造领域，为客户提供高品质产品与全方位解决方案' }}</p>
+        <span class="hero-tag animate-item">中大型盘类精密件 · 来图定制加工</span>
+        <h1 class="hero-title animate-item">山东尧舜机械制造有限公司</h1>
+        <p class="hero-subtitle animate-item">Φ250–1000mm 加工直径 | 精度 IT9~IT6 | 1400T 成形能力</p>
         <div class="hero-actions animate-item">
           <router-link to="/products" class="btn-red">产品中心</router-link>
           <router-link to="/contact" class="btn-outline-light">获取报价</router-link>
@@ -42,7 +42,7 @@
         <div class="capabilities-grid">
           <div class="cap-card capabilities-highlight reveal">
             <p>Φ250mm - 1000mm</p>
-            <p>IT3-IT6（可达IT6级）</p>
+            <p>IT9~IT6（可达IT6级）</p>
           </div>
           <div
             v-for="(item, idx) in capabilities"
@@ -63,6 +63,7 @@
           <div class="section-title text-left">
             <div class="title-line"></div>
             <h2>产品中心</h2>
+            <p class="section-desc">中大型盘类与回转类精密加工件，按图纸加工。以下为典型件示例，不限于示例品类。</p>
           </div>
           <router-link to="/products" class="view-all-link">查看全部 →</router-link>
         </div>
@@ -94,6 +95,10 @@
         <div v-else class="empty-state">
           <div class="empty-icon">📦</div>
           <p>暂无产品信息</p>
+        </div>
+        <div class="product-disclaimer reveal">
+          <p>以上产品仅为典型加工件示例参考，不限于示例品类；在 Φ250–1000mm 加工范围内，可按图纸要求获取专属定制方案。</p>
+          <p>产品示例图仅供参考，一切以实物为准。</p>
         </div>
         <div class="section-more reveal" v-if="filteredProducts.length">
           <router-link to="/products" class="btn-outline-dark">查看更多产品 →</router-link>
@@ -128,9 +133,9 @@
     <section class="solutions section-dark">
       <div class="container">
         <div class="sol-header reveal">
-          <p class="sol-label">— SOLUTIONS · 行业解决方案</p>
-          <h2 class="sol-main-title">覆盖多场景的专业制造服务</h2>
-          <p class="sol-main-desc">从图纸到成品，我们为客户提供灵活、可靠的定制化制造解决方案，满足多元化需求。</p>
+          <p class="sol-label">— SOLUTIONS</p>
+          <h2 class="sol-main-title">制造服务与解决方案</h2>
+          <p class="sol-main-desc">从图纸到成品，提供新品打样、批量生产、维修替换与旧件再生四类服务场景。</p>
         </div>
         <div class="solutions-grid">
           <div
@@ -153,10 +158,11 @@
     <section id="cases" class="cases section-light">
       <div class="container">
         <div class="section-title reveal">
-          <h2>客户案例</h2>
+          <h2>客户案例与行业应用</h2>
           <p class="section-subtitle">CASES</p>
           <div class="title-line"></div>
         </div>
+        <p class="cases-lead">长期为泵阀、重工、传动与矿山装备行业提供精密加工配套，以下为部分合作与应用场景。</p>
         <div class="cases-grid">
           <router-link
             v-for="(c, idx) in cases"
@@ -171,6 +177,7 @@
             </div>
           </router-link>
         </div>
+        <p class="confidential-notice">以下合作内容已按客户代工保密要求处理，不披露客户名称与项目细节；技术描述以实际产能为依据。</p>
       </div>
     </section>
 
@@ -233,7 +240,7 @@
         <div class="about-inner">
           <div class="about-stats reveal">
             <div class="stat-item">
-              <span class="stat-num">{{ config.establishYear || '10年+' }}</span>
+              <span class="stat-num">{{ config.establishYear || '2014' }}</span>
               <span class="stat-unit"></span>
               <span class="stat-label">成立年限</span>
             </div>
@@ -268,9 +275,9 @@
     <!-- 11. 联系/报价CTA -->
     <section class="cta-section">
       <div class="container">
-        <h2 class="cta-title reveal">准备好开始合作了吗？</h2>
-        <p class="cta-subtitle reveal">联系我们获取专属报价方案</p>
-        <router-link to="/contact" class="btn-cta reveal">立即获取报价</router-link>
+        <h2 class="cta-title reveal">有图纸？发过来，先做一次工艺评估</h2>
+        <p class="cta-subtitle reveal">支持 DXF / STEP / PDF 图纸获取报价。</p>
+        <router-link to="/contact" class="btn-cta reveal">发图纸，获取报价</router-link>
         <a v-if="config.phone" :href="'tel:' + config.phone" class="cta-phone reveal">{{ config.phone }}</a>
       </div>
     </section>
@@ -317,7 +324,7 @@ function stripHtml(html) {
 // === 硬编码数据 ===
 const trustItems = [
   'ISO9001认证·三体系',
-  '10年+行业经验',
+  '2014年建厂',
   '定制化',
   '非标件'
 ]
@@ -338,6 +345,10 @@ const capabilities = [
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="20" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 40c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M30 38l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
     title: '售后保障',
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M4 24h40M24 4c6 6 6 34 0 40M24 4c-6 6-6 34 0 40" stroke="currentColor" stroke-width="1.5"/></svg>`,
+    title: '外贸服务',
   }
 ]
 
@@ -362,7 +373,7 @@ const defaultSolutionIcons = [
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v5.6L5.6 17A2 2 0 0 0 7.4 20h9.2a2 2 0 0 0 1.8-3L14 8.6V3"/><path d="M7.6 14h8.8"/></svg>`,
   // 小批量 · 维修/替换用件 —— 立方体/备件
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg>`,
-  // 逆向工程 · 来样复制 —— 测绘取景框
+  // 精密再制造 · 来样复制 —— 测绘取景框
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="8.5" y="8.5" width="7" height="7" rx="1"/></svg>`,
   `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 20h12M18 28h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`
@@ -590,7 +601,7 @@ onUnmounted(() => {
 /* ==================== 能力展示 ==================== */
 .capabilities-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 24px;
 }
 
@@ -618,6 +629,7 @@ onUnmounted(() => {
 
 .capabilities-highlight p {
   margin: 0;
+  color: var(--gold);
 }
 
 .cap-card {
@@ -724,6 +736,29 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+}
+
+/* ==================== 产品免责 ==================== */
+.section-desc {
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.7;
+  margin-top: 8px;
+  max-width: 600px;
+}
+
+.product-disclaimer {
+  font-size: 13px;
+  color: var(--gray-400);
+  line-height: 1.8;
+  margin-top: 24px;
+  padding: 16px 20px;
+  border: 1px dashed var(--gray-300);
+  border-radius: var(--radius-sm);
+}
+
+.product-disclaimer p {
+  margin: 0;
 }
 
 .section-more {
@@ -901,6 +936,26 @@ onUnmounted(() => {
 }
 
 /* ==================== 客户案例 ==================== */
+.cases-lead {
+  font-size: 15px;
+  color: var(--gray-500);
+  line-height: 1.8;
+  max-width: 720px;
+  margin-bottom: 28px;
+  margin-top: -12px;
+}
+
+.confidential-notice {
+  font-size: 13px;
+  color: var(--gray-400);
+  text-align: center;
+  margin-top: 24px;
+  padding: 12px 20px;
+  border: 1px dashed var(--gray-300);
+  border-radius: var(--radius-sm);
+  line-height: 1.7;
+}
+
 .cases-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
