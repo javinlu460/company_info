@@ -11,19 +11,19 @@
         <div class="intro-grid">
           <div class="intro-text">
             <div class="section-label">COMPANY PROFILE</div>
-            <h2 class="intro-title">公司简介</h2>
+            <h2 class="intro-title">Company Profile</h2>
             <div v-if="loading" class="loading-wrap">
               <div class="loading-spinner"></div>
-              <span>加载中...</span>
+              <span>Loading...</span>
             </div>
             <div v-else class="intro-body" v-html="decodeHtml(configData.aboutContent)"></div>
             <router-link to="/contact" class="btn-red cta-btn">
-              发图纸，获取报价及解决方案 →
+              Send Drawings, Get a Quote & Solution →
             </router-link>
           </div>
           <div class="intro-visual">
             <div class="intro-image-wrap">
-              <img v-if="siteConfig.logo" :src="getImageUrl(siteConfig.logo)" alt="公司形象" />
+              <img v-if="siteConfig.logo" :src="getImageUrl(siteConfig.logo)" alt="Company profile image" />
               <div v-else class="intro-image-fallback">
                 <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect width="120" height="120" rx="8" fill="#23272B" />
@@ -33,7 +33,7 @@
               </div>
               <div class="intro-badge">
                 <strong>{{ stats.founded }}</strong>
-                <span>成立年份</span>
+                <span>Founded</span>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@
     <section class="section-light culture-section">
       <div class="container">
         <div class="section-title">
-          <h2>关于我们</h2>
+          <h2>About Us</h2>
           <p>CORPORATE CULTURE</p>
           <div class="title-line"></div>
         </div>
@@ -65,12 +65,12 @@
         <div class="culture-card">
           <div v-if="loading" class="loading-wrap">
             <div class="loading-spinner"></div>
-            <span>加载中...</span>
+            <span>Loading...</span>
           </div>
           <div v-else-if="tabContent" class="culture-content" v-html="tabContent"></div>
           <div v-else class="empty-state">
             <div class="empty-icon">📄</div>
-            <p>暂无相关内容</p>
+            <p>No content available</p>
           </div>
         </div>
       </div>
@@ -80,14 +80,14 @@
     <section class="section-white honor-section">
       <div class="container">
         <div class="section-title">
-          <h2>资质荣誉</h2>
+          <h2>Qualifications &amp; Honors</h2>
           <p>QUALIFICATIONS & HONORS</p>
           <div class="title-line"></div>
         </div>
 
         <div v-if="loading" class="loading-wrap">
           <div class="loading-spinner"></div>
-          <span>加载中...</span>
+          <span>Loading...</span>
         </div>
         <div v-else-if="honorContent" class="honor-content" v-html="honorContent"></div>
         <div v-else class="honor-grid">
@@ -98,8 +98,8 @@
                 <path d="M32 18L36 28H47L38 35L41 46L32 39L23 46L26 35L17 28H28L32 18Z" fill="#BF8E2A" />
               </svg>
             </div>
-            <h4>资质荣誉 {{ n }}</h4>
-            <p>行业认可与企业实力认证</p>
+            <h4>Qualification {{ n }}</h4>
+            <p>Industry recognition and corporate capability certification</p>
           </div>
         </div>
       </div>
@@ -115,8 +115,8 @@ import Banner from '../components/Banner.vue'
 const banners = ref([])
 
 const tabs = [
-  { key: 'vision', name: '业务与贸易范围' },
-  { key: 'culture', name: '工贸一体' }
+  { key: 'vision', name: 'Business & Trade Scope' },
+  { key: 'culture', name: 'Integrated Industry & Trade' }
 ]
 
 const activeTab = ref('vision')
@@ -126,23 +126,23 @@ const siteConfig = ref({})
 
 const stats = ref({
   founded: '2014',
-  capital: '5000万',
+  capital: '¥50M',
   partners: '200+',
   cases: '1000+'
 })
 
 const statList = computed(() => [
-  { value: stats.value.founded, label: '成立年份' },
-  { value: stats.value.capital, label: '注册资金' },
-  { value: stats.value.partners, label: '合作伙伴' },
-  { value: stats.value.cases, label: '服务案例' }
+  { value: stats.value.founded, label: 'Founded Year' },
+  { value: stats.value.capital, label: 'Registered Capital' },
+  { value: stats.value.partners, label: 'Partners' },
+  { value: stats.value.cases, label: 'Projects Delivered' }
 ])
 
 const milestones = [
-  { year: '2014', title: '公司成立', desc: '在行业内正式注册成立，开启专业化服务之路。' },
-  { year: '2018', title: '技术升级', desc: '引进先进生产设备与管理体系，通过 ISO9001 质量体系认证。' },
-  { year: '2022', title: '规模扩张', desc: '业务覆盖全国多个省市，团队规模与产能持续提升。' },
-  { year: '2026', title: '持续创新', desc: '持续加大研发投入，推动数字化转型与智能化升级。' }
+  { year: '2014', title: 'Company Founded', desc: 'Formally registered in the industry, starting our path of professional service.' },
+  { year: '2018', title: 'Technical Upgrade', desc: 'Introduced advanced production equipment and management systems, and passed ISO 9001 quality system certification.' },
+  { year: '2022', title: 'Business Expansion', desc: 'Coverage extended to multiple provinces and cities nationwide, with continuous growth in team size and capacity.' },
+  { year: '2026', title: 'Continuous Innovation', desc: 'Continued investment in R&D to drive digital and intelligent transformation.' }
 ]
 
 const tabContent = computed(() => {

@@ -5,58 +5,58 @@
       <div class="container">
         <!-- 页面标题 -->
         <div class="section-header">
-          <p class="ew-label">CONTACT · 联系我们</p>
-          <h2 class="section-title">联系工厂，直接对接</h2>
+          <p class="ew-label">CONTACT · Contact Us</p>
+          <h2 class="section-title">Talk to the Factory Directly</h2>
         </div>
 
         <!-- 两栏布局 -->
         <div class="contact-layout">
           <!-- 左侧：留言表单 -->
           <div class="form-column">
-            <p class="ew-label form-section-label">留言 / 咨询</p>
+            <p class="ew-label form-section-label">Message / Enquiry</p>
             <form class="message-form" @submit.prevent="handleSubmit">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="name">姓名</label>
+                  <label for="name">Name</label>
                   <input
                     id="name"
                     v-model="form.name"
                     type="text"
-                    placeholder="请输入姓名"
+                    placeholder="Please enter your name"
                     :class="{ 'input-error': errors.name }"
                   />
                   <span v-if="errors.name" class="error-msg">{{ errors.name }}</span>
                 </div>
                 <div class="form-group">
-                  <label for="company">公司</label>
+                  <label for="company">Company</label>
                   <input
                     id="company"
                     v-model="form.companyName"
                     type="text"
-                    placeholder="请输入公司名称"
+                    placeholder="Enter company name"
                   />
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="phone">电话 <span class="required">*</span></label>
+                  <label for="phone">Phone <span class="required">*</span></label>
                   <input
                     id="phone"
                     v-model="form.phone"
                     type="tel"
-                    placeholder="请输入联系电话"
+                    placeholder="Please enter your phone number"
                     :class="{ 'input-error': errors.phone }"
                   />
                   <span v-if="errors.phone" class="error-msg">{{ errors.phone }}</span>
                 </div>
                 <div class="form-group">
-                  <label for="email">邮箱</label>
+                  <label for="email">Email</label>
                   <input
                     id="email"
                     v-model="form.email"
                     type="email"
-                    placeholder="请输入邮箱地址"
+                    placeholder="Enter email address"
                     :class="{ 'input-error': errors.email }"
                   />
                   <span v-if="errors.email" class="error-msg">{{ errors.email }}</span>
@@ -64,35 +64,35 @@
               </div>
 
               <div class="form-group">
-                <label for="requirementType">需求类型</label>
+                <label for="requirementType">Requirement Type</label>
                 <select
                   id="requirementType"
                   v-model="form.requirementType"
                 >
-                  <option value="">请选择需求类型</option>
-                  <option value="来图加工">来图加工</option>
-                  <option value="打样">打样</option>
-                  <option value="批量生产">批量生产</option>
-                  <option value="精密再制造">精密再制造</option>
-                  <option value="外贸服务">外贸服务</option>
-                  <option value="其他">其他</option>
+                  <option value="">Select a requirement type</option>
+                  <option value="来图加工">Build to Drawing</option>
+                  <option value="打样">Prototyping</option>
+                  <option value="批量生产">Batch Production</option>
+                  <option value="精密再制造">Precision Remanufacturing</option>
+                  <option value="外贸服务">Export Service</option>
+                  <option value="其他">Other</option>
                 </select>
               </div>
 
               <div class="form-group">
-                <label for="content">留言内容</label>
+                <label for="content">Message</label>
                 <textarea
                   id="content"
                   v-model="form.content"
                   rows="6"
-                  placeholder="材质、数量、公差要求、目标交期"
+                  placeholder="Material, quantity, tolerance requirements, target lead time"
                   :class="{ 'input-error': errors.content }"
                 ></textarea>
                 <span v-if="errors.content" class="error-msg">{{ errors.content }}</span>
               </div>
 
               <button type="submit" class="btn-submit" :disabled="submitting">
-                {{ submitting ? '发送中...' : '发送留言' }}
+                {{ submitting ? 'Sending...' : 'Send Message' }}
               </button>
             </form>
           </div>
@@ -100,20 +100,20 @@
           <!-- 右侧：联系方式侧边栏 -->
           <div class="sidebar-column">
             <div class="sidebar-card">
-              <h3 class="sidebar-title">工厂直接联系方式</h3>
+              <h3 class="sidebar-title">Direct Factory Contact</h3>
 
               <ul class="contact-list">
                 <li class="contact-item">
                   <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
                   <div class="contact-info">
                     <div class="contact-header">
-                      <span class="contact-label">联系电话</span>
+                      <span class="contact-label">Phone</span>
                     </div>
                     <div class="contact-value">
                       <a v-if="contactInfo.phone" :href="'tel:' + contactInfo.phone">{{ contactInfo.phone }}</a>
-                      <span v-else>暂未填写</span>
+                      <span v-else>Not provided yet</span>
                     </div>
-                    <div class="contact-hint">{{ contactInfo.workTime || '工作日 6:30—17:30' }}</div>
+                    <div class="contact-hint">{{ contactInfo.workTime || 'Weekdays 6:30—17:30' }}</div>
                   </div>
                 </li>
 
@@ -121,13 +121,13 @@
                   <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
                   <div class="contact-info">
                     <div class="contact-header">
-                      <span class="contact-label">邮箱</span>
+                      <span class="contact-label">Email</span>
                     </div>
                     <div class="contact-value">
                       <a v-if="contactInfo.email" :href="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
-                      <span v-else>暂未填写</span>
+                      <span v-else>Not provided yet</span>
                     </div>
-                    <div class="contact-hint">图纸/需求询价请发至此</div>
+                    <div class="contact-hint">Send drawings and enquiries here</div>
                   </div>
                 </li>
 
@@ -135,10 +135,10 @@
                   <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
                   <div class="contact-info">
                     <div class="contact-header">
-                      <span class="contact-label">微信</span>
+                      <span class="contact-label">WeChat</span>
                     </div>
                     <div class="contact-value">
-                      <span>{{ contactInfo.wechat || '请来电获取' }}</span>
+                      <span>{{ contactInfo.wechat || 'Call us for details' }}</span>
                     </div>
                   </div>
                 </li>
@@ -147,10 +147,10 @@
                   <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
                   <div class="contact-info">
                     <div class="contact-header">
-                      <span class="contact-label">工厂地址</span>
+                      <span class="contact-label">Factory Address</span>
                     </div>
                     <div class="contact-value">
-                      <span>{{ contactInfo.address || '山东省淄博市博山区白塔镇工业园' }}</span>
+                      <span>{{ contactInfo.address || 'Baita Town Industrial Park, Boshan District, Zibo, Shandong, China' }}</span>
                     </div>
                   </div>
                 </li>
@@ -159,10 +159,10 @@
                   <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
                   <div class="contact-info">
                     <div class="contact-header">
-                      <span class="contact-label">到厂</span>
+                      <span class="contact-label">Directions</span>
                     </div>
                     <div class="contact-value">
-                      <span>{{ contactInfo.route || '济南章丘出口，导航"白塔镇工业园"' }}</span>
+                      <span>{{ contactInfo.route || 'Jinan-Zhangqiu exit, follow signs to Baita Town Industrial Park' }}</span>
                     </div>
                   </div>
                 </li>
@@ -172,28 +172,28 @@
               <div class="quote-process">
                 <div class="process-title">
                   <span class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6a1 1 0 0 1 1 1v1h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 0 1 1-1z"/><path d="M9 4h6"/></svg></span>
-                  <span>报价流程</span>
+                  <span>Quotation Process</span>
                 </div>
                 <ol class="process-steps">
                   <li>
                     <span class="step-num">1</span>
-                    <span class="step-text">发图纸/需求描述</span>
+                    <span class="step-text">Send drawings / requirement notes</span>
                   </li>
                   <li>
                     <span class="step-num">2</span>
-                    <span class="step-text">工程师评估(工作日)</span>
+                    <span class="step-text">Engineer assessment (weekdays)</span>
                   </li>
                   <li>
                     <span class="step-num">3</span>
-                    <span class="step-text">预估报价，材质，交期</span>
+                    <span class="step-text">Estimated price, material, lead time</span>
                   </li>
                   <li>
                     <span class="step-num">4</span>
-                    <span class="step-text">正式签约</span>
+                    <span class="step-text">Contract signing</span>
                   </li>
                   <li>
                     <span class="step-num">5</span>
-                    <span class="step-text">打样 → 确认 → 批量生产</span>
+                    <span class="step-text">Sample → Approval → Batch production</span>
                   </li>
                 </ol>
               </div>
@@ -212,9 +212,9 @@
             <path d="M14 24l7 7 13-13" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </div>
-        <h3>提交成功！</h3>
-        <p>感谢您的留言，我们会尽快与您联系。</p>
-        <button class="btn-red" @click="showSuccess = false">确定</button>
+        <h3>Submitted Successfully!</h3>
+        <p>Thank you for your message. We will get in touch with you shortly.</p>
+        <button class="btn-red" @click="showSuccess = false">OK</button>
       </div>
     </div>
   </div>
@@ -261,15 +261,15 @@ function validate() {
   errors.content = ''
 
   if (!form.name.trim()) {
-    errors.name = '请输入姓名'
+    errors.name = 'Please enter your name'
     valid = false
   }
   if (!form.phone.trim()) {
-    errors.phone = '请输入联系电话'
+    errors.phone = 'Please enter your phone number'
     valid = false
   }
   if (!form.content.trim()) {
-    errors.content = '请输入留言内容'
+    errors.content = 'Please enter your message'
     valid = false
   }
   return valid
@@ -299,7 +299,7 @@ async function handleSubmit() {
     form.requirementType = ''
   } catch (e) {
     console.error('提交留言失败:', e)
-    alert('提交失败，请稍后重试')
+    alert('Submission failed. Please try again later.')
   } finally {
     submitting.value = false
   }

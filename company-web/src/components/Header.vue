@@ -9,7 +9,7 @@
           alt="logo"
           class="logo-img"
         />
-        <span class="logo-text">{{ siteConfig.siteName || '企业官网' }}</span>
+        <span class="logo-text">{{ siteConfig.siteName || 'Corporate Site' }}</span>
       </router-link>
 
       <!-- 桌面端导航 -->
@@ -27,14 +27,14 @@
 
       <!-- 桌面端 CTA -->
       <router-link to="/contact" class="cta-btn desktop-cta">
-        获取报价
+        Get a Quote
       </router-link>
 
       <!-- 移动端汉堡菜单 -->
       <button
         class="menu-toggle"
         @click="drawerOpen = true"
-        aria-label="打开菜单"
+        aria-label="Open menu"
       >
         <span class="hamburger"></span>
       </button>
@@ -53,7 +53,7 @@
         <button
           class="drawer-close"
           @click="drawerOpen = false"
-          aria-label="关闭菜单"
+          aria-label="Close menu"
         ></button>
         <nav class="drawer-nav">
           <router-link
@@ -72,7 +72,7 @@
           class="cta-btn drawer-cta"
           @click="drawerOpen = false"
         >
-          获取报价
+          Get a Quote
         </router-link>
       </aside>
     </transition>
@@ -90,13 +90,13 @@ const drawerOpen = ref(false)
 const siteConfig = ref({})
 
 const navItems = [
-  { name: '关于我们', path: '/about' },
-  { name: '产品中心', path: '/products' },
-  { name: '解决方案', path: '/business' },
-  { name: '客户案例', path: '/cases' },
-  { name: '行业洞察', path: '/news' },
-  { name: '常见问题', path: '/faq' },
-  { name: '联系我们', path: '/contact' }
+  { name: 'About Us', path: '/about' },
+  { name: 'Products', path: '/products' },
+  { name: 'Solutions', path: '/business' },
+  { name: 'Cases', path: '/cases' },
+  { name: 'Insights', path: '/news' },
+  { name: 'FAQ', path: '/faq' },
+  { name: 'Contact Us', path: '/contact' }
 ]
 
 function isActive(item) {

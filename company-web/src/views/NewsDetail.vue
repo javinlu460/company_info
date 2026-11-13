@@ -5,11 +5,11 @@
       <div class="container">
         <p class="banner-en">INDUSTRY INSIGHTS</p>
         <nav class="breadcrumb" aria-label="breadcrumb">
-          <router-link to="/">首页</router-link>
+          <router-link to="/">Home</router-link>
           <span class="separator">/</span>
-          <router-link to="/news">行业洞察</router-link>
+          <router-link to="/news">Insights</router-link>
           <span class="separator">/</span>
-          <span class="current">{{ news.title || '文章详情' }}</span>
+          <span class="current">{{ news.title || 'Article' }}</span>
         </nav>
       </div>
     </div>
@@ -17,7 +17,7 @@
     <!-- 加载中 -->
     <div v-if="loading" class="loading-wrap" style="min-height: 400px;">
       <div class="loading-spinner"></div>
-      <span>加载中...</span>
+      <span>Loading...</span>
     </div>
 
     <!-- 文章内容 -->
@@ -38,7 +38,7 @@
             </span>
             <span v-if="news.viewCount">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              {{ news.viewCount }} 次阅读
+              {{ news.viewCount }} views
             </span>
           </div>
         </header>
@@ -49,19 +49,19 @@
         <!-- 上下篇导航 -->
         <footer class="article-nav">
           <div class="nav-item nav-prev">
-            <span class="nav-label">上一篇</span>
+            <span class="nav-label">Previous Article</span>
             <router-link v-if="prevNews" :to="`/news/${prevNews.id}`" class="nav-link">
               {{ prevNews.title }}
             </router-link>
-            <span v-else class="nav-empty">没有了</span>
+            <span v-else class="nav-empty">None</span>
           </div>
           <div class="nav-divider"></div>
           <div class="nav-item nav-next">
-            <span class="nav-label">下一篇</span>
+            <span class="nav-label">Next Article</span>
             <router-link v-if="nextNews" :to="`/news/${nextNews.id}`" class="nav-link">
               {{ nextNews.title }}
             </router-link>
-            <span v-else class="nav-empty">没有了</span>
+            <span v-else class="nav-empty">None</span>
           </div>
         </footer>
       </div>
@@ -70,8 +70,8 @@
     <!-- 文章不存在 -->
     <div v-else class="empty-state" style="min-height: 400px;">
       <div class="empty-icon">📰</div>
-      <p>文章不存在或已删除</p>
-      <router-link to="/news" class="btn-red" style="margin-top: 20px; text-decoration: none;">返回行业洞察</router-link>
+      <p>This article does not exist or has been deleted.</p>
+      <router-link to="/news" class="btn-red" style="margin-top: 20px; text-decoration: none;">Back to Insights</router-link>
     </div>
   </div>
 </template>

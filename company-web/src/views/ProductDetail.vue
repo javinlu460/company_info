@@ -3,20 +3,20 @@
     <div class="page-banner">
       <div class="container">
         <nav class="breadcrumb">
-          <router-link to="/">首页</router-link>
+          <router-link to="/">Home</router-link>
           <span class="separator">/</span>
-          <router-link to="/products">产品中心</router-link>
+          <router-link to="/products">Products</router-link>
           <span class="separator">/</span>
-          <span class="current">{{ productName || '产品详情' }}</span>
+          <span class="current">{{ productName || 'Product Details' }}</span>
         </nav>
-        <h1>产品详情</h1>
+        <h1>Product Details</h1>
         <p class="banner-subtitle">PRODUCT DETAIL</p>
       </div>
     </div>
 
     <div v-if="loading" class="loading-wrap">
       <div class="loading-spinner"></div>
-      <span>加载中...</span>
+      <span>Loading...</span>
     </div>
 
     <template v-else-if="product.id">
@@ -38,7 +38,7 @@
               <h1 class="product-name">{{ productName }}</h1>
               <p v-if="product.description" class="product-desc">{{ product.description }}</p>
               <router-link to="/contact" class="btn-red cta-btn">
-                联系咨询
+                Contact Us
               </router-link>
             </div>
           </div>
@@ -49,7 +49,7 @@
         <div class="container">
           <div class="content-card" v-html="decodedContent"></div>
           <div class="product-notice">
-            <p>以上产品仅为典型加工件示例参考；在 Φ250–1000mm 加工范围内，可按图纸要求获取专属定制方案。产品示例图仅供参考，一切以实物为准。</p>
+            <p>The products above are typical machined parts shown for reference only. Within the Φ250–1000mm machining range, a dedicated solution can be quoted against your drawings. Product images are for reference only; the actual product shall prevail.</p>
           </div>
         </div>
       </section>
@@ -57,7 +57,7 @@
       <section v-if="relatedProducts.length" class="section-light related-section">
         <div class="container">
           <div class="section-title">
-            <h2>相关产品</h2>
+            <h2>Related Products</h2>
             <div class="title-line"></div>
           </div>
           <div class="related-grid">
@@ -73,8 +73,8 @@
 
     <div v-else class="empty-state">
       <div class="empty-icon">📦</div>
-      <p>产品不存在或已下架</p>
-      <router-link to="/products" class="btn-red" style="margin-top: 16px;">返回产品列表</router-link>
+      <p>This product does not exist or has been removed.</p>
+      <router-link to="/products" class="btn-red" style="margin-top: 16px;">Back to Products</router-link>
     </div>
   </div>
 </template>

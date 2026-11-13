@@ -4,17 +4,17 @@
     <section class="solutions-section">
       <div class="container">
         <div class="section-head">
-          <span class="ew">SOLUTIONS · 制造服务与解决方案</span>
-          <h2>覆盖多场景的专业制造服务</h2>
+          <span class="ew">SOLUTIONS · Manufacturing Services &amp; Solutions</span>
+          <h2>Professional Manufacturing Services for Multiple Scenarios</h2>
           <p class="lead">
-            从图纸到成品，提供新品打样、批量生产、维修替换与旧件再生四类服务场景。
+            From drawing to finished part, we cover four service scenarios: new-part prototyping, batch production, repair and replacement parts, and precision remanufacturing of worn components.
           </p>
         </div>
 
         <div class="content-block">
           <div v-if="loading" class="loading-wrap">
             <div class="loading-spinner"></div>
-            <span>加载中...</span>
+            <span>Loading...</span>
           </div>
 
           <template v-else>
@@ -48,8 +48,8 @@
           <!-- 合作流程 -->
           <div class="process-container">
             <div class="section-head center">
-              <span class="ew">PROCESS · 合作流程</span>
-              <h2>从发图纸到收货——六步搞定</h2>
+              <span class="ew">PROCESS · How We Work</span>
+              <h2>From Drawing to Delivery — Six Simple Steps</h2>
             </div>
 
             <div class="flow-grid">
@@ -69,7 +69,7 @@
           <!-- 底部 CTA -->
           <div class="cta-bar">
             <router-link to="/contact" class="btn-red cta-btn">
-              发图纸，获取报价及解决方案 →
+              Send Drawings, Get a Quote & Solution →
             </router-link>
           </div>
         </div>
@@ -89,45 +89,45 @@ const defaultSolutions = [
   {
     id: 'default-1',
     num: 'A',
-    title: 'OEM 定制 · 按图加工',
+    title: 'OEM Custom Machining · To Drawing',
     subtitle: 'Contract Manufacturing',
-    summary: '客户提供图纸或样品，我们按规格进行精密加工与组装，按图纸与合同要求执行。',
+    summary: 'Customers provide drawings or samples, and we perform precision machining and assembly to specification, executed according to drawings and contractual requirements.',
     specs: [
-      { label: '来图加工' },
-      { label: '批量稳定', highlight: true }
+      { label: 'Build to Drawing' },
+      { label: 'Stable Batch Quality', highlight: true }
     ]
   },
   {
     id: 'default-2',
     num: 'B',
-    title: '快速打样 · 新品开发验证',
+    title: 'Rapid Prototyping · New Product Validation',
     subtitle: 'Rapid Prototyping',
-    summary: '针对新品开发阶段提供小批量打样服务，快速验证结构设计与工艺可行性，缩短研发周期。',
+    summary: 'Small-batch prototypes for the new-product development stage, quickly validating structural design and process feasibility to shorten development cycles.',
     specs: [
-      { label: '评估后确认' },
-      { label: '小批量', highlight: true }
+      { label: 'Confirmed After Assessment' },
+      { label: 'Small Batch', highlight: true }
     ]
   },
   {
     id: 'default-3',
     num: 'C',
-    title: '小批量 · 维修/替换用件',
+    title: 'Small Batch · Repair & Replacement Parts',
     subtitle: 'Medium-Small Batch Production',
-    summary: '为设备维护、备件更换提供灵活的小批量生产，无需开模大批囤货，降低库存与资金压力。',
+    summary: 'Flexible small-batch production for equipment maintenance and spare-part replacement — no tooling investment or large stock holding, reducing inventory and cash-flow pressure.',
     specs: [
-      { label: '按需生产' },
-      { label: '交期灵活', highlight: true }
+      { label: 'Made to Demand' },
+      { label: 'Flexible Lead Time', highlight: true }
     ]
   },
   {
     id: 'default-4',
     num: 'D',
-    title: '精密再制造 · 来样复制',
+    title: 'Precision Remanufacturing · Replication from Sample',
     subtitle: 'Precision Remanufacturing',
-    summary: '仅有实物样品即可完成测绘、建模与生产复制，帮助客户延续供应或优化老旧零部件。',
+    summary: 'A physical sample is all we need to complete measurement, modeling and production replication, helping customers sustain supply or upgrade aging components.',
     specs: [
-      { label: '三维测绘' },
-      { label: '老旧件替代', highlight: true }
+      { label: '3D Measurement' },
+      { label: 'Aging Part Replacement', highlight: true }
     ]
   }
 ]
@@ -145,12 +145,12 @@ const solutionIcons = [
 ]
 
 const processSteps = [
-  { title: '提交图纸', desc: '上传图纸、样品或需求说明' },
-  { title: '工程师审核', desc: '评估工艺、材料与交期' },
-  { title: '报价签约', desc: '双方拟定合同和正式签约' },
-  { title: '确认打样', desc: '报价确认后安排样品制作' },
-  { title: '质检/交样报告', desc: '检测/出具报告' },
-  { title: '批量生产及交付', desc: '按合同交付' }
+  { title: 'Submit Drawings', desc: 'Upload drawings, samples or requirement notes' },
+  { title: 'Engineer Review', desc: 'Assess process, material and lead time' },
+  { title: 'Quote & Contract', desc: 'Both parties draft and sign the contract' },
+  { title: 'Sample Confirmation', desc: 'Sample production arranged once the quote is confirmed' },
+  { title: 'Inspection Report', desc: 'Inspection and report issuance' },
+  { title: 'Batch Production & Delivery', desc: 'Delivered per contract' }
 ]
 
 const displayList = computed(() => {

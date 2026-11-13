@@ -4,7 +4,7 @@
     v-show="!isOpen"
     class="ai-chat-fab"
     @click="togglePanel"
-    aria-label="打开智能客服"
+    aria-label="Open support chat"
   >
     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
@@ -28,14 +28,14 @@
             </svg>
           </div>
           <div class="ai-chat-header__text">
-            <h3 class="ai-chat-header__title">智能客服</h3>
+            <h3 class="ai-chat-header__title">AI Support</h3>
             <div class="ai-chat-header__status">
               <span class="ai-chat-header__dot"></span>
-              <span>在线</span>
+              <span>Online</span>
             </div>
           </div>
         </div>
-        <button class="ai-chat-header__close" @click="togglePanel" aria-label="关闭">
+        <button class="ai-chat-header__close" @click="togglePanel" aria-label="Close">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
@@ -55,7 +55,7 @@
             </svg>
           </div>
           <div class="ai-chat-msg__bubble">
-            您好！我是智能客服助手，有什么可以帮您的吗？
+            Hello! I'm your AI assistant. How can I help you today?
           </div>
         </div>
 
@@ -111,10 +111,10 @@
           v-model="inputText"
           type="text"
           class="ai-chat-footer__input"
-          placeholder="输入您的问题..."
+          placeholder="Type your question..."
           @keyup.enter="sendMessage"
         />
-        <button class="ai-chat-footer__send" @click="sendMessage" :disabled="!inputText.trim()" aria-label="发送">
+        <button class="ai-chat-footer__send" @click="sendMessage" :disabled="!inputText.trim()" aria-label="Send">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13" />
             <polygon points="22 2 15 22 11 13 2 9 22 2" />
@@ -135,16 +135,16 @@ const isTyping = ref(false)
 const showQuickActions = ref(true)
 const bodyRef = ref(null)
 
-const quickQuestions = ['产品咨询', '获取报价', '售后服务', '合作洽谈']
+const quickQuestions = ['Product Inquiry', 'Get a Quote', 'After-sales Service', 'Partnership']
 
 const replies = {
-  '产品咨询': '感谢您的咨询！我们提供多种工业机械产品，您可以访问产品中心了解详情，或拨打热线电话获取专业建议。',
-  '获取报价': '请您填写联系我们页面的报价表单，我们的销售团队将在24小时内为您提供详细报价。',
-  '售后服务': '我们提供完善的售后服务，包括设备安装、调试、培训及维修保养。请拨打售后热线或留言，我们将尽快处理。',
-  '合作洽谈': '欢迎合作！请通过联系我们页面留下您的信息，我们的商务团队将与您联系。'
+  'Product Inquiry': 'Thank you for your interest! We offer a wide range of precision machined components. Visit our Products page for details, or call our hotline for professional advice.',
+  'Get a Quote': 'Please fill in the quote form on our Contact page. Our sales team will prepare a detailed quotation for you within 24 hours.',
+  'After-sales Service': 'We provide full after-sales support, including installation, commissioning, training and maintenance. Please call our service hotline or leave a message and we will follow up as soon as possible.',
+  'Partnership': 'We welcome partnerships. Please leave your details on our Contact page and our business team will get in touch with you.'
 }
 
-const defaultReply = '感谢您的留言，我们的客服人员将尽快为您解答。您也可以拨打热线电话获取即时帮助。'
+const defaultReply = 'Thank you for your message. Our team will get back to you shortly. You can also call our hotline for immediate assistance.'
 
 function togglePanel() {
   isOpen.value = !isOpen.value

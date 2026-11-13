@@ -3,8 +3,8 @@
     <section class="faq-section">
       <div class="container">
         <div class="section-head">
-          <span class="ew">FAQ · 常见问题</span>
-          <h2>加工咨询常见问题解答</h2>
+          <span class="ew">FAQ · Frequently Asked Questions</span>
+          <h2>Common Questions About Machining Services</h2>
         </div>
 
         <!-- 搜索框 -->
@@ -12,7 +12,7 @@
           <input
             v-model="searchKeyword"
             type="text"
-            placeholder="搜索关键词，如：精度、起订量、交期、图纸…"
+            placeholder="Search keywords, e.g. precision, MOQ, lead time, drawings…"
             class="search-input"
           />
         </div>
@@ -52,7 +52,7 @@
 
         <!-- CTA -->
         <div class="cta-wrapper">
-          <router-link to="/contact" class="btn-red cta-btn">发图纸，获取报价及解决方案 →</router-link>
+          <router-link to="/contact" class="btn-red cta-btn">Send Drawings, Get a Quote & Solution →</router-link>
         </div>
       </div>
     </section>
@@ -65,8 +65,8 @@ import { getFaqList, getFaqCategories } from '../api/faq'
 
 const activeFaq = ref(null)
 const searchKeyword = ref('')
-const activeCategory = ref('全部')
-const categories = ref(['全部'])
+const activeCategory = ref('All')
+const categories = ref(['All'])
 const faqItems = ref([])
 
 function toggleFaq(id) {
@@ -78,17 +78,17 @@ async function loadFaqData() {
     const [listRes, catRes] = await Promise.all([getFaqList(), getFaqCategories()])
     faqItems.value = listRes || []
     const cats = catRes || []
-    categories.value = ['全部', ...cats]
+    categories.value = ['All', ...cats]
   } catch (e) {
     console.error('加载FAQ失败:', e)
     faqItems.value = []
-    categories.value = ['全部']
+    categories.value = ['All']
   }
 }
 
 const filteredFaq = computed(() => {
   let list = faqItems.value
-  if (activeCategory.value !== '全部') {
+  if (activeCategory.value !== 'All') {
     list = list.filter(item => item.category === activeCategory.value)
   }
   if (searchKeyword.value.trim()) {

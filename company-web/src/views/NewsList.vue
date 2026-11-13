@@ -4,9 +4,9 @@
     <div class="page-label">
       <div class="container">
         <div class="section-head">
-          <span class="ew">INSIGHTS · 行业洞察</span>
-          <h2>深入行业前沿，洞察制造趋势</h2>
-          <p class="lead">分享行业动态、制造工艺、技术创新等专业内容，助力客户了解行业最新发展。</p>
+          <span class="ew">INSIGHTS · Industry Insights</span>
+          <h2>Industry Frontiers and Manufacturing Trends</h2>
+          <p class="lead">We share industry news, machining processes and technical innovation, helping customers keep pace with the latest developments.</p>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
             :class="{ active: !activeCategory }"
             @click="selectCategory(null)"
           >
-            全部
+            All
           </button>
           <button
             v-for="cat in categories"
@@ -40,7 +40,7 @@
       <div class="container">
         <div v-if="loading" class="loading-wrap">
           <div class="loading-spinner"></div>
-          <span>加载中...</span>
+          <span>Loading...</span>
         </div>
         <template v-else>
           <div v-if="newsList.length" class="news-grid">
@@ -52,11 +52,11 @@
           </div>
           <div v-else class="empty-state">
             <div class="empty-icon">📰</div>
-            <p>暂无相关资讯</p>
+            <p>No articles available</p>
           </div>
           <div class="cta-wrapper">
             <router-link to="/contact" class="btn-red cta-btn">
-              发图纸，获取报价及解决方案 →
+              Send Drawings, Get a Quote & Solution →
             </router-link>
           </div>
         </template>

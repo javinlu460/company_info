@@ -4,13 +4,13 @@
     <div class="page-banner">
       <div class="container">
         <nav class="breadcrumb">
-          <router-link to="/">首页</router-link>
+          <router-link to="/">Home</router-link>
           <span class="separator">/</span>
-          <router-link to="/cases">客户案例</router-link>
+          <router-link to="/cases">Cases</router-link>
           <span class="separator">/</span>
-          <span class="current">{{ caseData.title || '案例详情' }}</span>
+          <span class="current">{{ caseData.title || 'Case Details' }}</span>
         </nav>
-        <h1>案例详情</h1>
+        <h1>Case Details</h1>
         <p class="banner-subtitle">CASE DETAIL</p>
       </div>
     </div>
@@ -18,7 +18,7 @@
     <!-- 加载中 -->
     <div v-if="loading" class="loading-wrap">
       <div class="loading-spinner"></div>
-      <span>加载中...</span>
+      <span>Loading...</span>
     </div>
 
     <template v-else-if="caseData.id">
@@ -42,12 +42,12 @@
               <span v-if="caseData.industry" class="industry-tag">{{ caseData.industry }}</span>
               <h1 class="case-title">{{ caseData.title }}</h1>
               <div v-if="caseData.clientName" class="meta-row">
-                <span class="meta-label">客户名称</span>
+                <span class="meta-label">Client Name</span>
                 <span class="meta-value">{{ caseData.clientName }}</span>
               </div>
               <p v-if="caseData.description" class="case-desc">{{ caseData.description }}</p>
               <router-link to="/contact" class="btn-red cta-btn">
-                发图纸，获取报价及解决方案 →
+                Send Drawings, Get a Quote & Solution →
               </router-link>
             </div>
           </div>
@@ -65,7 +65,7 @@
       <section v-if="relatedCases.length" class="section-light related-section">
         <div class="container">
           <div class="section-title-row">
-            <h2>相关案例</h2>
+            <h2>Related Cases</h2>
             <div class="title-line"></div>
           </div>
           <div class="related-grid">
@@ -92,9 +92,9 @@
     <!-- 不存在 -->
     <div v-else class="empty-state">
       <div class="empty-icon">📋</div>
-      <p>案例不存在或已下架</p>
+      <p>This case does not exist or has been removed.</p>
       <router-link to="/cases" class="btn-red" style="margin-top: 16px; display: inline-block; padding: 12px 28px; text-decoration: none; border-radius: 4px;">
-        返回案例列表
+        Back to Cases
       </router-link>
     </div>
   </div>

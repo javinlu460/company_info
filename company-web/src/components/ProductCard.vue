@@ -4,13 +4,13 @@
       <img
         v-if="imageUrl"
         :src="imageUrl"
-        :alt="product.productName || product.name || '产品图片'"
+        :alt="product.productName || product.name || 'Product image'"
       />
       <div v-else class="image-placeholder">
-        <span>{{ (product.productName || product.name || '产品').charAt(0) }}</span>
+        <span>{{ (product.productName || product.name || 'P').charAt(0) }}</span>
       </div>
       <div class="card-overlay">
-        <span class="overlay-text">查看详情</span>
+        <span class="overlay-text">View Details</span>
       </div>
     </div>
     <div class="card-body">

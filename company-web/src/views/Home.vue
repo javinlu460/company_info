@@ -4,12 +4,12 @@
     <section class="hero">
       <div class="hero-bg"></div>
       <div class="hero-content container">
-        <span class="hero-tag animate-item">中大型盘类精密件 · 来图定制加工</span>
-        <h1 class="hero-title animate-item">山东尧舜机械制造有限公司</h1>
-        <p class="hero-subtitle animate-item">Φ250–1000mm 加工直径 | 精度 IT9~IT6</p>
+        <span class="hero-tag animate-item">Medium &amp; Large Disc-Type Precision Parts · Custom Machining to Drawing</span>
+        <h1 class="hero-title animate-item">Shandong Yaoshun Machinery Manufacturing Co., Ltd.</h1>
+        <p class="hero-subtitle animate-item">Φ250–1000mm Machining Diameter | Precision IT9~IT6</p>
         <div class="hero-actions animate-item">
-          <router-link to="/products" class="btn-red">产品中心</router-link>
-          <router-link to="/contact" class="btn-outline-light">获取报价</router-link>
+          <router-link to="/products" class="btn-red">Our Products</router-link>
+          <router-link to="/contact" class="btn-outline-light">Get a Quote</router-link>
         </div>
       </div>
     </section>
@@ -36,14 +36,14 @@
       <div class="container">
         <div class="section-title reveal">
           <div class="title-line"></div>
-          <h2>核心能力</h2>
-          <p class="section-subtitle">Core Capabilities</p>
+          <h2>Core Capabilities</h2>
+          <p class="section-subtitle">WHAT WE DO</p>
         </div>
         <div class="capabilities-grid">
           <div class="cap-card capabilities-highlight reveal">
             <p class="cap-spec">Φ250–1000mm</p>
             <p class="cap-spec">IT9~IT6</p>
-            <p class="cap-spec-sub">（可达IT6级）</p>
+            <p class="cap-spec-sub">(up to IT6)</p>
           </div>
           <div
             v-for="(item, idx) in capabilities"
@@ -63,17 +63,17 @@
         <div class="section-header reveal">
           <div class="section-title text-left">
             <div class="title-line"></div>
-            <h2>产品中心</h2>
-            <p class="section-desc">中大型盘类与回转类精密加工件，按图纸加工。以下为典型件示例，不限于示例品类。</p>
+            <h2>Our Products</h2>
+            <p class="section-desc">Medium-to-large disc and rotational precision machined parts, produced to your drawings. The items below are typical examples only and we are not limited to these categories.</p>
           </div>
-          <router-link to="/products" class="view-all-link">查看全部 →</router-link>
+          <router-link to="/products" class="view-all-link">View All →</router-link>
         </div>
         <div v-if="categories.length" class="product-tabs reveal">
           <button
             class="tab-btn"
             :class="{ active: activeCategory === null }"
             @click="activeCategory = null"
-          >全部</button>
+          >All</button>
           <button
             v-for="cat in categories"
             :key="cat.id"
@@ -84,7 +84,7 @@
         </div>
         <div v-if="loading" class="loading-wrap">
           <div class="loading-spinner"></div>
-          <span>加载中...</span>
+          <span>Loading...</span>
         </div>
         <div v-else-if="filteredProducts.length" class="products-grid reveal">
           <ProductCard
@@ -95,14 +95,14 @@
         </div>
         <div v-else class="empty-state">
           <div class="empty-icon">📦</div>
-          <p>暂无产品信息</p>
+          <p>No products available</p>
         </div>
         <div class="product-disclaimer reveal">
-          <p>以上产品仅为典型加工件示例参考，不限于示例品类；在 Φ250–1000mm 加工范围内，可按图纸要求获取专属定制方案。</p>
-          <p>产品示例图仅供参考，一切以实物为准。</p>
+          <p>The products above are typical machined parts shown for reference only and we are not limited to these categories. Within the Φ250–1000mm machining range, a dedicated solution can be quoted against your drawings.</p>
+          <p>Product images are for reference only; the actual product shall prevail.</p>
         </div>
         <div class="section-more reveal" v-if="filteredProducts.length">
-          <router-link to="/products" class="btn-outline-dark">查看更多产品 →</router-link>
+          <router-link to="/products" class="btn-outline-dark">View More Products →</router-link>
         </div>
       </div>
     </section>
@@ -111,7 +111,7 @@
     <section class="process section-white">
       <div class="container">
         <div class="section-title reveal">
-          <h2>工艺流程</h2>
+          <h2>Manufacturing Process</h2>
           <p class="section-subtitle">PROCESS</p>
           <div class="title-line"></div>
         </div>
@@ -135,8 +135,8 @@
       <div class="container">
         <div class="sol-header reveal">
           <p class="sol-label">— SOLUTIONS</p>
-          <h2 class="sol-main-title">制造服务与解决方案</h2>
-          <p class="sol-main-desc">从图纸到成品，提供新品打样、批量生产、维修替换与旧件再生四类服务场景。</p>
+          <h2 class="sol-main-title">Manufacturing Services &amp; Solutions</h2>
+          <p class="sol-main-desc">From drawing to finished part, we cover four service scenarios: new-part prototyping, batch production, repair and replacement parts, and precision remanufacturing of worn components.</p>
         </div>
         <div class="solutions-grid">
           <div
@@ -149,7 +149,7 @@
             </div>
             <h3 class="sol-title">{{ sol.title }}</h3>
             <p class="sol-desc">{{ sol.summary }}</p>
-            <router-link to="/business" class="sol-link">了解更多 →</router-link>
+            <router-link to="/business" class="sol-link">Learn More →</router-link>
           </div>
         </div>
       </div>
@@ -159,11 +159,11 @@
     <section id="cases" class="cases section-light">
       <div class="container">
         <div class="section-title reveal">
-          <h2>客户案例与行业应用</h2>
+          <h2>Case Studies &amp; Industry Applications</h2>
           <p class="section-subtitle">CASES</p>
           <div class="title-line"></div>
         </div>
-        <p class="cases-lead">长期为泵阀、重工、传动与矿山装备行业提供精密加工配套，以下为部分合作与应用场景。</p>
+        <p class="cases-lead">We have long supplied precision machining support to the pump &amp; valve, heavy machinery, power transmission and mining equipment industries. Below are some of our engagements and applications.</p>
         <div class="cases-grid">
           <router-link
             v-for="(c, idx) in cases"
@@ -178,7 +178,7 @@
             </div>
           </router-link>
         </div>
-        <p class="confidential-notice">以下合作内容已按客户代工保密要求处理，不披露客户名称与项目细节；技术描述以实际产能为依据。</p>
+        <p class="confidential-notice">The engagements below are presented in line with customer confidentiality requirements for contract manufacturing; customer names and project details are not disclosed. Technical descriptions are based on our actual capacity.</p>
       </div>
     </section>
 
@@ -188,9 +188,9 @@
         <div class="section-header reveal">
           <div class="section-title text-left">
             <div class="title-line"></div>
-            <h2>行业洞察</h2>
+            <h2>Insights</h2>
           </div>
-          <router-link to="/news" class="view-all-link">查看更多 →</router-link>
+          <router-link to="/news" class="view-all-link">View More →</router-link>
         </div>
         <div v-if="homeData.news && homeData.news.length" class="insights-grid reveal">
           <NewsItem
@@ -201,7 +201,7 @@
         </div>
         <div v-else class="empty-state">
           <div class="empty-icon">📰</div>
-          <p>暂无新闻动态</p>
+          <p>No news at the moment</p>
         </div>
       </div>
     </section>
@@ -210,7 +210,7 @@
     <section id="faq" class="faq section-light">
       <div class="container">
         <div class="section-title reveal">
-          <h2>常见问题</h2>
+          <h2>Frequently Asked Questions</h2>
           <p class="section-subtitle">FAQ</p>
           <div class="title-line"></div>
         </div>
@@ -243,31 +243,31 @@
             <div class="stat-item">
               <span class="stat-num">{{ config.establishYear || '2014' }}</span>
               <span class="stat-unit"></span>
-              <span class="stat-label">成立年限</span>
+              <span class="stat-label">Years in Operation</span>
             </div>
             <div class="stat-item">
               <span class="stat-num">{{ config.registeredCapital || 'ISO9001' }}</span>
               <span class="stat-unit"></span>
-              <span class="stat-label">认证</span>
+              <span class="stat-label">Certification</span>
             </div>
             <div class="stat-item">
               <span class="stat-num">{{ config.agentCount || 'CNC' }}</span>
               <span class="stat-unit"></span>
-              <span class="stat-label">精密加工</span>
+              <span class="stat-label">Precision Machining</span>
             </div>
             <div class="stat-item">
               <span class="stat-num">{{ config.caseCount || 'OEM' }}</span>
               <span class="stat-unit"></span>
-              <span class="stat-label">定制</span>
+              <span class="stat-label">Customization</span>
             </div>
           </div>
           <div class="about-text reveal">
-            <h2>关于我们</h2>
+            <h2>About Us</h2>
             <div class="about-line"></div>
             <p class="about-desc">
-              {{ config.siteDesc ? stripHtml(decodeHtml(config.siteDesc)).slice(0, 200) : '我们是一家专业的机械制造企业，致力于为客户提供优质的产品和服务，以创新驱动发展，以品质赢得信赖。' }}
+              {{ config.siteDesc ? stripHtml(decodeHtml(config.siteDesc)).slice(0, 200) : 'We are a professional machinery manufacturer dedicated to delivering quality products and services — driven by innovation, trusted for quality.' }}
             </p>
-            <router-link to="/about" class="btn-gold">了解更多 →</router-link>
+            <router-link to="/about" class="btn-gold">Learn More →</router-link>
           </div>
         </div>
       </div>
@@ -276,9 +276,9 @@
     <!-- 11. 联系/报价CTA -->
     <section class="cta-section">
       <div class="container">
-        <h2 class="cta-title reveal">有图纸？发过来，先做一次工艺评估</h2>
-        <p class="cta-subtitle reveal">支持 DXF / STEP / PDF 图纸获取报价。</p>
-        <router-link to="/contact" class="btn-cta reveal">发图纸，获取报价</router-link>
+        <h2 class="cta-title reveal">Have a drawing? Send it over for a preliminary process assessment.</h2>
+        <p class="cta-subtitle reveal">DXF / STEP / PDF drawings accepted for quotation.</p>
+        <router-link to="/contact" class="btn-cta reveal">Send Drawings, Get a Quote</router-link>
         <a v-if="config.phone" :href="'tel:' + config.phone" class="cta-phone reveal">{{ config.phone }}</a>
       </div>
     </section>
@@ -324,42 +324,42 @@ function stripHtml(html) {
 
 // === 硬编码数据 ===
 const trustItems = [
-  'ISO9001认证·三体系',
-  '2014年建厂',
-  '定制化',
-  '非标件'
+  'ISO 9001/14001/45001 Certified',
+  'Established in 2014',
+  'Custom Built',
+  'Non-standard Parts'
 ]
 
 const capabilities = [
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-    title: '精密加工',
+    title: 'Precision Machining',
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 20h12M18 28h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-    title: '定制化加工',
+    title: 'Custom Machining',
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 4l4 8 9 1.5-6.5 6 1.5 9-8-4.5-8 4.5 1.5-9-6.5-6 9-1.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
-    title: '质量管控',
+    title: 'Quality Control',
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="20" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 40c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M30 38l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-    title: '售后保障',
+    title: 'After-sales Support',
   },
   {
     icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/><path d="M4 24h40M24 4c6 6 6 34 0 40M24 4c-6 6-6 34 0 40" stroke="currentColor" stroke-width="1.5"/></svg>`,
-    title: '外贸服务',
+    title: 'Export Service',
   }
 ]
 
 const processSteps = [
-  { title: '需求沟通', desc: '' },
-  { title: '方案设计', desc: '' },
-  { title: '生产制造', desc: '' },
-  { title: '质量检测', desc: '' },
-  { title: '物流配送', desc: '' },
-  { title: '售后服务', desc: '' }
+  { title: 'Requirement Review', desc: '' },
+  { title: 'Process Design', desc: '' },
+  { title: 'Production', desc: '' },
+  { title: 'Quality Inspection', desc: '' },
+  { title: 'Packing & Delivery', desc: '' },
+  { title: 'After-sales Service', desc: '' }
 ]
 
 const solutions = ref([])

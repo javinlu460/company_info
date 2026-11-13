@@ -11,17 +11,17 @@
               <rect width="32" height="32" rx="4" fill="var(--red)"/>
               <path d="M8 22V10h4l4 7 4-7h4v12h-3v-7.5l-3.5 6h-3l-3.5-6V22H8z" fill="var(--paper)"/>
             </svg>
-            <span class="brand-name">{{ siteConfig.siteName || '企业官网' }}</span>
+            <span class="brand-name">{{ siteConfig.siteName || 'Corporate Site' }}</span>
           </div>
-          <p class="brand-desc">{{ companyDesc || '致力于为客户提供优质的产品和专业的技术服务，以创新驱动发展，以品质赢得信赖。' }}</p>
+          <p class="brand-desc">{{ companyDesc || 'Committed to quality products and professional technical service — driven by innovation, trusted for quality.' }}</p>
 
         </div>
 
         <!-- 第2列：产品分类 -->
         <div class="footer-col">
           <h4 class="col-title">
-            <span>产品中心</span>
-            <button class="collapse-btn" @click="toggleSection('products')" aria-label="展开/收起">
+            <span>Products</span>
+            <button class="collapse-btn" @click="toggleSection('products')" aria-label="Expand/Collapse">
               <svg :class="['chevron', { 'chevron--open': openSections.products }]" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -39,7 +39,7 @@
             <li v-if="!productCategories.length && !loadingCategories">
               <router-link to="/products">
                 <svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>
-                全部产品
+                All Products
               </router-link>
             </li>
           </ul>
@@ -48,28 +48,28 @@
         <!-- 第3列：快速链接 -->
         <div class="footer-col">
           <h4 class="col-title">
-            <span>快速链接</span>
-            <button class="collapse-btn" @click="toggleSection('links')" aria-label="展开/收起">
+            <span>Quick Links</span>
+            <button class="collapse-btn" @click="toggleSection('links')" aria-label="Expand/Collapse">
               <svg :class="['chevron', { 'chevron--open': openSections.links }]" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </h4>
           <ul :class="['col-list', { 'col-list--open': openSections.links }]">
-            <li><router-link to="/"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>首页</router-link></li>
-            <li><router-link to="/about"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>关于我们</router-link></li>
-            <li><router-link to="/products"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>产品中心</router-link></li>
-            <li><router-link to="/news"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>行业洞察</router-link></li>
-            <li><router-link to="/business"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>解决方案</router-link></li>
-            <li><router-link to="/contact"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>联系我们</router-link></li>
+            <li><router-link to="/"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>Home</router-link></li>
+            <li><router-link to="/about"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>About Us</router-link></li>
+            <li><router-link to="/products"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>Products</router-link></li>
+            <li><router-link to="/news"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>Insights</router-link></li>
+            <li><router-link to="/business"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>Solutions</router-link></li>
+            <li><router-link to="/contact"><svg width="6" height="6" viewBox="0 0 6 6" fill="none" class="dot-icon"><circle cx="3" cy="3" r="3" fill="var(--gold)"/></svg>Contact Us</router-link></li>
           </ul>
         </div>
 
         <!-- 第4列：联系方式 -->
         <div class="footer-col">
           <h4 class="col-title">
-            <span>联系我们</span>
-            <button class="collapse-btn" @click="toggleSection('contact')" aria-label="展开/收起">
+            <span>Contact Us</span>
+            <button class="collapse-btn" @click="toggleSection('contact')" aria-label="Expand/Collapse">
               <svg :class="['chevron', { 'chevron--open': openSections.contact }]" width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -115,14 +115,14 @@
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <p class="copyright">
-          © {{ currentYear }} {{ siteConfig.siteName || '企业官网' }} 版权所有
+          © {{ currentYear }} {{ siteConfig.siteName || 'Corporate Site' }}. All rights reserved.
           <span v-if="siteConfig.icp" class="icp-link">
             <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">{{ siteConfig.icp }}</a>
           </span>
         </p>
         <div class="social-icons">
           <!-- 微信 -->
-          <a href="#" class="social-icon" aria-label="微信" title="微信">
+          <a href="#" class="social-icon" aria-label="WeChat" title="WeChat">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M8.5 10.5c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm5 0c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1z" fill="currentColor"/>
               <path d="M21.5 13.5c0-3.59-3.58-6.5-8-6.5S5.5 9.91 5.5 13.5c0 1.93.92 3.67 2.4 4.88L7 21l3.1-1.55c.6.15 1.23.24 1.9.24 4.42 0 8-2.91 8-6.5zm-11-1.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" fill="currentColor" opacity="0.4"/>
@@ -136,13 +136,13 @@
             </svg>
           </a>
           <!-- 微博 -->
-          <a href="#" class="social-icon" aria-label="微博" title="微博">
+          <a href="#" class="social-icon" aria-label="Weibo" title="Weibo">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M10.098 20c-4.197 0-7.6-2.309-7.6-5.158 0-1.61 1.028-3.386 2.814-4.874 2.367-1.956 5.127-2.55 6.178-1.32.417.484.51 1.178.276 1.952 1.058-.457 1.988-.498 2.492-.062.644.555.496 1.607-.082 2.779 1.638.015 2.924.848 2.924 2.327C17.1 18.03 13.934 20 10.098 20zm9.08-14.5c-.283-2.83-2.803-4.854-5.65-4.498l-.25.03a.75.75 0 00.18 1.49l.25-.03c1.987-.24 3.785 1.19 3.994 3.163l.03.25a.75.75 0 101.494-.18l-.048-.225zm-2.44 1.49a.75.75 0 00-.874.604l-.02.112c-.16.873-.871 1.512-1.754 1.612a.75.75 0 00.173 1.49c1.433-.166 2.605-1.192 2.879-2.644l.02-.112a.75.75 0 00-.424-.062z" fill="currentColor"/>
             </svg>
           </a>
           <!-- 抖音 -->
-          <a href="#" class="social-icon" aria-label="抖音" title="抖音">
+          <a href="#" class="social-icon" aria-label="Douyin" title="Douyin">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M19.321 5.562a5.124 5.124 0 01-.443-.258 6.228 6.228 0 01-1.138-1.009c-.849-.966-1.166-1.959-1.282-2.656H16.4c.063.36.094.73.094 1.11v12.95a2.918 2.918 0 01-2.913 2.788 2.918 2.918 0 01-2.913-2.913 2.918 2.918 0 012.913-2.913c.286 0 .563.043.824.118V9.193a7.43 7.43 0 00-.824-.046 7.353 7.353 0 00-7.343 7.343 7.353 7.353 0 007.343 7.343 7.353 7.353 0 007.343-7.343V9.83a11.67 11.67 0 006.833 2.198V7.514a6.609 6.609 0 01-3.436-1.952z"/>
             </svg>
@@ -153,7 +153,7 @@
 
     <!-- 回到顶部按钮 -->
     <Transition name="fade-up">
-      <button v-if="showBackTop" class="back-top" @click="scrollToTop" aria-label="回到顶部">
+      <button v-if="showBackTop" class="back-top" @click="scrollToTop" aria-label="Back to top">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M10 15V5M10 5L5 10M10 5l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>

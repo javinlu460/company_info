@@ -3,9 +3,9 @@
     <div class="container main-content">
       <!-- 页面标签 -->
       <div class="section-head">
-        <span class="ew">PRODUCTS · 产品中心</span>
-        <h2>专业制造，精密加工，来图定制</h2>
-        <p class="lead">以上产品仅为典型加工件示例参考，不限于示例品类；在 Φ250–1000mm 加工范围内，可按图纸要求获取专属定制方案。</p>
+        <span class="ew">PRODUCTS · Our Products</span>
+        <h2>Professional Manufacturing, Precision Machining, Build to Drawing</h2>
+        <p class="lead">The products above are typical machined parts shown for reference only and we are not limited to these categories. Within the Φ250–1000mm machining range, a dedicated solution can be quoted against your drawings.</p>
       </div>
 
       <!-- 分类筛选 -->
@@ -15,7 +15,7 @@
           :class="{ active: !activeCategory }"
           @click="selectCategory(null)"
         >
-          全部
+          All
         </button>
         <button
           v-for="cat in categories"
@@ -31,7 +31,7 @@
       <!-- 产品列表 -->
       <div v-if="loading" class="loading-wrap">
         <div class="loading-spinner"></div>
-        <span>加载中...</span>
+        <span>Loading...</span>
       </div>
       <template v-else>
         <div v-if="products.length" class="products-grid">
@@ -43,11 +43,11 @@
         </div>
         <div v-else class="empty-state">
           <div class="empty-icon">📦</div>
-          <p>暂无相关产品</p>
+          <p>No matching products</p>
         </div>
       </template>
       <div class="product-disclaimer">
-        <p>产品示例图仅供参考，一切以实物为准。</p>
+        <p>Product images are for reference only; the actual product shall prevail.</p>
       </div>
     </div>
 
@@ -55,7 +55,7 @@
     <section class="cta-section">
       <div class="container">
         <router-link to="/contact" class="btn-red cta-btn">
-          发图纸，获取报价及解决方案 →
+          Send Drawings, Get a Quote & Solution →
         </router-link>
       </div>
     </section>
